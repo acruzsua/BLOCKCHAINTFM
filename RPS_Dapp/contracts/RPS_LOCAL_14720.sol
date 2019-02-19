@@ -32,9 +32,9 @@ contract RPS is Ownable {
     uint constant jackpotFeeRate = 5000;
     uint constant feeUnits = 1000000;
     uint businessFeeRate = 2 * lotteryRate;
-    uint public totalBusinessFee = 0;
-    uint public minBusinessFeePayment = 0.01 ether;
-    address public businessAddress = 0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359;  // Ethereum foundation address
+    uint totalBusinessFee = 0;
+    uint constant businessFeePayment = 0.01 ether;
+    address public businessAddress = 0x4C2917B5aDa565c76A457cCc954D25EFF3BfcfAE;
 
     /* Not used yet
     uint maxJackpot;
@@ -83,8 +83,6 @@ contract RPS is Ownable {
 
     event Payment(address paidAddress, uint amount);
     event LotteryWin(address winner, uint jackpot);
-
-    event BusinessPayment(address businessAddress, uint payment);
 
     /** @dev Modifier for functions available only when game is running
       * @param _isRunning bool to check is we need the game is running or not
@@ -340,16 +338,9 @@ contract RPS is Ownable {
         // We must do the transfer of business fee to businessAddress but since they're supposed to be very small we should wait
         // till collecting a bigger amount, for avoiding paying more gas than actual money.
         totalBusinessFee += businessFee;
-<<<<<<< HEAD
         if (totalBusinessFee > businessFeePayment) {
             //businessAddress.transfer(totalBusinessFee);
             businessFee = 0;
-=======
-        if (totalBusinessFee > minBusinessFeePayment) {
-            emit BusinessPayment(businessAddress, totalBusinessFee);
-            businessAddress.transfer(totalBusinessFee);
-            totalBusinessFee = 0;
->>>>>>> 50fdb63d7fb6e20662ea11a5c029860a93a9e05f
         }
 
 
@@ -375,21 +366,12 @@ contract RPS is Ownable {
     }
 
     /** @notice Set the lottery rate in percentage, how easy is to hit the jackpot
-      * @dev Mostly for testing porpuse. It should be removed in final deployment or no modifiable by anyone
+      * @dev Mostly for testing porpuse. It should be removed in final deployment
       * @param newLotteryRate new lottery rate
      */
     // Mostly for testing porpuse.
     function setLotteryRate(uint newLotteryRate) public onlyOwner {
         lotteryRate = newLotteryRate;
-    }
-
-    /** @notice Set the minimum amount of ETH to be transfered when collecting business fees
-      * @dev Mostly for testing porpuse. It should be removed in final deployment or no modifiable by anyone
-      * @param newMinBusinessFeePayment new min amount of ETH to transfer to business
-     */
-    // Mostly for testing porpuse.
-    function setminBusinessFeePayment(uint newMinBusinessFeePayment) public onlyOwner {
-        minBusinessFeePayment = newMinBusinessFeePayment;
     }
 
     /** @notice Play lottery for the round

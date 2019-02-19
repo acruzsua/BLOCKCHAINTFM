@@ -1,7 +1,7 @@
-pragma solidity 0.5.0;
+pragma solidity ^0.4.25;
 
-import "./Ownable.sol";
-import "./SafeMath.sol";
+import "zeppelin-solidity/contracts/ownership/Ownable.sol";
+import "zeppelin-solidity/contracts/math/SafeMath.sol";
 
 
 /** @title RPS - RockPaperScissor P2P game, playing also for a jackpot.
@@ -11,7 +11,6 @@ import "./SafeMath.sol";
             it has some known vulnerabilities.
   * @dev My first smartcontract, so probably code could be improved.
  */
-
 contract RPS is Ownable {
 
     using SafeMath for uint;
@@ -101,7 +100,7 @@ contract RPS is Ownable {
 
     /** @notice Fallback, just in case of receiving funds, to the jackpot
     */
-    function () external payable {
+    function () public payable {
         jackpot = jackpot.add(msg.value);
     }
 
@@ -182,10 +181,10 @@ contract RPS is Ownable {
     /** @notice Withdraw funds in case of an emergengy. Set jackpot to 0.
       * @param _myAddress addres to withdraw funds to
     */
-    // function withdrawFunds(address _myAddress) public onlyOwner gameIsRunning(false) {
-    //     (_myAddress).transfer(address(this).balance);
-    //     jackpot = 0;
-    // }
+    function withdrawFunds(address _myAddress) public onlyOwner gameIsRunning(false) {
+        _myAddress.transfer(address(this).balance);
+        jackpot = 0;
+    }
 
     /** @notice Function called each time we want to play.
                 Payable function thar receives the bet amount.
@@ -309,7 +308,7 @@ contract RPS is Ownable {
 
         if(myRound.isSolo) {  // 1 player mode
             if (winner == address(0)){  // Draw, player recevies what he bet minus fee
-                //myRound.player1.playerAddress.transfer(myRound.betAmount - jackpotFee - businessFee);
+                myRound.player1.playerAddress.transfer(myRound.betAmount - jackpotFee - businessFee);
                 jackpot = jackpot.add(jackpotFee);
             } else if (winner == address(this)) {  // Player looses, bet to jackpot
                 jackpot = jackpot.add(myRound.betAmount);
@@ -317,7 +316,7 @@ contract RPS is Ownable {
                 // SafeMath is not necessary, jackpot and betAmount are uint, and the substraction can only be uint.
                 // Used to show using a Library. Consider to change it to use -, since it saves same gas.
                 jackpot = jackpot.sub(myRound.betAmount);
-                //winner.transfer(myRound.betAmount.mul(2) - jackpotFee - businessFee);
+                winner.transfer(myRound.betAmount.mul(2) - jackpotFee - businessFee);
                 emit Payment(winner, myRound.betAmount - jackpotFee - businessFee);
                 jackpot = jackpot.add(jackpotFee);
             }
@@ -327,11 +326,11 @@ contract RPS is Ownable {
                 // We might consider to study this a bit more, but I think that when playing 2 players
                 // we may just charge half of business fee to each player and that's OK for avoiding
                 // attacks in case of a draw.
-                //myRound.player1.playerAddress.transfer(myRound.betAmount - jackpotFee - businessFee / 2);
-                //myRound.player2.playerAddress.transfer(myRound.betAmount - jackpotFee - businessFee / 2);
+                myRound.player1.playerAddress.transfer(myRound.betAmount - jackpotFee - businessFee / 2);
+                myRound.player2.playerAddress.transfer(myRound.betAmount - jackpotFee - businessFee / 2);
                 jackpot = jackpot.add(2 * jackpotFee);
             } else {  // Bet to the winner minus jackpot and business fee
-                //winner.transfer(myRound.betAmount.mul(2) - jackpotFee - businessFee);
+                winner.transfer(myRound.betAmount.mul(2) - jackpotFee - businessFee);
                 emit Payment(winner, myRound.betAmount - jackpotFee - businessFee);
                 jackpot = jackpot.add(jackpotFee);
             }
@@ -340,16 +339,10 @@ contract RPS is Ownable {
         // We must do the transfer of business fee to businessAddress but since they're supposed to be very small we should wait
         // till collecting a bigger amount, for avoiding paying more gas than actual money.
         totalBusinessFee += businessFee;
-<<<<<<< HEAD
-        if (totalBusinessFee > businessFeePayment) {
-            //businessAddress.transfer(totalBusinessFee);
-            businessFee = 0;
-=======
         if (totalBusinessFee > minBusinessFeePayment) {
             emit BusinessPayment(businessAddress, totalBusinessFee);
             businessAddress.transfer(totalBusinessFee);
             totalBusinessFee = 0;
->>>>>>> 50fdb63d7fb6e20662ea11a5c029860a93a9e05f
         }
 
 
@@ -364,7 +357,7 @@ contract RPS is Ownable {
       * @param player2 player struct (with player's address and choice)
       * @return address of the winner
      */
-    function _checkWinner(Player memory player1, Player memory player2) private pure returns(address) {
+    function _checkWinner(Player player1, Player player2) private pure returns(address) {
         if ((uint(player1.choice) + 1) % 3 == uint(player2.choice)) {
             return player2.playerAddress;
         } else if ((uint(player1.choice) + 2) % 3 == uint(player2.choice)) {
@@ -405,7 +398,7 @@ contract RPS is Ownable {
 
         if (uint(keccak256(abi.encodePacked(roundCount, playerAddress, blockhash(block.number - 1)))) % lotteryRate == 0) {
             Round storage myRound = rounds[_roundId];  // Pointer to round
-            //require(myRound.lotteryWinner == 0, "Only one lotery winner per round");
+            require(myRound.lotteryWinner == 0, "Only one loterry winner per round");
             myRound.lotteryWinner = playerAddress;
             _payLotteryWinner(playerAddress);
             return true;
@@ -420,7 +413,7 @@ contract RPS is Ownable {
         require(jackpot <= address(this).balance, "Jackpot is higher than contract balance");
 
         // I think we dont need to avoid reentrancy since no problem using transfer.
-        //_winnerAddress.transfer(jackpot);
+        _winnerAddress.transfer(jackpot);
         jackpot = 0;
         emit LotteryWin(_winnerAddress, jackpot);
         emit Payment(_winnerAddress, jackpot);
