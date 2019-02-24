@@ -185,8 +185,8 @@ contract Dice is usingOraclize, Ownable, StartStopGame {
     function payWinner(address payable _player, uint _betAmount, uint _netProfit) 
     private 
     {
-        //require( address(this).balance >= (msg.value + _netProfit) );
         uint winAmount = _betAmount.add(_netProfit);
+        require( address(this).balance >= winAmount );
         emit logPayWinner("Pay winner: ", _player, winAmount);            
         _player.transfer(winAmount);
     }

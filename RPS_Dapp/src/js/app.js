@@ -34,9 +34,13 @@ App = {
   },
 
   bindEvents: () => {
+    $(document).on('click', '.btn-to-dice', function(event){
+      self.location='./indexdice.html';
+    });
     $(document).on('click', '.btn-dice', function(event){
       App.roll();
     });
+
 
   },
 

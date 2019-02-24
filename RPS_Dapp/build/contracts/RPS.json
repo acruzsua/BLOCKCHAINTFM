@@ -25768,10 +25768,16 @@
       "links": {},
       "address": "0xef9c6234A5045bF55fFe1C6f3cE6F116a2206AC1",
       "transactionHash": "0xf887d8b954a6786bf487b17642deb47224d2c17177649d3451961f0f37edad4f"
+    },
+    "1551025054141": {
+      "events": {},
+      "links": {},
+      "address": "0x3B3ae684db9F4744E0c21a5cfDA5b6C1E3A8b222",
+      "transactionHash": "0xf887d8b954a6786bf487b17642deb47224d2c17177649d3451961f0f37edad4f"
     }
   },
   "schemaVersion": "3.0.2",
-  "updatedAt": "2019-02-24T11:55:11.314Z",
+  "updatedAt": "2019-02-24T16:19:33.800Z",
   "devdoc": {
     "author": "rggentil",
     "details": "My first smartcontract, so probably code could be improved.",

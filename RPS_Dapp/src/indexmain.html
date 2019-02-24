@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>DICE</title>
+    <title>MAIN PAGE GAMES</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -29,7 +29,7 @@
 
     <header>
       <div></div>
-      <div id="game-title">DICE</div>
+      <div id="game-title">GAMES</div>
       <div id="player">
         <p>Player:<div id="metamask-player"></div>
         </p>
@@ -41,27 +41,9 @@
         <div id="game-container" class="text-center">
 
           <form>
-            <div class="form-inline" id="bet-amount" >
-              <div class="form-group">
-                <label class="sr-only" for="betAmount">Bet Amount (in ethers)</label>
-                <div class="input-group">
-                  <div class="input-group-addon">ETH</div>
-                  <input type="text" class="form-control" name="bet" value=0.5 id="betAmount" style="width: 80px; background-color:hsl(47, 96%, 88%);" required>
-                  </div>
-                </div>
-            </div>
+            <button class="btn btn-choice btn-to-dice" type="button">Play Dice</button>
+            <button class="btn btn-choice btn-to-rps" type="button">Play RPS</button>
 
-            <div class="form-inline" id="risk-probability" >
-              <div class="form-group">
-                <label class="sr-only" for="risk">Probability</label>
-                <div class="input-group">
-                  <div class="input-group-addon">RISK %</div>
-                  <input type="text" class="form-control" name="rsk" value=50 placeholder=50 id="risk" style="width: 80px; background-color:hsl(47, 96%, 88%);" required>
-                  </div>
-                </div>
-            </div>
-
-            <button class="btn btn-choice btn-dice" type="button">Roll Dice</button>
           </form>
           </div>
       </div>

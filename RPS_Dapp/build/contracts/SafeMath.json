@@ -3393,10 +3393,16 @@
       "links": {},
       "address": "0xd9f8eF8E2A755a3d8be2a2152C7945cd4c8Cde41",
       "transactionHash": "0x70983b1cc15e6e76550914370a05ff6fd0334670c2f9e703cafbd05b4423fae0"
+    },
+    "1551025054141": {
+      "events": {},
+      "links": {},
+      "address": "0x4A0B48c2c147E76336aF499Ca3f93Cf818F44554",
+      "transactionHash": "0x70983b1cc15e6e76550914370a05ff6fd0334670c2f9e703cafbd05b4423fae0"
     }
   },
   "schemaVersion": "3.0.2",
-  "updatedAt": "2019-02-24T11:55:11.352Z",
+  "updatedAt": "2019-02-24T16:19:33.835Z",
   "devdoc": {
     "details": "Unsigned math operations with safety checks that revert on error",
     "methods": {},

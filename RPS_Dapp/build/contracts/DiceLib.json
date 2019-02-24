@@ -895,10 +895,16 @@
       "links": {},
       "address": "0xFD7BF7332Be9A18690694a126Ed31c7217823353",
       "transactionHash": "0x6be5bcf75faa42917195250f28b00385c2463aed351dea28b7980b98b8826ee2"
+    },
+    "1551025054141": {
+      "events": {},
+      "links": {},
+      "address": "0x49cb960EF03eB172fa66436b94BF7282c63de1a5",
+      "transactionHash": "0x6be5bcf75faa42917195250f28b00385c2463aed351dea28b7980b98b8826ee2"
     }
   },
   "schemaVersion": "3.0.2",
-  "updatedAt": "2019-02-24T11:55:11.354Z",
+  "updatedAt": "2019-02-24T16:19:33.836Z",
   "devdoc": {
     "author": "Antonio Cruz",
     "details": "Set of functions used to allow playihng Dice game",

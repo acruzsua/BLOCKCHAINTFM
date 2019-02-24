@@ -1731,10 +1731,16 @@
       "links": {},
       "address": "0x7a3BBe407ae6e4B2A5323c8775471587e54020C6",
       "transactionHash": "0xc0407095ac733ac61c8f15688eb4d220b8de505958e6599c3c468f7cf28ba2dd"
+    },
+    "1551025054141": {
+      "events": {},
+      "links": {},
+      "address": "0x677f3a12762837b21E82aDd2307b31962dB38B17",
+      "transactionHash": "0xc0407095ac733ac61c8f15688eb4d220b8de505958e6599c3c468f7cf28ba2dd"
     }
   },
   "schemaVersion": "3.0.2",
-  "updatedAt": "2019-02-24T11:55:11.360Z",
+  "updatedAt": "2019-02-24T16:19:33.843Z",
   "devdoc": {
     "methods": {}
   },

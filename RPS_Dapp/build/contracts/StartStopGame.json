@@ -1258,10 +1258,16 @@
       "links": {},
       "address": "0x5D60dE35c9A98De744A9E83F4EB5F89a71191773",
       "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1551025054141": {
+      "events": {},
+      "links": {},
+      "address": "0x98f6a9C18C7362c2563151C25e16617C110fCCc7",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
     }
   },
   "schemaVersion": "3.0.2",
-  "updatedAt": "2019-02-24T11:55:11.355Z",
+  "updatedAt": "2019-02-24T16:19:33.837Z",
   "devdoc": {
     "author": "Antonio Cruz",
     "details": "For more implementation details read the \"design_pattern_decisions.md\" document. ",
