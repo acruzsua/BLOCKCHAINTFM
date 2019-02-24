@@ -27,8 +27,9 @@ App = {
 
       // Set the provider for our contract
       App.contracts.Dice.setProvider(App.web3Provider);
-
+      
     });
+
     return App.bindEvents();
   },
 
@@ -53,6 +54,30 @@ App = {
      const account = await accounts[0];
      const result = await diceInstance.rollDice(risk, {from: account, value: betAmount});
 
+       
+     var LogPlayerBetAccepted = diceInstance.logPlayerBetAccepted({});
+     LogPlayerBetAccepted.watch(function (err, result) {
+       if (!err) {
+        console.log("bet accepted");
+        console.log((result.args._bet).valueOf());
+        console.log("risk");
+        console.log((result.args._risk).valueOf());
+
+      } else {
+         console.error(err);
+       }
+     })
+
+     var LogRolledDice = diceInstance.logRollDice({});
+     LogRolledDice.watch(function (err, result) {
+       if (!err) {
+        console.log((result.args._description).valueOf());
+
+      } else {
+         console.error(err);
+       }
+     })
+
      var LogRolledDiceNumber = diceInstance.logRolledDiceNumber({});
      LogRolledDiceNumber.watch(function (err, result) {
        if (!err) {
@@ -62,8 +87,82 @@ App = {
          console.error(err);
        }
      })
+
+     var LogPlayerWins = diceInstance.logPlayerWins({});
+     LogPlayerWins.watch(function (err, result) {
+       if (!err) {
+        console.log((result.args.description).valueOf());
+        console.log((result.args._contract).valueOf());
+        console.log((result.args._winner).valueOf());
+        console.log((result.args._rolledDiceNumber).valueOf());
+        console.log((result.args._profit).valueOf());
+        console.log((result.args._riskPer).valueOf());
+        console.log((result.args._grossP).valueOf());
+        
+       } else {
+         console.error(err);
+       }
+     })
+
+      var LogJackpotBalance = diceInstance.logJackpotBalance({});
+      LogJackpotBalance.watch(function (err, result) {
+        if (!err) {
+          console.log((result.args.description).valueOf());
+          console.log((result.args._ownerAddress).valueOf());
+          console.log((result.args._ownerBalance).valueOf());
+        } else {
+          console.error(err);
+        }
+      })
+
+      var LogPayWinner = diceInstance.logPayWinner({});
+      LogPayWinner.watch(function (err, result) {
+        if (!err) {
+          console.log((result.args.description).valueOf());
+          console.log((result.args._playerAddress).valueOf());
+          console.log((result.args._winAmount).valueOf());
+        } else {
+          console.error(err);
+        }
+      })
+
+     var LogPlayerLose = diceInstance.logPlayerLose({});
+     LogPlayerLose.watch(function (err, result) {
+       if (!err) {
+        console.log((result.args.description).valueOf());
+        console.log((result.args._contract).valueOf());
+        console.log((result.args._player).valueOf());
+        console.log((result.args._rolledDiceNumber).valueOf());
+        console.log((result.args._betAmount).valueOf());
+       } else {
+         console.error(err);
+       }
+     })
+
+    App.getContractBalance();
+
+
     }); 
+
   },
+
+  getContractBalance: function () {
+
+    var account; 
+    web3.eth.getAccounts(async (error, accounts) => {
+     account = await accounts[0];
+     }); 
+    
+    App.contracts.Dice.deployed().then(function (contractInstance) {
+      return contractInstance.getContractBalance({ from: account }).then(function (v) {
+        console.log("Contract balance");
+        console.log(web3.fromWei(v.valueOf(), 'ether'));
+
+      }).catch(function (e) {
+        console.log(e);      
+      });
+    });
+},
 
 };
 

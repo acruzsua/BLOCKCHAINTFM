@@ -3,102 +3,98 @@ pragma solidity ^0.5.0;
 import "./Ownable.sol";
 import "./oraclizeAPI.sol";
 import "./SafeMath.sol";
+import "./DiceLib.sol";
+import "./StartStopGame.sol";
 
 
 /** @title Dice - Dice game
   * @author Rodrigo Gómez Gentil, Antonio Cruz Suárez
  */
 
-contract Dice is usingOraclize, Ownable {
+contract Dice is usingOraclize, Ownable, StartStopGame {
 
-    uint minimumBet;
-    string public RANDOMNUMBER;
+    using SafeMath for uint;
 
+    bool public emergencyStop;
+    
+    modifier noEmergency 
+    { 
+        if (!emergencyStop) 
+        _;
+    }
+    
+    modifier inEmergency 
+    {
+        if (emergencyStop) 
+        _;
+    }
 
-    // The oraclize callback structure: we use several oraclize calls.
+    uint public minimumBet = 0.0001 ether;
+    uint public minimumRisk = 30;
+    uint public jackpot = 0;
+
     // All oraclize calls will result in a common callback to __callback(...).
-    // To keep track of the different queries we the struct callback struct in place.
-
     struct oraclizeCallback {
-        address player;
+        address payable player;
         bytes32 queryId;
         uint    risk;
         uint    betAmount;
         uint    rolledDiceNumber;
-        uint    winAmount;
+        uint    profit;
     }
 
      mapping (bytes32 => oraclizeCallback) public oraclizeCallbacks;
+     mapping (address => uint) private balances;
 
     // Events
     event logPlayerBetAccepted(address _contract, address _player, uint _risk, uint _bet);
     event logRollDice(address _contract, address _player, string _description);
-    event logNumberGeneratorQuery(address _contract, address _player, bytes32 _randomOrgQueryId);
-    event logAwaitingRandomOrgCallback(address _contract, bytes32 _randomOrgQueryId);
-    event logRandomOrgCallback(address _contract, bytes32 _oraclizeQueryId);
-    event logNumberGeneratorResponse(address _contract, address _player, bytes32 _oraclizeQueryId, string _oraclizeResponse);
     event logRolledDiceNumber(address _contract, bytes32 _oraclizeQueryId, uint _risk, uint _rolledDiceNumber);
-    event logDidNotWin(address _contract, uint _rolledDiceNumber, uint _risk);
-    event logPlayerWins(address _contract, address _winner, uint _rolledDiceNumber, uint _winAmount);
-    event logPlayerCashout(address _contract, address _winner, uint _rolledDiceNumber, uint _winAmount);
-    event logGameFinalized(address _contract);
+    event logPlayerLose(string description, address _contract, address _player, uint _rolledDiceNumber, uint _betAmount);
+    event logPlayerWins(string description, address _contract, address _winner, uint _rolledDiceNumber, uint _profit, uint _riskPer, uint _grossP);
+    event logGameStatus(bool _status);
     event logNewOraclizeQuery(string description);
+    event logContractBalance(uint _contractBalance);
+    event logJackpotBalance(string description, address _ownerAddress, uint _ownerBalance);
+    event logPayWinner(string description, address _playerAddress, uint _winAmount);
+
 
     constructor() 
-        public
+    public
     {
         // Replace the next line with your version:
         OAR = OraclizeAddrResolverI(0x6f485C8BF6fc43eA212E93BBF8ce046C7f1cb475);
-        minimumBet = 0.0001 ether;
-    }
+        setGameStatus(true);
+        emit logGameStatus(getGameStatus());
 
+    }
 
     function rollDice(uint risk) 
         public 
+        noEmergency
+        gameIsOn
         payable
         returns (bool success)
     {
         
-        bytes32 oraclizeQueryId;
-        
-        address player = msg.sender;                
-        uint betAmount = msg.value;
-        
-        require(betAmount >= minimumBet);
+        bytes32 oraclizeQueryId;        
+        address payable player = msg.sender;                
 
+        uint betAmount = msg.value;        
+        require(DiceLib.isValidBet(betAmount, minimumBet));
+        require(DiceLib.isValidRisk(risk, minimumRisk));
         emit logPlayerBetAccepted(address(this), player, risk, betAmount);
-        emit logRollDice(address(this), player, "Query to random.org was sent, standing by for the answer.");
 
+        // Making oraclized query to random.org.
+        emit logRollDice(address(this), player, "Oraclize query to random.org was sent, standing by for the answer.");
+        oraclizeQueryId = oraclize_query("URL", "https://www.random.org/integers/?num=1&min=1&max=100&col=1&base=10&format=plain&rnd=new");
 
-        if(risk > 20 ) {
+        // Saving the struct        
+        oraclizeCallbacks[oraclizeQueryId].queryId = oraclizeQueryId;
+        oraclizeCallbacks[oraclizeQueryId].player = player;
+        oraclizeCallbacks[oraclizeQueryId].risk = risk;
+        oraclizeCallbacks[oraclizeQueryId].betAmount = betAmount;
 
-            // Making oraclized query to random.org.
-            if (oraclize_getPrice("URL") > address(this).balance) {
-              emit logNewOraclizeQuery("Oraclize query was NOT sent, please add some ETH to cover for the query fee");
-            } else{
-              emit logNewOraclizeQuery("Oraclize query was sent, standing by for the answer..");
-              oraclizeQueryId = oraclize_query("URL", "https://www.random.org/integers/?num=1&min=1&max=100&col=1&base=10&format=plain&rnd=new");
-            }
-
-
-            // Saving the struct
-            
-            oraclizeCallbacks[oraclizeQueryId].queryId = oraclizeQueryId;
-            oraclizeCallbacks[oraclizeQueryId].player = player;
-            oraclizeCallbacks[oraclizeQueryId].risk = risk;
-            oraclizeCallbacks[oraclizeQueryId].betAmount = betAmount;
-
-            emit logNumberGeneratorQuery(address(this), player, oraclizeQueryId);
- 
- 
-        } else {
-            
-            // revert the money to the player  if the risk is < 20
-            msg.sender.transfer(msg.value);
-
-        }
-      
-        emit logAwaitingRandomOrgCallback(address(this), oraclizeQueryId);
         return true;
     }
 
@@ -116,16 +112,16 @@ contract Dice is usingOraclize, Ownable {
         
 
         bool playerWins = false;       
-        uint winAmount;
-    
-        emit logRandomOrgCallback(address(this), myid);
+        uint grossProfit;
+        uint netProfit;
+        uint riskPercentage;
+        uint feeUnits = 1000000000000000000;
+        uint feeJackpot =  5000000000000000;  // Fund to jackpot 0.005 ether as a fee
+        uint feeOraclize = 4000000000000000; // Oraclize service charges 0.004 Ether as a fee for querying random.org
+
         require (msg.sender == oraclize_cbAddress());
         
-        address player = oraclizeCallbacks[myid].player;
-
-
-        emit logNumberGeneratorResponse(address(this), msg.sender, myid, result);
-        
+        address payable player = oraclizeCallbacks[myid].player;       
         uint rolledDiceNumber = parseInt(result); 
         oraclizeCallbacks[myid].rolledDiceNumber = rolledDiceNumber;   
         uint risk = oraclizeCallbacks[myid].risk;
@@ -133,85 +129,66 @@ contract Dice is usingOraclize, Ownable {
         emit logRolledDiceNumber(address(this), myid, risk, rolledDiceNumber);
 
 
-        if(rolledDiceNumber > risk) {
-            playerWins = true;
+         // If the number of the rolled dice is higher than the assumed risk then the player wins
+         if(rolledDiceNumber > risk) {
+             playerWins = true;
         }
-    
-        
+           
         if(playerWins) {
             
-            // Calculate player profit
+            // Calculate player profit            
+            riskPercentage = feeUnits.mul(risk); 
+            riskPercentage = riskPercentage.div(100);
+            grossProfit = betAmount.mul(riskPercentage);
+            grossProfit = grossProfit.div(feeUnits);               
+            netProfit = grossProfit.sub(feeJackpot);
+            netProfit = netProfit.sub(feeOraclize);
 
-    //        if(risk > 20 && risk < 30) {
-    //                winAmount = betAmount.mul(107);
-    //                winAmount = winAmount.div(100);
-    //        }
-            if(risk > 30 && risk < 40) {
-                    winAmount = (betAmount * 142) / 100;
-            }
-            if(risk > 40 && risk < 50) {
-                    winAmount = (betAmount * 195) / 100;
-            }
-            if(risk > 50 && risk < 60) {
-                    winAmount = (betAmount * 293) / 100;
-            }
-            if(risk > 60 ) {
-                    winAmount = (betAmount * 589) / 100;
-            }
+            oraclizeCallbacks[myid].profit = netProfit;  
+            emit logPlayerWins("Player wins: ", address(this), player, rolledDiceNumber, netProfit, riskPercentage, grossProfit );
 
-            emit logPlayerWins(address(this), player, rolledDiceNumber, winAmount);
+            // Increase jackpot
+            balances[owner] = balances[owner].add(feeJackpot);
+            emit logJackpotBalance("Balance owner: ", owner, balances[owner]);            
 
-            if(winAmount > 0) {
-
-                // Substract the casino edge 4% and pay the winner..
-                
-                uint casino_edge = (winAmount / 100) * 4;
-                uint oraclize_fee = 4000000000000000; // Oraclize service charges us a fee of 0.004 Ether for querying random.org on the blockchain
-                
-                winAmount = winAmount - casino_edge;
-                winAmount = winAmount - oraclize_fee;
-
-                (msg.sender).transfer(winAmount);
-
-                oraclizeCallbacks[myid].winAmount = winAmount;
-
-                emit logPlayerCashout(address(this), player, rolledDiceNumber, winAmount);
+             if(netProfit > 0) {             
+                 payWinner(player, betAmount, netProfit);          
+             }
             
-            }
-            
-        }
+         }
 
-        if(playerWins==false) {
-
-            emit logDidNotWin(address(this), rolledDiceNumber, risk);
-            emit logGameFinalized(address(this));
-            //address(this).balance = (address(this).balance).sub(msg.value);
+         if(playerWins==false) {
+             emit logPlayerLose("Player lose: ",address(this), player, rolledDiceNumber, betAmount);
         }
 
     }
 
-    function gameStatus(bytes32 oraclizeQueryId)
-        public
-        view
-        returns (address, uint, uint, uint, uint)
-    {
-
-        address player = oraclizeCallbacks[oraclizeQueryId].player;
-        uint risk = oraclizeCallbacks[oraclizeQueryId].risk;
-        uint rolledDiceNumber = oraclizeCallbacks[oraclizeQueryId].rolledDiceNumber;
-        uint betAmount = oraclizeCallbacks[oraclizeQueryId].betAmount;
-        uint winAmount = oraclizeCallbacks[oraclizeQueryId].winAmount;
-
-        return (player, risk, rolledDiceNumber, betAmount, winAmount);
-    }
-
-
+  
     function getContractBalance()
         public
         view
         returns (uint)
     {
         return (address(this).balance);
+    }
+
+ 
+    /** 
+     * @notice Fallback function - Called if other functions don't match call or sent ether without data
+     * Typically, called when invalid data is sent
+     * Added so ether sent to this contract is reverted if the contract fails. Otherwise, the sender's money is transferred to contract
+     */
+    function () external payable{ 
+        revert();        
+    }
+
+    function payWinner(address payable _player, uint _betAmount, uint _netProfit) 
+    private 
+    {
+        //require( address(this).balance >= (msg.value + _netProfit) );
+        uint winAmount = _betAmount.add(_netProfit);
+        emit logPayWinner("Pay winner: ", _player, winAmount);            
+        _player.transfer(winAmount);
     }
 
 }

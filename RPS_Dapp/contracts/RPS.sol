@@ -339,18 +339,11 @@ contract RPS is Ownable {
 
         // We must do the transfer of business fee to businessAddress but since they're supposed to be very small we should wait
         // till collecting a bigger amount, for avoiding paying more gas than actual money.
-        totalBusinessFee += businessFee;
-<<<<<<< HEAD
-        if (totalBusinessFee > businessFeePayment) {
-            //businessAddress.transfer(totalBusinessFee);
-            businessFee = 0;
-=======
-        if (totalBusinessFee > minBusinessFeePayment) {
-            emit BusinessPayment(businessAddress, totalBusinessFee);
-            businessAddress.transfer(totalBusinessFee);
-            totalBusinessFee = 0;
->>>>>>> 50fdb63d7fb6e20662ea11a5c029860a93a9e05f
-        }
+        // totalBusinessFee += businessFee;
+        // if (totalBusinessFee > businessFeePayment) {
+        //     //businessAddress.transfer(totalBusinessFee);
+        //     businessFee = 0;
+        // }
 
 
         // Additional check por security for reentrancy (kind of formal verification)
