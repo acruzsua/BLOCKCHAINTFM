@@ -1,24 +1,24 @@
 {
   "contractName": "DiceLib",
   "abi": [],
-  "bytecode": "0x604c602c600b82828239805160001a60731460008114601c57601e565bfe5b5030600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea165627a7a72305820e588b9045cbc4115adc8dab33bb6c9dcdb00ce23ca8a3ae629e6539d204eaa1f0029",
-  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea165627a7a72305820e588b9045cbc4115adc8dab33bb6c9dcdb00ce23ca8a3ae629e6539d204eaa1f0029",
-  "sourceMap": "139:990:1:-;;132:2:-1;166:7;155:9;146:7;137:37;252:7;246:14;243:1;238:23;232:4;229:33;270:1;265:20;;;;222:63;;265:20;274:9;222:63;;298:9;295:1;288:20;328:4;319:7;311:22;352:7;343;336:24",
-  "deployedSourceMap": "139:990:1:-;;;;;;;;",
-  "source": "pragma solidity ^0.5.0;\n\n/** \n * @title Dice Library\n * @author Antonio Cruz\n * @dev Set of functions used to allow playihng Dice game\n */\nlibrary DiceLib {\n\n    /**\n     * @notice Test if the risk assumed by the user is the minimum accepted by the game\n     * @param _risk : Risk assumed by the player\n     * @param _minimumRisk Indicates the minimum risk accepted to play the game\n     * @return True if the risk is over 30, False otherwise.\n     */\n       function isValidRisk (uint _risk, uint _minimumRisk)\n        internal\n        pure\n        returns (bool)\n    {\n        return (_risk >= _minimumRisk);\n    }\n    \n    /**\n     * @notice Test if the player's bet is at least the minium required for playing\n     * @param _bet Indicates the bet risked by the user\n     * @param _minimumBet Indicates the minimum bet accepted to play the game\n     * @return True if player's bet is at least equal to the minimum expected to allow the game, False otherwise.\n     */\n    function isValidBet (uint _bet, uint _minimumBet)\n        internal\n        pure\n        returns (bool)\n    {\n        return (_bet >= _minimumBet);\n    }\n\n}",
+  "bytecode": "0x604c602c600b82828239805160001a60731460008114601c57601e565bfe5b5030600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea165627a7a72305820b81e5befc81251a3ee23337f1b66244be78d465b1bee3540fd6cdfdfb1bc4eee0029",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea165627a7a72305820b81e5befc81251a3ee23337f1b66244be78d465b1bee3540fd6cdfdfb1bc4eee0029",
+  "sourceMap": "139:1038:1:-;;132:2:-1;166:7;155:9;146:7;137:37;252:7;246:14;243:1;238:23;232:4;229:33;270:1;265:20;;;;222:63;;265:20;274:9;222:63;;298:9;295:1;288:20;328:4;319:7;311:22;352:7;343;336:24",
+  "deployedSourceMap": "139:1038:1:-;;;;;;;;",
+  "source": "pragma solidity ^0.5.0;\n\n/** \n * @title Dice Library\n * @author Antonio Cruz\n * @dev Set of functions used to allow playihng Dice game\n */\nlibrary DiceLib {\n\n    /**\n     * @notice Test if the risk assumed by the user is the minimum accepted by the game\n     * @param _risk : Risk assumed by the player\n     * @param _minimumRisk Indicates the minimum risk accepted to play the game\n     * @return True if the risk is over 30, False otherwise.\n     */\n       function isValidRisk (uint _risk, uint _minimumRisk, uint _maximumRisk)\n        internal\n        pure\n        returns (bool)\n    {\n        return ((_risk >= _minimumRisk) && (_risk <= _maximumRisk));\n    }\n    \n    /**\n     * @notice Test if the player's bet is at least the minium required for playing\n     * @param _bet Indicates the bet risked by the user\n     * @param _minimumBet Indicates the minimum bet accepted to play the game\n     * @return True if player's bet is at least equal to the minimum expected to allow the game, False otherwise.\n     */\n    function isValidBet (uint _bet, uint _minimumBet)\n        internal\n        pure\n        returns (bool)\n    {\n        return (_bet >= _minimumBet);\n    }\n\n}",
   "sourcePath": "/home/antonio/src/TFM/BLOCKCHAINTFM/RPS_Dapp/contracts/DiceLib.sol",
   "ast": {
     "absolutePath": "/home/antonio/src/TFM/BLOCKCHAINTFM/RPS_Dapp/contracts/DiceLib.sol",
     "exportedSymbols": {
       "DiceLib": [
-        568
+        563
       ]
     },
-    "id": 569,
+    "id": 564,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 537,
+        "id": 524,
         "literals": [
           "solidity",
           "^",
@@ -34,18 +34,18 @@
         "contractKind": "library",
         "documentation": "@title Dice Library\n@author Antonio Cruz\n@dev Set of functions used to allow playihng Dice game",
         "fullyImplemented": true,
-        "id": 568,
+        "id": 563,
         "linearizedBaseContracts": [
-          568
+          563
         ],
         "name": "DiceLib",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "body": {
-              "id": 551,
+              "id": 546,
               "nodeType": "Block",
-              "src": "569:47:1",
+              "src": "588:76:1",
               "statements": [
                 {
                   "expression": {
@@ -54,86 +54,184 @@
                       {
                         "argumentTypes": null,
                         "commonType": {
-                          "typeIdentifier": "t_uint256",
-                          "typeString": "uint256"
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
                         },
-                        "id": 548,
+                        "id": 543,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
                           "argumentTypes": null,
-                          "id": 546,
-                          "name": "_risk",
-                          "nodeType": "Identifier",
-                          "overloadedDeclarations": [],
-                          "referencedDeclaration": 539,
-                          "src": "587:5:1",
+                          "components": [
+                            {
+                              "argumentTypes": null,
+                              "commonType": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              },
+                              "id": 537,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "leftExpression": {
+                                "argumentTypes": null,
+                                "id": 535,
+                                "name": "_risk",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 526,
+                                "src": "607:5:1",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              },
+                              "nodeType": "BinaryOperation",
+                              "operator": ">=",
+                              "rightExpression": {
+                                "argumentTypes": null,
+                                "id": 536,
+                                "name": "_minimumRisk",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 528,
+                                "src": "616:12:1",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              },
+                              "src": "607:21:1",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_bool",
+                                "typeString": "bool"
+                              }
+                            }
+                          ],
+                          "id": 538,
+                          "isConstant": false,
+                          "isInlineArray": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "TupleExpression",
+                          "src": "606:23:1",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_uint256",
-                            "typeString": "uint256"
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
                           }
                         },
                         "nodeType": "BinaryOperation",
-                        "operator": ">=",
+                        "operator": "&&",
                         "rightExpression": {
                           "argumentTypes": null,
-                          "id": 547,
-                          "name": "_minimumRisk",
-                          "nodeType": "Identifier",
-                          "overloadedDeclarations": [],
-                          "referencedDeclaration": 541,
-                          "src": "596:12:1",
+                          "components": [
+                            {
+                              "argumentTypes": null,
+                              "commonType": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              },
+                              "id": 541,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "leftExpression": {
+                                "argumentTypes": null,
+                                "id": 539,
+                                "name": "_risk",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 526,
+                                "src": "634:5:1",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              },
+                              "nodeType": "BinaryOperation",
+                              "operator": "<=",
+                              "rightExpression": {
+                                "argumentTypes": null,
+                                "id": 540,
+                                "name": "_maximumRisk",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 530,
+                                "src": "643:12:1",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              },
+                              "src": "634:21:1",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_bool",
+                                "typeString": "bool"
+                              }
+                            }
+                          ],
+                          "id": 542,
+                          "isConstant": false,
+                          "isInlineArray": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "TupleExpression",
+                          "src": "633:23:1",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_uint256",
-                            "typeString": "uint256"
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
                           }
                         },
-                        "src": "587:21:1",
+                        "src": "606:50:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
                         }
                       }
                     ],
-                    "id": 549,
+                    "id": 544,
                     "isConstant": false,
                     "isInlineArray": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "nodeType": "TupleExpression",
-                    "src": "586:23:1",
+                    "src": "605:52:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
                     }
                   },
-                  "functionReturnParameters": 545,
-                  "id": 550,
+                  "functionReturnParameters": 534,
+                  "id": 545,
                   "nodeType": "Return",
-                  "src": "579:30:1"
+                  "src": "598:59:1"
                 }
               ]
             },
             "documentation": "@notice Test if the risk assumed by the user is the minimum accepted by the game\n@param _risk : Risk assumed by the player\n@param _minimumRisk Indicates the minimum risk accepted to play the game\n@return True if the risk is over 30, False otherwise.",
-            "id": 552,
+            "id": 547,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "isValidRisk",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 542,
+              "id": 531,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 539,
+                  "id": 526,
                   "name": "_risk",
                   "nodeType": "VariableDeclaration",
-                  "scope": 552,
+                  "scope": 547,
                   "src": "481:10:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -142,7 +240,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 538,
+                    "id": 525,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "481:4:1",
@@ -156,10 +254,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 541,
+                  "id": 528,
                   "name": "_minimumRisk",
                   "nodeType": "VariableDeclaration",
-                  "scope": 552,
+                  "scope": 547,
                   "src": "493:17:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -168,7 +266,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 540,
+                    "id": 527,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "493:4:1",
@@ -179,21 +277,47 @@
                   },
                   "value": null,
                   "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 530,
+                  "name": "_maximumRisk",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 547,
+                  "src": "512:17:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 529,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "512:4:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
                 }
               ],
-              "src": "480:31:1"
+              "src": "480:50:1"
             },
             "returnParameters": {
-              "id": 545,
+              "id": 534,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 544,
+                  "id": 533,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 552,
-                  "src": "559:4:1",
+                  "scope": 547,
+                  "src": "578:4:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -201,10 +325,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 543,
+                    "id": 532,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "559:4:1",
+                    "src": "578:4:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -214,19 +338,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "558:6:1"
+              "src": "577:6:1"
             },
-            "scope": 568,
-            "src": "459:157:1",
+            "scope": 563,
+            "src": "459:205:1",
             "stateMutability": "pure",
             "superFunction": null,
             "visibility": "internal"
           },
           {
             "body": {
-              "id": 566,
+              "id": 561,
               "nodeType": "Block",
-              "src": "1081:45:1",
+              "src": "1129:45:1",
               "statements": [
                 {
                   "expression": {
@@ -238,19 +362,19 @@
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         },
-                        "id": 563,
+                        "id": 558,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
                           "argumentTypes": null,
-                          "id": 561,
+                          "id": 556,
                           "name": "_bet",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 554,
-                          "src": "1099:4:1",
+                          "referencedDeclaration": 549,
+                          "src": "1147:4:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
@@ -260,62 +384,62 @@
                         "operator": ">=",
                         "rightExpression": {
                           "argumentTypes": null,
-                          "id": 562,
+                          "id": 557,
                           "name": "_minimumBet",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 556,
-                          "src": "1107:11:1",
+                          "referencedDeclaration": 551,
+                          "src": "1155:11:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           }
                         },
-                        "src": "1099:19:1",
+                        "src": "1147:19:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
                         }
                       }
                     ],
-                    "id": 564,
+                    "id": 559,
                     "isConstant": false,
                     "isInlineArray": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "nodeType": "TupleExpression",
-                    "src": "1098:21:1",
+                    "src": "1146:21:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
                     }
                   },
-                  "functionReturnParameters": 560,
-                  "id": 565,
+                  "functionReturnParameters": 555,
+                  "id": 560,
                   "nodeType": "Return",
-                  "src": "1091:28:1"
+                  "src": "1139:28:1"
                 }
               ]
             },
             "documentation": "@notice Test if the player's bet is at least the minium required for playing\n@param _bet Indicates the bet risked by the user\n@param _minimumBet Indicates the minimum bet accepted to play the game\n@return True if player's bet is at least equal to the minimum expected to allow the game, False otherwise.",
-            "id": 567,
+            "id": 562,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "isValidBet",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 557,
+              "id": 552,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 554,
+                  "id": 549,
                   "name": "_bet",
                   "nodeType": "VariableDeclaration",
-                  "scope": 567,
-                  "src": "995:9:1",
+                  "scope": 562,
+                  "src": "1043:9:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -323,10 +447,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 553,
+                    "id": 548,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "995:4:1",
+                    "src": "1043:4:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -337,11 +461,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 556,
+                  "id": 551,
                   "name": "_minimumBet",
                   "nodeType": "VariableDeclaration",
-                  "scope": 567,
-                  "src": "1006:16:1",
+                  "scope": 562,
+                  "src": "1054:16:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -349,10 +473,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 555,
+                    "id": 550,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1006:4:1",
+                    "src": "1054:4:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -362,19 +486,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "994:29:1"
+              "src": "1042:29:1"
             },
             "returnParameters": {
-              "id": 560,
+              "id": 555,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 559,
+                  "id": 554,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 567,
-                  "src": "1071:4:1",
+                  "scope": 562,
+                  "src": "1119:4:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -382,10 +506,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 558,
+                    "id": 553,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1071:4:1",
+                    "src": "1119:4:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -395,33 +519,33 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1070:6:1"
+              "src": "1118:6:1"
             },
-            "scope": 568,
-            "src": "974:152:1",
+            "scope": 563,
+            "src": "1022:152:1",
             "stateMutability": "pure",
             "superFunction": null,
             "visibility": "internal"
           }
         ],
-        "scope": 569,
-        "src": "139:990:1"
+        "scope": 564,
+        "src": "139:1038:1"
       }
     ],
-    "src": "0:1129:1"
+    "src": "0:1177:1"
   },
   "legacyAST": {
     "absolutePath": "/home/antonio/src/TFM/BLOCKCHAINTFM/RPS_Dapp/contracts/DiceLib.sol",
     "exportedSymbols": {
       "DiceLib": [
-        568
+        563
       ]
     },
-    "id": 569,
+    "id": 564,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 537,
+        "id": 524,
         "literals": [
           "solidity",
           "^",
@@ -437,18 +561,18 @@
         "contractKind": "library",
         "documentation": "@title Dice Library\n@author Antonio Cruz\n@dev Set of functions used to allow playihng Dice game",
         "fullyImplemented": true,
-        "id": 568,
+        "id": 563,
         "linearizedBaseContracts": [
-          568
+          563
         ],
         "name": "DiceLib",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "body": {
-              "id": 551,
+              "id": 546,
               "nodeType": "Block",
-              "src": "569:47:1",
+              "src": "588:76:1",
               "statements": [
                 {
                   "expression": {
@@ -457,86 +581,184 @@
                       {
                         "argumentTypes": null,
                         "commonType": {
-                          "typeIdentifier": "t_uint256",
-                          "typeString": "uint256"
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
                         },
-                        "id": 548,
+                        "id": 543,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
                           "argumentTypes": null,
-                          "id": 546,
-                          "name": "_risk",
-                          "nodeType": "Identifier",
-                          "overloadedDeclarations": [],
-                          "referencedDeclaration": 539,
-                          "src": "587:5:1",
+                          "components": [
+                            {
+                              "argumentTypes": null,
+                              "commonType": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              },
+                              "id": 537,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "leftExpression": {
+                                "argumentTypes": null,
+                                "id": 535,
+                                "name": "_risk",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 526,
+                                "src": "607:5:1",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              },
+                              "nodeType": "BinaryOperation",
+                              "operator": ">=",
+                              "rightExpression": {
+                                "argumentTypes": null,
+                                "id": 536,
+                                "name": "_minimumRisk",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 528,
+                                "src": "616:12:1",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              },
+                              "src": "607:21:1",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_bool",
+                                "typeString": "bool"
+                              }
+                            }
+                          ],
+                          "id": 538,
+                          "isConstant": false,
+                          "isInlineArray": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "TupleExpression",
+                          "src": "606:23:1",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_uint256",
-                            "typeString": "uint256"
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
                           }
                         },
                         "nodeType": "BinaryOperation",
-                        "operator": ">=",
+                        "operator": "&&",
                         "rightExpression": {
                           "argumentTypes": null,
-                          "id": 547,
-                          "name": "_minimumRisk",
-                          "nodeType": "Identifier",
-                          "overloadedDeclarations": [],
-                          "referencedDeclaration": 541,
-                          "src": "596:12:1",
+                          "components": [
+                            {
+                              "argumentTypes": null,
+                              "commonType": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              },
+                              "id": 541,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "leftExpression": {
+                                "argumentTypes": null,
+                                "id": 539,
+                                "name": "_risk",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 526,
+                                "src": "634:5:1",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              },
+                              "nodeType": "BinaryOperation",
+                              "operator": "<=",
+                              "rightExpression": {
+                                "argumentTypes": null,
+                                "id": 540,
+                                "name": "_maximumRisk",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 530,
+                                "src": "643:12:1",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              },
+                              "src": "634:21:1",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_bool",
+                                "typeString": "bool"
+                              }
+                            }
+                          ],
+                          "id": 542,
+                          "isConstant": false,
+                          "isInlineArray": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "TupleExpression",
+                          "src": "633:23:1",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_uint256",
-                            "typeString": "uint256"
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
                           }
                         },
-                        "src": "587:21:1",
+                        "src": "606:50:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
                         }
                       }
                     ],
-                    "id": 549,
+                    "id": 544,
                     "isConstant": false,
                     "isInlineArray": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "nodeType": "TupleExpression",
-                    "src": "586:23:1",
+                    "src": "605:52:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
                     }
                   },
-                  "functionReturnParameters": 545,
-                  "id": 550,
+                  "functionReturnParameters": 534,
+                  "id": 545,
                   "nodeType": "Return",
-                  "src": "579:30:1"
+                  "src": "598:59:1"
                 }
               ]
             },
             "documentation": "@notice Test if the risk assumed by the user is the minimum accepted by the game\n@param _risk : Risk assumed by the player\n@param _minimumRisk Indicates the minimum risk accepted to play the game\n@return True if the risk is over 30, False otherwise.",
-            "id": 552,
+            "id": 547,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "isValidRisk",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 542,
+              "id": 531,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 539,
+                  "id": 526,
                   "name": "_risk",
                   "nodeType": "VariableDeclaration",
-                  "scope": 552,
+                  "scope": 547,
                   "src": "481:10:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -545,7 +767,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 538,
+                    "id": 525,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "481:4:1",
@@ -559,10 +781,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 541,
+                  "id": 528,
                   "name": "_minimumRisk",
                   "nodeType": "VariableDeclaration",
-                  "scope": 552,
+                  "scope": 547,
                   "src": "493:17:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -571,7 +793,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 540,
+                    "id": 527,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "493:4:1",
@@ -582,21 +804,47 @@
                   },
                   "value": null,
                   "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 530,
+                  "name": "_maximumRisk",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 547,
+                  "src": "512:17:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 529,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "512:4:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
                 }
               ],
-              "src": "480:31:1"
+              "src": "480:50:1"
             },
             "returnParameters": {
-              "id": 545,
+              "id": 534,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 544,
+                  "id": 533,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 552,
-                  "src": "559:4:1",
+                  "scope": 547,
+                  "src": "578:4:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -604,10 +852,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 543,
+                    "id": 532,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "559:4:1",
+                    "src": "578:4:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -617,19 +865,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "558:6:1"
+              "src": "577:6:1"
             },
-            "scope": 568,
-            "src": "459:157:1",
+            "scope": 563,
+            "src": "459:205:1",
             "stateMutability": "pure",
             "superFunction": null,
             "visibility": "internal"
           },
           {
             "body": {
-              "id": 566,
+              "id": 561,
               "nodeType": "Block",
-              "src": "1081:45:1",
+              "src": "1129:45:1",
               "statements": [
                 {
                   "expression": {
@@ -641,19 +889,19 @@
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         },
-                        "id": 563,
+                        "id": 558,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
                           "argumentTypes": null,
-                          "id": 561,
+                          "id": 556,
                           "name": "_bet",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 554,
-                          "src": "1099:4:1",
+                          "referencedDeclaration": 549,
+                          "src": "1147:4:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
@@ -663,62 +911,62 @@
                         "operator": ">=",
                         "rightExpression": {
                           "argumentTypes": null,
-                          "id": 562,
+                          "id": 557,
                           "name": "_minimumBet",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 556,
-                          "src": "1107:11:1",
+                          "referencedDeclaration": 551,
+                          "src": "1155:11:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           }
                         },
-                        "src": "1099:19:1",
+                        "src": "1147:19:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
                         }
                       }
                     ],
-                    "id": 564,
+                    "id": 559,
                     "isConstant": false,
                     "isInlineArray": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "nodeType": "TupleExpression",
-                    "src": "1098:21:1",
+                    "src": "1146:21:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
                     }
                   },
-                  "functionReturnParameters": 560,
-                  "id": 565,
+                  "functionReturnParameters": 555,
+                  "id": 560,
                   "nodeType": "Return",
-                  "src": "1091:28:1"
+                  "src": "1139:28:1"
                 }
               ]
             },
             "documentation": "@notice Test if the player's bet is at least the minium required for playing\n@param _bet Indicates the bet risked by the user\n@param _minimumBet Indicates the minimum bet accepted to play the game\n@return True if player's bet is at least equal to the minimum expected to allow the game, False otherwise.",
-            "id": 567,
+            "id": 562,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "isValidBet",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 557,
+              "id": 552,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 554,
+                  "id": 549,
                   "name": "_bet",
                   "nodeType": "VariableDeclaration",
-                  "scope": 567,
-                  "src": "995:9:1",
+                  "scope": 562,
+                  "src": "1043:9:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -726,10 +974,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 553,
+                    "id": 548,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "995:4:1",
+                    "src": "1043:4:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -740,11 +988,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 556,
+                  "id": 551,
                   "name": "_minimumBet",
                   "nodeType": "VariableDeclaration",
-                  "scope": 567,
-                  "src": "1006:16:1",
+                  "scope": 562,
+                  "src": "1054:16:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -752,10 +1000,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 555,
+                    "id": 550,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1006:4:1",
+                    "src": "1054:4:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -765,19 +1013,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "994:29:1"
+              "src": "1042:29:1"
             },
             "returnParameters": {
-              "id": 560,
+              "id": 555,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 559,
+                  "id": 554,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 567,
-                  "src": "1071:4:1",
+                  "scope": 562,
+                  "src": "1119:4:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -785,10 +1033,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 558,
+                    "id": 553,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1071:4:1",
+                    "src": "1119:4:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -798,20 +1046,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1070:6:1"
+              "src": "1118:6:1"
             },
-            "scope": 568,
-            "src": "974:152:1",
+            "scope": 563,
+            "src": "1022:152:1",
             "stateMutability": "pure",
             "superFunction": null,
             "visibility": "internal"
           }
         ],
-        "scope": 569,
-        "src": "139:990:1"
+        "scope": 564,
+        "src": "139:1038:1"
       }
     ],
-    "src": "0:1129:1"
+    "src": "0:1177:1"
   },
   "compiler": {
     "name": "solc",
@@ -901,10 +1149,22 @@
       "links": {},
       "address": "0x49cb960EF03eB172fa66436b94BF7282c63de1a5",
       "transactionHash": "0x6be5bcf75faa42917195250f28b00385c2463aed351dea28b7980b98b8826ee2"
+    },
+    "1551121551961": {
+      "events": {},
+      "links": {},
+      "address": "0x7c354F7bc65af7C74F9606F94a11Cf28454317F3",
+      "transactionHash": "0x6be5bcf75faa42917195250f28b00385c2463aed351dea28b7980b98b8826ee2"
+    },
+    "1551132103914": {
+      "events": {},
+      "links": {},
+      "address": "0xfd4d048063971d20C025C4E6Ea001ffD921688e2",
+      "transactionHash": "0xa5210c9fd3c4a701c64a6b006d832b4226b875a0999d02f3c5298144d9b45469"
     }
   },
   "schemaVersion": "3.0.2",
-  "updatedAt": "2019-02-24T16:19:33.836Z",
+  "updatedAt": "2019-02-25T22:55:23.123Z",
   "devdoc": {
     "author": "Antonio Cruz",
     "details": "Set of functions used to allow playihng Dice game",

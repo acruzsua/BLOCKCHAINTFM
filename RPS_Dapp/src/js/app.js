@@ -27,7 +27,9 @@ App = {
 
       // Set the provider for our contract
       App.contracts.Dice.setProvider(App.web3Provider);
-      
+
+      App.showPlayersInfo();
+
     });
 
     return App.bindEvents();
@@ -44,10 +46,41 @@ App = {
 
   },
 
+  showPlayersInfo: async() => {
+    diceInstance = await App.contracts.Dice.deployed();
+
+    const showAddress = () => {
+      web3.eth.getAccounts(async (error, accounts) => {
+        account = await accounts[0];
+        accountShorted = account.slice(0, 6) + '...' + account.slice(-4);
+        document.getElementById("metamask-player").innerHTML = accountShorted;
+      });
+    }
+
+    showAddress();
+
+    // Better, use Metamask's recommendation, polling every 100 ms.
+    // https://github.com/MetaMask/faq/blob/master/DEVELOPERS.md#ear-listening-for-selected-account-changes
+    web3.eth.getAccounts(async (error, accounts) => {
+      account = await accounts[0];
+
+      setInterval(() => {
+        if (web3.eth.accounts[0] !== account) {
+          account = web3.eth.accounts[0];
+
+          document.getElementById("result").innerHTML = "&nbsp;";
+          showAddress();
+        }
+      }, 100);
+    });
+  },  
+
   roll: async () => {
 
      const betAmount = web3.toWei($('#betAmount').val(), 'ether');
      const risk = ($('#risk').val());
+
+     App.cleanResult();
 
      console.log(betAmount);
      console.log(risk);
@@ -86,10 +119,13 @@ App = {
      LogRolledDiceNumber.watch(function (err, result) {
        if (!err) {
         console.log("getting number");
-        console.log((result.args._rolledDiceNumber).valueOf());
-       } else {
-         console.error(err);
-       }
+        console.log((result.args._rolledDiceNumber).valueOf());          
+        } else {
+          console.error(err);
+        }
+
+       App.showResult(result.args._rolledDiceNumber.valueOf());
+
      })
 
      var LogPlayerWins = diceInstance.logPlayerWins({});
@@ -143,10 +179,10 @@ App = {
        }
      })
 
-    App.getContractBalance();
-
-
     }); 
+   
+        
+    App.getContractBalance();   
 
   },
 
@@ -166,6 +202,38 @@ App = {
         console.log(e);      
       });
     });
+},
+
+showResult: (NumberOutcome) => {
+  web3.eth.getAccounts(async (error, accounts) => {
+   
+    const account = await accounts[0];
+    const risk = ($('#risk').val());
+    var result;
+
+    console.log("NumberOutcome");
+    console.log(NumberOutcome);
+    
+
+   if (NumberOutcome > risk) 
+   {
+      result = NumberOutcome + " - You win!";
+   }
+   if (NumberOutcome <= risk) 
+   {
+      result = NumberOutcome + " - You lose!";
+   }
+
+    document.getElementById("result").innerHTML = result;
+  });
+},
+
+cleanResult: () => {
+  web3.eth.getAccounts(async (error, accounts) => {
+   
+    const account = await accounts[0];
+    document.getElementById("result").innerHTML = "waiting ...";
+  });
 },
 
 };

@@ -31,8 +31,9 @@ contract Dice is usingOraclize, Ownable, StartStopGame {
 
     uint public minimumBet = 0.0001 ether;
     uint public minimumRisk = 30;
+    uint public maximumRisk = 95;    
     uint public jackpot = 0;
-
+    
     // All oraclize calls will result in a common callback to __callback(...).
     struct oraclizeCallback {
         address payable player;
@@ -82,7 +83,7 @@ contract Dice is usingOraclize, Ownable, StartStopGame {
 
         uint betAmount = msg.value;        
         require(DiceLib.isValidBet(betAmount, minimumBet));
-        require(DiceLib.isValidRisk(risk, minimumRisk));
+        require(DiceLib.isValidRisk(risk, minimumRisk, maximumRisk));
         emit logPlayerBetAccepted(address(this), player, risk, betAmount);
 
         // Making oraclized query to random.org.
@@ -107,7 +108,7 @@ contract Dice is usingOraclize, Ownable, StartStopGame {
     */
 
     function __callback(bytes32 myid, string memory result) 
-        public
+    public
     {
         
 

@@ -13,12 +13,12 @@ library DiceLib {
      * @param _minimumRisk Indicates the minimum risk accepted to play the game
      * @return True if the risk is over 30, False otherwise.
      */
-       function isValidRisk (uint _risk, uint _minimumRisk)
+       function isValidRisk (uint _risk, uint _minimumRisk, uint _maximumRisk)
         internal
         pure
         returns (bool)
     {
-        return (_risk >= _minimumRisk);
+        return ((_risk > _minimumRisk) && (_risk <= _maximumRisk));
     }
     
     /**

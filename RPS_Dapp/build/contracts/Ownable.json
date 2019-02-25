@@ -955,10 +955,22 @@
       "links": {},
       "address": "0xE2dba48a5A9dDd5580a6E4e2ca91523C5E44Fb6b",
       "transactionHash": "0x337a0f010a270454bff043bea70cc113e38c4a99bdb2d967f84f25d236bf7b22"
+    },
+    "1551121551961": {
+      "events": {},
+      "links": {},
+      "address": "0x6453107340F45f5B136a1bF9dCc059b6FDAB682B",
+      "transactionHash": "0x337a0f010a270454bff043bea70cc113e38c4a99bdb2d967f84f25d236bf7b22"
+    },
+    "1551132103914": {
+      "events": {},
+      "links": {},
+      "address": "0xEe246f407a712691DC62DeEDb47898C5A314d287",
+      "transactionHash": "0xa858268e3b75e509d00fbdda354ce591dbb3b61ffc783b8bdf1c8a4b766f7c6a"
     }
   },
   "schemaVersion": "3.0.2",
-  "updatedAt": "2019-02-24T16:19:33.833Z",
+  "updatedAt": "2019-02-25T22:55:23.122Z",
   "devdoc": {
     "author": "Antonio Cruz",
     "details": "For more implementation details read the \"design_pattern_decisions.md\" document. ",
