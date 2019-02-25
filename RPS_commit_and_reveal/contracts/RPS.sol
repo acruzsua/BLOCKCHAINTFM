@@ -286,6 +286,9 @@ contract RPS is Ownable {
         myRound.player2.choice = _choice;
     }
 
+    /** @notice Player 1 reveals choice when other player has joined to player 1's round
+                
+     */
     function revealChoice(uint _roundId, uint256 _choice, string _secret) public gameIsRunning(true) {
         Round storage myRound = rounds[_roundId];  // Pointer to round
         require(myRound.player2.playerAddress != address(0), "Nobody joined to the round, it can't be resolved");
@@ -296,6 +299,27 @@ contract RPS is Ownable {
             _playLottery(myRound.player1.playerAddress, _roundId);
             _playLottery(myRound.player2.playerAddress, _roundId);
         }
+    }
+
+    function cancelRound(uint _roundId, uint256 _choice, string _secret) public {
+        require(keccak256(abi.encodePacked(_choice, _secret)) == rounds[_roundId].player1.secretChoice, "Error trying to cancel round: wrong choice or secret");
+        _cancelRound(_roundId);
+    }
+
+    function cancelRound(uint _roundId) public {
+        require(rounds[_roundId].player1.playerAddress == msg.sender, "Error trying to cancel round: the sender is not the creator of the round");
+        _cancelRound(_roundId);
+    }
+
+    function _cancelRound(uint _roundId) private {
+        Round storage myRound = rounds[_roundId];  // Pointer to round
+        require(myRound.player2.playerAddress == address(0), "Only possible to cancel round when nobody has joined");
+
+        // Player can cancel round and receives the bet amount minus fees
+        uint jackpotFee = myRound.betAmount.mul(jackpotFeeRate) / feeUnits;
+        uint businessFee = myRound.betAmount.mul(businessFeeRate) / feeUnits;
+        myRound.player1.playerAddress.transfer(myRound.betAmount - jackpotFee - businessFee);
+        myRound.isClosed = true;
     }
 
     /** @notice Function that generates randomness for the game, used when playing vs House and playing
