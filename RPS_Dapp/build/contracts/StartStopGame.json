@@ -1,0 +1,1281 @@
+{
+  "contractName": "StartStopGame",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "gameStatus",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0x722fed7e"
+    },
+    {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor",
+      "signature": "constructor"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_status",
+          "type": "bool"
+        }
+      ],
+      "name": "setGameStatus",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function",
+      "signature": "0xcbe2e97e"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getGameStatus",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0x382396ee"
+    }
+  ],
+  "bytecode": "0x608060405234801561001057600080fd5b50610167806100206000396000f3fe608060405260043610610057576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063382396ee1461005c578063722fed7e1461008b578063cbe2e97e146100ba575b600080fd5b34801561006857600080fd5b506100716100f7565b604051808215151515815260200191505060405180910390f35b34801561009757600080fd5b506100a061010d565b604051808215151515815260200191505060405180910390f35b3480156100c657600080fd5b506100f5600480360360208110156100dd57600080fd5b8101908080351515906020019092919050505061011f565b005b60008060009054906101000a900460ff16905090565b6000809054906101000a900460ff1681565b806000806101000a81548160ff0219169083151502179055505056fea165627a7a723058206087df7915be6924eb45d9e04832c3203a15a200bac8427f88395fc279dc4c2b0029",
+  "deployedBytecode": "0x608060405260043610610057576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063382396ee1461005c578063722fed7e1461008b578063cbe2e97e146100ba575b600080fd5b34801561006857600080fd5b506100716100f7565b604051808215151515815260200191505060405180910390f35b34801561009757600080fd5b506100a061010d565b604051808215151515815260200191505060405180910390f35b3480156100c657600080fd5b506100f5600480360360208110156100dd57600080fd5b8101908080351515906020019092919050505061011f565b005b60008060009054906101000a900460ff16905090565b6000809054906101000a900460ff1681565b806000806101000a81548160ff0219169083151502179055505056fea165627a7a723058206087df7915be6924eb45d9e04832c3203a15a200bac8427f88395fc279dc4c2b0029",
+  "sourceMap": "229:447:6:-;;;292:28;8:9:-1;5:2;;;30:1;27;20:12;5:2;292:28:6;229:447;;;;;;",
+  "deployedSourceMap": "229:447:6:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;587:85;;8:9:-1;5:2;;;30:1;27;20:12;5:2;587:85:6;;;;;;;;;;;;;;;;;;;;;;;;;;;263:22;;8:9:-1;5:2;;;30:1;27;20:12;5:2;263:22:6;;;;;;;;;;;;;;;;;;;;;;;;;;;500:81;;8:9:-1;5:2;;;30:1;27;20:12;5:2;500:81:6;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;500:81:6;;;;;;;;;;;;;;;;;;;;;;587:85;632:4;655:10;;;;;;;;;;;648:17;;587:85;:::o;263:22::-;;;;;;;;;;;;;:::o;500:81::-;567:7;554:10;;:20;;;;;;;;;;;;;;;;;;500:81;:::o",
+  "source": "pragma solidity ^0.5.0;\n\n/** \n* @title StartStopGame\n* @author Antonio Cruz\n* @notice You can use this contract to set a game on or off.\n* @dev For more implementation details read the \"design_pattern_decisions.md\" document. \n*/\ncontract StartStopGame {\n    \n    bool public gameStatus;\n\n    constructor() public {\n    }\n\n    modifier gameIsOn() {\n        require(getGameStatus() == true);\n        _;\n    }\n\n    modifier gameIsOff() {\n        require(getGameStatus() == false);\n        _;\n    }\n\n    function setGameStatus(bool _status) public {\n        gameStatus = _status;\n    }\n\n    function getGameStatus() public view returns(bool) {\n        return gameStatus;\n    }\n\n\n}",
+  "sourcePath": "/home/antonio/src/TFM/BLOCKCHAINTFM/RPS_Dapp/contracts/StartStopGame.sol",
+  "ast": {
+    "absolutePath": "/home/antonio/src/TFM/BLOCKCHAINTFM/RPS_Dapp/contracts/StartStopGame.sol",
+    "exportedSymbols": {
+      "StartStopGame": [
+        1767
+      ]
+    },
+    "id": 1768,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1720,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:6"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@title StartStopGame\n@author Antonio Cruz\n@notice You can use this contract to set a game on or off.\n@dev For more implementation details read the \"design_pattern_decisions.md\" document. ",
+        "fullyImplemented": true,
+        "id": 1767,
+        "linearizedBaseContracts": [
+          1767
+        ],
+        "name": "StartStopGame",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 1722,
+            "name": "gameStatus",
+            "nodeType": "VariableDeclaration",
+            "scope": 1767,
+            "src": "263:22:6",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 1721,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "263:4:6",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 1725,
+              "nodeType": "Block",
+              "src": "313:7:6",
+              "statements": []
+            },
+            "documentation": null,
+            "id": 1726,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1723,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "303:2:6"
+            },
+            "returnParameters": {
+              "id": 1724,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "313:0:6"
+            },
+            "scope": 1767,
+            "src": "292:28:6",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 1736,
+              "nodeType": "Block",
+              "src": "346:60:6",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        "id": 1732,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "arguments": [],
+                          "expression": {
+                            "argumentTypes": [],
+                            "id": 1729,
+                            "name": "getGameStatus",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1766,
+                            "src": "364:13:6",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_internal_view$__$returns$_t_bool_$",
+                              "typeString": "function () view returns (bool)"
+                            }
+                          },
+                          "id": 1730,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "364:15:6",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "==",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "hexValue": "74727565",
+                          "id": 1731,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "bool",
+                          "lValueRequested": false,
+                          "nodeType": "Literal",
+                          "src": "383:4:6",
+                          "subdenomination": null,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          },
+                          "value": "true"
+                        },
+                        "src": "364:23:6",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 1728,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        8041,
+                        8042
+                      ],
+                      "referencedDeclaration": 8041,
+                      "src": "356:7:6",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 1733,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "356:32:6",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 1734,
+                  "nodeType": "ExpressionStatement",
+                  "src": "356:32:6"
+                },
+                {
+                  "id": 1735,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "398:1:6"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 1737,
+            "name": "gameIsOn",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 1727,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "343:2:6"
+            },
+            "src": "326:80:6",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 1747,
+              "nodeType": "Block",
+              "src": "433:61:6",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        "id": 1743,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "arguments": [],
+                          "expression": {
+                            "argumentTypes": [],
+                            "id": 1740,
+                            "name": "getGameStatus",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1766,
+                            "src": "451:13:6",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_internal_view$__$returns$_t_bool_$",
+                              "typeString": "function () view returns (bool)"
+                            }
+                          },
+                          "id": 1741,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "451:15:6",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "==",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "hexValue": "66616c7365",
+                          "id": 1742,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "bool",
+                          "lValueRequested": false,
+                          "nodeType": "Literal",
+                          "src": "470:5:6",
+                          "subdenomination": null,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          },
+                          "value": "false"
+                        },
+                        "src": "451:24:6",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 1739,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        8041,
+                        8042
+                      ],
+                      "referencedDeclaration": 8041,
+                      "src": "443:7:6",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 1744,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "443:33:6",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 1745,
+                  "nodeType": "ExpressionStatement",
+                  "src": "443:33:6"
+                },
+                {
+                  "id": 1746,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "486:1:6"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 1748,
+            "name": "gameIsOff",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 1738,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "430:2:6"
+            },
+            "src": "412:82:6",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 1757,
+              "nodeType": "Block",
+              "src": "544:37:6",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1755,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 1753,
+                      "name": "gameStatus",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 1722,
+                      "src": "554:10:6",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 1754,
+                      "name": "_status",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 1750,
+                      "src": "567:7:6",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "src": "554:20:6",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 1756,
+                  "nodeType": "ExpressionStatement",
+                  "src": "554:20:6"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 1758,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setGameStatus",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1751,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1750,
+                  "name": "_status",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1758,
+                  "src": "523:12:6",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 1749,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "523:4:6",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "522:14:6"
+            },
+            "returnParameters": {
+              "id": 1752,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "544:0:6"
+            },
+            "scope": 1767,
+            "src": "500:81:6",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 1765,
+              "nodeType": "Block",
+              "src": "638:34:6",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1763,
+                    "name": "gameStatus",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 1722,
+                    "src": "655:10:6",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "functionReturnParameters": 1762,
+                  "id": 1764,
+                  "nodeType": "Return",
+                  "src": "648:17:6"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 1766,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getGameStatus",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1759,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "609:2:6"
+            },
+            "returnParameters": {
+              "id": 1762,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1761,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1766,
+                  "src": "632:4:6",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 1760,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "632:4:6",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "631:6:6"
+            },
+            "scope": 1767,
+            "src": "587:85:6",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 1768,
+        "src": "229:447:6"
+      }
+    ],
+    "src": "0:676:6"
+  },
+  "legacyAST": {
+    "absolutePath": "/home/antonio/src/TFM/BLOCKCHAINTFM/RPS_Dapp/contracts/StartStopGame.sol",
+    "exportedSymbols": {
+      "StartStopGame": [
+        1767
+      ]
+    },
+    "id": 1768,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1720,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:6"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@title StartStopGame\n@author Antonio Cruz\n@notice You can use this contract to set a game on or off.\n@dev For more implementation details read the \"design_pattern_decisions.md\" document. ",
+        "fullyImplemented": true,
+        "id": 1767,
+        "linearizedBaseContracts": [
+          1767
+        ],
+        "name": "StartStopGame",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 1722,
+            "name": "gameStatus",
+            "nodeType": "VariableDeclaration",
+            "scope": 1767,
+            "src": "263:22:6",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 1721,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "263:4:6",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 1725,
+              "nodeType": "Block",
+              "src": "313:7:6",
+              "statements": []
+            },
+            "documentation": null,
+            "id": 1726,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1723,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "303:2:6"
+            },
+            "returnParameters": {
+              "id": 1724,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "313:0:6"
+            },
+            "scope": 1767,
+            "src": "292:28:6",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 1736,
+              "nodeType": "Block",
+              "src": "346:60:6",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        "id": 1732,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "arguments": [],
+                          "expression": {
+                            "argumentTypes": [],
+                            "id": 1729,
+                            "name": "getGameStatus",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1766,
+                            "src": "364:13:6",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_internal_view$__$returns$_t_bool_$",
+                              "typeString": "function () view returns (bool)"
+                            }
+                          },
+                          "id": 1730,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "364:15:6",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "==",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "hexValue": "74727565",
+                          "id": 1731,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "bool",
+                          "lValueRequested": false,
+                          "nodeType": "Literal",
+                          "src": "383:4:6",
+                          "subdenomination": null,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          },
+                          "value": "true"
+                        },
+                        "src": "364:23:6",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 1728,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        8041,
+                        8042
+                      ],
+                      "referencedDeclaration": 8041,
+                      "src": "356:7:6",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 1733,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "356:32:6",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 1734,
+                  "nodeType": "ExpressionStatement",
+                  "src": "356:32:6"
+                },
+                {
+                  "id": 1735,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "398:1:6"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 1737,
+            "name": "gameIsOn",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 1727,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "343:2:6"
+            },
+            "src": "326:80:6",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 1747,
+              "nodeType": "Block",
+              "src": "433:61:6",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        "id": 1743,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "arguments": [],
+                          "expression": {
+                            "argumentTypes": [],
+                            "id": 1740,
+                            "name": "getGameStatus",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1766,
+                            "src": "451:13:6",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_internal_view$__$returns$_t_bool_$",
+                              "typeString": "function () view returns (bool)"
+                            }
+                          },
+                          "id": 1741,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "451:15:6",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "==",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "hexValue": "66616c7365",
+                          "id": 1742,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "bool",
+                          "lValueRequested": false,
+                          "nodeType": "Literal",
+                          "src": "470:5:6",
+                          "subdenomination": null,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          },
+                          "value": "false"
+                        },
+                        "src": "451:24:6",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 1739,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        8041,
+                        8042
+                      ],
+                      "referencedDeclaration": 8041,
+                      "src": "443:7:6",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 1744,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "443:33:6",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 1745,
+                  "nodeType": "ExpressionStatement",
+                  "src": "443:33:6"
+                },
+                {
+                  "id": 1746,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "486:1:6"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 1748,
+            "name": "gameIsOff",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 1738,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "430:2:6"
+            },
+            "src": "412:82:6",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 1757,
+              "nodeType": "Block",
+              "src": "544:37:6",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1755,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 1753,
+                      "name": "gameStatus",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 1722,
+                      "src": "554:10:6",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 1754,
+                      "name": "_status",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 1750,
+                      "src": "567:7:6",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "src": "554:20:6",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 1756,
+                  "nodeType": "ExpressionStatement",
+                  "src": "554:20:6"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 1758,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setGameStatus",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1751,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1750,
+                  "name": "_status",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1758,
+                  "src": "523:12:6",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 1749,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "523:4:6",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "522:14:6"
+            },
+            "returnParameters": {
+              "id": 1752,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "544:0:6"
+            },
+            "scope": 1767,
+            "src": "500:81:6",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 1765,
+              "nodeType": "Block",
+              "src": "638:34:6",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1763,
+                    "name": "gameStatus",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 1722,
+                    "src": "655:10:6",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "functionReturnParameters": 1762,
+                  "id": 1764,
+                  "nodeType": "Return",
+                  "src": "648:17:6"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 1766,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getGameStatus",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1759,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "609:2:6"
+            },
+            "returnParameters": {
+              "id": 1762,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1761,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1766,
+                  "src": "632:4:6",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 1760,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "632:4:6",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "631:6:6"
+            },
+            "scope": 1767,
+            "src": "587:85:6",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 1768,
+        "src": "229:447:6"
+      }
+    ],
+    "src": "0:676:6"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.0+commit.1d4f565a.Emscripten.clang"
+  },
+  "networks": {
+    "1550918652763": {
+      "events": {},
+      "links": {},
+      "address": "0x5C7453753a89b056eEA6dbF6063393B222e6abc0",
+      "transactionHash": "0x86f266e972059d9fb6c1e2b3574bfa9cd98de5591c214397e39774e9a0631c91"
+    },
+    "1550932792096": {
+      "events": {},
+      "links": {},
+      "address": "0x8ee29435731bE93a2704470ab6Ff656aEdA6028b",
+      "transactionHash": "0x5401b1e1ae6300bb6db2597aca85963d3225bf2f61655e4413b235cab49fc976"
+    },
+    "1550934662910": {
+      "events": {},
+      "links": {},
+      "address": "0xD47185F0663EC6054b4FD0E9BfE841260e98EEbe",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1550934882805": {
+      "events": {},
+      "links": {},
+      "address": "0x7e0530799b673651Fa90953AE25484a897E66690",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1550935240943": {
+      "events": {},
+      "links": {},
+      "address": "0x377af4aC22D9B8398879934a90fC7646653Be722",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1550935472257": {
+      "events": {},
+      "links": {},
+      "address": "0x6D04C786903F18cc1C6D266E4DA03607f9d210f5",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1550940523382": {
+      "events": {},
+      "links": {},
+      "address": "0x510C209B5a8625c2F609b4785Ae07869B985B54A",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1550957513395": {
+      "events": {},
+      "links": {},
+      "address": "0x130BD010eD1D2793F8e31699506f325DF7Ce853E",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1550961129719": {
+      "events": {},
+      "links": {},
+      "address": "0xb285719596A02B41Fe0d30Ea09A94aCB892D1236",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1550962111604": {
+      "events": {},
+      "links": {},
+      "address": "0x886E86A55Fb0b133E50bE74a14909DF7a16Fc971",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1550963149262": {
+      "events": {},
+      "links": {},
+      "address": "0xc3aA18C8b4249E30C88487b76c410a525F1c453E",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1550997322110": {
+      "events": {},
+      "links": {},
+      "address": "0x30c3AB145a89ccBe64CEE5644B26D644af91a8Ac",
+      "transactionHash": "0x4de5848da8e8a4e52d3419119cbd0390f4bd5ccd4972a21816b77283cd1f1351"
+    },
+    "1551009174607": {
+      "events": {},
+      "links": {},
+      "address": "0x5D60dE35c9A98De744A9E83F4EB5F89a71191773",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1551025054141": {
+      "events": {},
+      "links": {},
+      "address": "0x98f6a9C18C7362c2563151C25e16617C110fCCc7",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    }
+  },
+  "schemaVersion": "3.0.2",
+  "updatedAt": "2019-02-24T16:19:33.837Z",
+  "devdoc": {
+    "author": "Antonio Cruz",
+    "details": "For more implementation details read the \"design_pattern_decisions.md\" document. ",
+    "methods": {},
+    "title": "StartStopGame"
+  },
+  "userdoc": {
+    "methods": {},
+    "notice": "You can use this contract to set a game on or off."
+  }
+}

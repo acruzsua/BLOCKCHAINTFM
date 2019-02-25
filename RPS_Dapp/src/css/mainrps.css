@@ -1,0 +1,208 @@
+@font-face {
+    font-family: "York white letter";
+    src: url('../fonts/yorkwhiteletter.otf');
+  }
+
+  @font-face {
+    font-family: 'Showtime';
+    src: url('../fonts/Showtime.ttf');
+  }
+
+  body {
+      background-image: url("../images/rps_background3.jpg");
+  }
+
+  header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+  }
+
+  footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: "URW Gothic L";
+    font-size: 16px;
+  }
+
+  button {
+    height: 170px;
+    width: 170px;
+    outline: none;
+    font-family: "URW Chancery L", cursive;
+    background-size: 170px 170px;
+    margin: auto 30px;
+  }
+
+  caption {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    color: black
+  }
+
+  .game-options {
+    margin: 10px 20px 0px 0px;
+    font-size: 18px;
+    font-family: 'URW Gothic L', monospace;
+  }
+
+  .info-container {
+    border: 6px solid goldenrod;
+    border-radius: 20px;
+    justify-self: center;
+    font-family: "URW Gothic L";
+    background: lightcyan;
+    width: 80%;
+    padding: 10px;
+    font-size: 20px;
+  }
+
+  .table-history {
+    font-size: 12px;
+  }
+
+  .table-wrap {
+    height: 250px;
+    overflow-y: auto;
+  }
+
+  .choice {
+    margin: 30px auto;
+  }
+
+  .btn-rock {
+    background-image: url( '../images/rock.png' );
+    background-color: transparent;
+  }
+
+  .btn-paper {
+    background-image: url( '../images/paper.png' );
+    background-color: transparent;
+  }
+
+  .btn-scissors {
+    background-image: url( '../images/scissors.png' );
+    background-color: transparent;
+  }
+
+  .btn-choice {
+    border: 3px solid darkcyan;
+    border-radius: 20px;
+    background-color:hsl(47, 96%, 80%);
+    font-size: 25px;
+    font-weight: bold;
+  }
+
+  .btn-choice:hover {
+    background-color:hsl(47, 83%, 57%);
+    font-weight: bolder;
+    transform: scale(1.08);
+  }
+
+  #jackpot {
+    align-self: center;
+    font-family:  "York white letter", monospace;
+    font-size: 80px;
+    color: black;
+    opacity: 0.7;
+    text-transform: uppercase;
+    width:45%;
+    border: 3px solid transparent;
+    border-radius: 60%;
+    background: hsl(47, 96%, 80%);
+  }
+
+  #jackpot:hover {
+    transform: scale(1.1);
+    animation-name: colorful;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes colorful {
+    0% {
+      background-color: gold;
+    }
+    50% {
+      background-color: hsl(47, 96%, 80%);
+      top: 50px;
+    }
+    100% {
+      background-color: gold;
+    }
+  }
+
+  #jackpot-amount {
+    font-family: 'URW Chancery L', cursive;
+    font-weight: bolder;
+    font-size: 40px;
+  }
+
+  #bet-amount {
+    margin: 25px auto 10px auto;
+    width: 20%
+  }
+
+  #result {
+    width: 50%;
+    margin: 30px auto 0px auto;
+    background: transparent;
+    color: rgb(22, 26, 7);
+    font-size: 28px;
+    border: 5px solid darkcyan;
+    border-radius: 10px;
+    background: lightcyan;
+    font-family: 'Kaushan Script', cursive;
+  }
+
+  #game-container {
+    background-color: goldenrod;
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    display: flex;
+    flex-direction: column;
+    grid-area: "game-container";
+    border: 9px solid darkcyan;
+    border-radius: 20px;
+  }
+
+  #game-title {
+    font-family: 'Showtime', monospace;
+    font-size: 120px;
+    color: darkcyan;
+    text-align: center;
+  }
+
+  #player {
+    text-align: right;
+    font-size: 20px;
+    margin: 20px;
+    font-family: "URW Gothic L";
+    padding: 25px 50px;
+    font-weight: bold;
+  }
+
+  #main-container {
+    width: 100%;
+    display: grid;
+    margin: 10px auto;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 1fr auto;
+    grid-template-areas:
+      "instructions game-container history"
+      "instructions result history";
+    grid-gap: 10px;
+  }
+
+  #history {
+    grid-area: "history";
+    justify-self: right;
+  }
+
+  #instructions {
+    grid-area: "instructions";
+  }

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>RPS P2P</title>
+    <title>DICE</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -29,7 +29,7 @@
 
     <header>
       <div></div>
-      <div id="game-title">(RPS-P2P)</div>
+      <div id="game-title">DICE</div>
       <div id="player">
         <p>Player:<div id="metamask-player"></div>
         </p>
@@ -38,109 +38,35 @@
 
     <main>
       <div id="main-container">
-
-        <div id="instructions" class="info-container">
-          <ul>
-            <li><b>Rock</b> crushes Scissors</li>
-            <li><b>Paper</b> covers Rock</li>
-            <li><b>Scissors</b> cuts Paper</li>
-          </ul>
-          <hr/>
-          <ul>
-            Two types of games:
-            <li>Play vs House (aka Smartcontract)</li>
-            <li>Play vs other player (create or join to an existing round)</li>
-          </ul>
-          <hr/>
-          <ul>
-            <li>Winning round: <b>earn x1.995</b></li>
-            <li>Draw: loose <b>0.5%</b></li>
-            <li>Loosing round: <b>loose all</b></li>
-          </ul>
-          <hr/>
-          <p >When playing vs House you're playing for the Jackpot. Current chance of winning is 0.01%</p>
-        </div>
         <div id="game-container" class="text-center">
 
           <form>
-            <fieldset>
-                <input type="radio" id="soloPlayer"  name="playerType" value="soloPlayer" checked />
-                <label class="game-options" for="soloPlayer">vs House</label>
-                <input type="radio" id="newRound" name="playerType" value="newRound" />
-                <label class="game-options" for="newRound">Create Round</label>
-                <input type="radio" id="joinRound" name="playerType" value="joinRound" />
-                <label class="game-options" for="joinRound">Join Round</label>
-                <input type="text" name="round" id="round" style="width: 60px; margin: 0px 0px 0px -20px; background-color:hsl(47, 96%, 88%);"/>
-            </fieldset>
-
             <div class="form-inline" id="bet-amount" >
               <div class="form-group">
-                <label class="sr-only" for="betAmount">Amount (in ethers)</label>
+                <label class="sr-only" for="betAmount">Bet Amount (in ethers)</label>
                 <div class="input-group">
                   <div class="input-group-addon">ETH</div>
-                  <input type="text" class="form-control" name="bet" value=0.5 placeholder=0.0001 id="betAmount" style="width: 80px; background-color:hsl(47, 96%, 88%);" required>
+                  <input type="text" class="form-control" name="bet" value=0.5 id="betAmount" style="width: 80px; background-color:hsl(47, 96%, 88%);" required>
                   </div>
                 </div>
             </div>
 
-            <div class="choice">
-              <button class="btn btn-choice btn-rock" type="button">Rock</button>
-              <button class="btn btn-choice btn-paper" type="button">Paper</button>
-              <button class="btn btn-choice btn-scissors" type="button">Scissors</button>
+            <div class="form-inline" id="risk-probability" >
+              <div class="form-group">
+                <label class="sr-only" for="risk">Probability</label>
+                <div class="input-group">
+                  <div class="input-group-addon">RISK %</div>
+                  <input type="text" class="form-control" name="rsk" value=50 placeholder=50 id="risk" style="width: 80px; background-color:hsl(47, 96%, 88%);" required>
+                  </div>
+                </div>
             </div>
+
+            <button class="btn btn-choice btn-dice" type="button">Roll Dice</button>
           </form>
-
-
-          <div id="jackpot">ÌjackpotÍ<div id="jackpot-amount"></div>
-          </div>
-
-          <div id="result-container">
-            <div id="result">&nbsp;</div>
           </div>
       </div>
-
-      <div class="history info-container">
-
-          <table class="table table-history table-hover" id="last-rounds-table">
-            <caption>Last rounds:</caption>
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Player 1</th>
-                <th scope="col">Player 2</th>
-                <th scope="col">Bet</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-        <hr/>
-        <div class="table-wrap">
-          <table class="table table-history table-hover" table id="opened-rounds-table">
-            <caption>Opened rounds:</caption>
-            <thead class="thead-light" >
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Player 1</th>
-                <th scope="col">Bet</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-          </div>
-      </div>
-    </div>
     </main>
 
-    <footer>
-      <div>
-        <a href="https://github.com/rggentil/master_ethereum/tree/master/design_and_development/modulo4/mydapp/RPS" title="source code of RPS P2P" target="_blank">
-          <img src="images/GitHub-Mark-32px.png" width=25px height=25x>
-        </a>
-      </div>
-      <div style="margin: 10px">Donate: <b>0x5a35AF8F8b4283cF6a6407852D8BdAB19456C118</b></div>
-    </footer>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
