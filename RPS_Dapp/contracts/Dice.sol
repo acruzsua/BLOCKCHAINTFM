@@ -180,7 +180,7 @@ contract Dice is usingOraclize, Ownable, StartStopGame {
      * Added so ether sent to this contract is reverted if the contract fails. Otherwise, the sender's money is transferred to contract
      */
     function () external payable{ 
-        revert();        
+//        revert();        
     }
 
     function payWinner(address payable _player, uint _betAmount, uint _netProfit) 
@@ -190,6 +190,17 @@ contract Dice is usingOraclize, Ownable, StartStopGame {
         require( address(this).balance >= winAmount );
         emit logPayWinner("Pay winner: ", _player, winAmount);            
         _player.transfer(winAmount);
+    }
+
+   /**
+    * @notice Enable the emergency stop.
+    * @dev Owner of the smart contract activate the emergency stop.
+    */
+    function enableEmergency() 
+        public 
+        onlyOwner
+    {
+        emergencyStop = !emergencyStop;        
     }
 
 }

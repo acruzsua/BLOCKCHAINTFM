@@ -967,10 +967,40 @@
       "links": {},
       "address": "0xEe246f407a712691DC62DeEDb47898C5A314d287",
       "transactionHash": "0xa858268e3b75e509d00fbdda354ce591dbb3b61ffc783b8bdf1c8a4b766f7c6a"
+    },
+    "1551207951851": {
+      "events": {},
+      "links": {},
+      "address": "0xE8e6aC856209F5a2F15537c5F3f26EC4E5B18DE5",
+      "transactionHash": "0x337a0f010a270454bff043bea70cc113e38c4a99bdb2d967f84f25d236bf7b22"
+    },
+    "1551300956424": {
+      "events": {},
+      "links": {},
+      "address": "0xcF075C870645eeC2F2aD92534a54780dB5c39DCf",
+      "transactionHash": "0x884a80b0396abe01b5a4fd95d49ed41aae1ec320a5e091c4daae896b0d2db928"
+    },
+    "1551304114393": {
+      "events": {},
+      "links": {},
+      "address": "0x15B464ad92d388C38d13c589603767B0F152Cd46",
+      "transactionHash": "0x337a0f010a270454bff043bea70cc113e38c4a99bdb2d967f84f25d236bf7b22"
+    },
+    "1551304771516": {
+      "events": {},
+      "links": {},
+      "address": "0x3dbe55D672184843D527d40A0631d5b1A659cbB0",
+      "transactionHash": "0x337a0f010a270454bff043bea70cc113e38c4a99bdb2d967f84f25d236bf7b22"
+    },
+    "1551376519084": {
+      "events": {},
+      "links": {},
+      "address": "0x562d1db54e0648ecf9Beba7B7b1D011A34eB4B32",
+      "transactionHash": "0x337a0f010a270454bff043bea70cc113e38c4a99bdb2d967f84f25d236bf7b22"
     }
   },
   "schemaVersion": "3.0.2",
-  "updatedAt": "2019-02-25T22:55:23.122Z",
+  "updatedAt": "2019-02-28T18:02:13.863Z",
   "devdoc": {
     "author": "Antonio Cruz",
     "details": "For more implementation details read the \"design_pattern_decisions.md\" document. ",

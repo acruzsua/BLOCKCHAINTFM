@@ -1276,10 +1276,40 @@
       "links": {},
       "address": "0x0B1543CA602c0995CB2bC2DE081f9D1656d87772",
       "transactionHash": "0x0e5dfb2ef879c2a40a6fc6b93f3377cd4897907f4205dc09977e7af48c6d75e7"
+    },
+    "1551207951851": {
+      "events": {},
+      "links": {},
+      "address": "0x0Ae21f00dA6Ceeb4033127D09cebc996a54ffCDf",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1551300956424": {
+      "events": {},
+      "links": {},
+      "address": "0xD7e22fEF23408837C0265992Fd2017199F68aD2B",
+      "transactionHash": "0xbd6a395d317ad0b0755a36f129925319611017f745a41ae486616a537be18137"
+    },
+    "1551304114393": {
+      "events": {},
+      "links": {},
+      "address": "0x16097C091142E7499aB1f753Ef723904Bb693f90",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1551304771516": {
+      "events": {},
+      "links": {},
+      "address": "0x4DEF1e9d427f8463938FcB70445952F4b0a4757e",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1551376519084": {
+      "events": {},
+      "links": {},
+      "address": "0xEfF3d0997BAE132598b36372b3bEf07ADa2e9564",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
     }
   },
   "schemaVersion": "3.0.2",
-  "updatedAt": "2019-02-25T22:55:23.126Z",
+  "updatedAt": "2019-02-28T18:02:13.871Z",
   "devdoc": {
     "author": "Antonio Cruz",
     "details": "For more implementation details read the \"design_pattern_decisions.md\" document. ",
