@@ -24,81 +24,101 @@ contract('Dice', async (accounts) => {
   /**
    * Test that is possible to get the balance of the contract.
    */
-  // it("Getting the balance of the contract", async () => {
+  it("Getting the balance of the contract", async () => {
 
-  //   let balance = await dice.getContractBalance({ from: owner });
+    let balance = await dice.getContractBalance({ from: owner });
 
-  //   assert.isTrue(balance.valueOf() == 0, "Balance is not zero");
+    assert.isTrue(balance.valueOf() == 0, "Balance is not zero");
 
-  // });
+  });
+
+   /**
+   * Test that is not possible to roll the dice when the risk is < minimumRisk
+   */
+   it("It is not possible to roll the dice for unvalid risk", async () => {
+    const betAmount = 2000000000000000000;
+    const risk = 20;
+     
+     try {
+      await dice.rollDice(risk, {from:owner, value: betAmount, gas: '5600000'});
+    } catch (error) {
+      err = error;
+    }
+    assert.ok(err instanceof Error);
+   });
+
+  /**
+   * Test that is not possible to roll the dice when the risk is < minimumRisk
+   */
+  it("It is not possible to roll when the bet amount is bigger than balance's contract", async () => {
+    const betAmount = 2000000000000000000;
+    const risk = 50;
+     
+     try {
+      await dice.rollDice(risk, {from:owner, value: betAmount, gas: '5600000'});
+    } catch (error) {
+      err = error;
+    }
+    assert.ok(err instanceof Error);
+   });
 
    /**
    * Test that is possible to roll a dice
    */
-  it("Rolling dice", async () => {
+  it("Rolling dice between 1 and 100", async () => {
 
 
-      // for simplicity, we'll do both checks in this function
+      const initFunds = 9000000000000000000;
       const betAmount = 2000000000000000000;
       const risk = 31;
-      
-   
-      // call the getRandomNumber function
-      // make sure to send enough Ether and to set gas limit sufficiently high
-      //let result;
-      const result = await dice.rollDice(risk, {
-        from: accounts[0],
-        value: betAmount,
-        gas: '5600000',
-      })
-  
-      // Method 1 to check for events: loop through the "result" variable
-  
-      // look for the logRollDice event to make sure query sent
-       let testPassed = false // variable to hold status of result
-       for (let i = 0; i < result.logs.length; i++) {
-         let log = result.logs[i]
-         if (log.event === 'logRollDice') {
-           // we found the event
-           testPassed = true
-         }
-       }
 
+      web3.eth.getAccounts(async (error, accounts) => {
+        account = await accounts[0];
+        await dice.sendMoney({from:account, value: initFunds, gas: '5600000'});
+        const result = await dice.rollDice(risk, {from:account, value: betAmount, gas: '5600000'});
     
+         // Look for the logRollDice event to make sure query sent
+         let testPassed = false // variable to hold status of result
+         for (let i = 0; i < result.logs.length; i++) {
+           let log = result.logs[i]
+           if (log.event === 'logRollDice') {
+             // we found the event
+             testPassed = true
+           }
+         }
+  
+        assert(testPassed, '"logRollDice" event not found')
+      });
+   
+ 
+        // Listen for logRolledDiceNumber event to check for Oraclize's call to _callback
+      const LogRolledDiceNumber = dice.logRolledDiceNumber({});
+  
+      //create promise so Mocha waits for value to be returned
+      let checkForNumber = new Promise((resolve, reject) => {     
+       LogRolledDiceNumber.watch(async function(error, result) {
+           if (error) {
+             reject(error)
+           }
+           const randomNumber = (result.args._rolledDiceNumber).valueOf();
+           // stop watching event and resolve promise
+           LogRolledDiceNumber.stopWatching();
+           resolve(randomNumber);
+         }) 
+      }) 
 
-       assert(testPassed, '"logRollDice" event not found')
-  
-       // Method 2 to check for events: listen for them with .watch()
-  
-       // listen for LogResultReceived event to check for Oraclize's call to _callback
-       // define events we want to listen for
-       const LogResultReceived = dice.logRolledDiceNumber()
-  
-       // create promise so Mocha waits for value to be returned
-      //  let checkForNumber = new Promise((resolve, reject) => {
-      //    // watch for our LogResultReceived event
-         
-      //    LogResultReceived.watch(async function(error, result) {
-      //      if (error) {
-      //        reject(error)
-      //      }
-      //      // template.randomNumber() returns a BigNumber object
-      //      const bigNumber = await dice.rolledDiceNumber()
-      //      // convert BigNumber to ordinary number
-      //      const randomNumber = bigNumber.toNumber()
-      //      // stop watching event and resolve promise
-      //      LogResultReceived.stopWatching()
-      //      resolve(randomNumber)
-      //    }) // end LogResultReceived.watch()
-      //  }) // end new Promise
-  
-       // call promise and wait for result
-      //  const randomNumber = await checkForNumber
-      //  // ensure result is within our query's min/max values
-      //  assert.isAtLeast(randomNumber, 1, 'Random number was less than 1')
-      //  assert.isAtMost(randomNumber, 1000, 'Random number was greater than 1000')
-  
-     }); // end 'it' block
+      var diceNumberResult  = function () {
+        checkForNumber
+          .then(function (fulfilled) {
+            assert.isAtLeast(checkForNumber, 1, 'Random number was less than 1')
+            assert.isAtMost(checkForNumber, 100, 'Random number was greater than 100')
+          })
+          .catch(function(error){
+          });
+      }
+
+      diceNumberResult();
+      }); // end 'it' block
 
 
 
@@ -107,14 +127,14 @@ contract('Dice', async (accounts) => {
    * Test that only the owner can activate the emergency stop.
    * Used try/catch to catch de error.
    */ 
-  // it("Test Emergency Stop", async () => {
+  it("Test Emergency Stop", async () => {
 
-  //   try {
-  //       await dice.enableEmergency({ from: owner });
-  //   } catch (error) {
-  //       err = error;
-  //   }
-  //   assert.ok(err instanceof Error);
-  // });
+    try {
+        await dice.enableEmergency({ from: owner });
+    } catch (error) {
+        err = error;
+    }
+    assert.ok(err instanceof Error);
+  });
 
 });

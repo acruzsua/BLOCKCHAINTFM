@@ -1306,10 +1306,58 @@
       "links": {},
       "address": "0xEfF3d0997BAE132598b36372b3bEf07ADa2e9564",
       "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1551521618429": {
+      "events": {},
+      "links": {},
+      "address": "0xC016724Fe4e8394c273CE74D20199B7398aC70f4",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1551526183175": {
+      "events": {},
+      "links": {},
+      "address": "0x94b8D95d9edCF0C50993fF19339b219E3aFF3c3e",
+      "transactionHash": "0xbbff98c5d42946ac23488dbf9cd6cda05814037ba64b91b61d815f437bca7da0"
+    },
+    "1551528130768": {
+      "events": {},
+      "links": {},
+      "address": "0x7F8F7387E5B23175a4B66861c5012C289a02B1e0",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1551529007885": {
+      "events": {},
+      "links": {},
+      "address": "0x51cED18941584AC0489D5fA9E7b81E84C36a9a71",
+      "transactionHash": "0x418804dcf97fe1e860f400fee905e6f27419fbe347bda99b3bccf272f0fc2a23"
+    },
+    "1551542402836": {
+      "events": {},
+      "links": {},
+      "address": "0x65ac9765Cbf39F9Ae0Ed6Aa73E2350635Cd29832",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1551543058796": {
+      "events": {},
+      "links": {},
+      "address": "0xA97f2eDf58974Da76Be511A40C4137d96c403d8C",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1551547080784": {
+      "events": {},
+      "links": {},
+      "address": "0x1980Ca7ec985185F4076F7322325F6d3A440d850",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1551548150729": {
+      "events": {},
+      "links": {},
+      "address": "0xC2da95D0383C686E92cA23b24959AD48a008DB8c",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
     }
   },
   "schemaVersion": "3.0.2",
-  "updatedAt": "2019-02-28T18:02:13.871Z",
+  "updatedAt": "2019-03-02T17:38:02.039Z",
   "devdoc": {
     "author": "Antonio Cruz",
     "details": "For more implementation details read the \"design_pattern_decisions.md\" document. ",

@@ -16,7 +16,11 @@
     "lite-server": "^2.3.0"
   },
   "dependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.0.2",
     "openzeppelin-solidity": "^2.0.0",
+    "truffle-assertions": "^0.8.0",
+    "web3": "^1.0.0-beta.47",
     "web3-eth-abi": "^1.0.0-beta.36",
     "web3-utils": "^1.0.0-beta.36",
     "zeppelin-solidity": "^1.12.0"

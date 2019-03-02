@@ -185,6 +185,13 @@ contract Dice is usingOraclize, Ownable, StartStopGame {
     function () external payable{ 
     }
 
+    /** 
+     * @notice sendMoney function is equivalent to fallback function
+     * The sender's money is transferred to contract
+     */
+    function sendMoney() public payable{ 
+    }
+
     function calculateProfit(uint betAmount, uint risk) 
     private
     view 

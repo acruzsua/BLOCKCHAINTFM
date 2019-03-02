@@ -199,6 +199,19 @@ caption {
   grid-gap: 10px;
 }
 
+#main1-container {
+  width: 525px;
+  display: grid;
+  margin: 0 auto;
+  margin-top: 100px;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 1fr auto;
+  grid-template-areas:
+    "instructions game-container history"
+    "instructions result history";
+  grid-gap: 10px;
+}
+
 #history {
   grid-area: "history";
   justify-self: right;
