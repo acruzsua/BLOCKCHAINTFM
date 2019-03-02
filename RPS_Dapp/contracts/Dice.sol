@@ -31,7 +31,9 @@ contract Dice is usingOraclize, Ownable, StartStopGame {
 
     uint public minimumBet = 0.0001 ether;
     uint public minimumRisk = 30;
-    uint public maximumRisk = 95;    
+    uint public maximumRisk = 95;
+    uint public feeJackpot =  5000000000000000;  // Fund to jackpot 0.005 ether as a fee
+    
     uint public jackpot = 0;
     
     // All oraclize calls will result in a common callback to __callback(...).
@@ -52,12 +54,13 @@ contract Dice is usingOraclize, Ownable, StartStopGame {
     event logRollDice(address _contract, address _player, string _description);
     event logRolledDiceNumber(address _contract, bytes32 _oraclizeQueryId, uint _risk, uint _rolledDiceNumber);
     event logPlayerLose(string description, address _contract, address _player, uint _rolledDiceNumber, uint _betAmount);
-    event logPlayerWins(string description, address _contract, address _winner, uint _rolledDiceNumber, uint _profit, uint _riskPer, uint _grossP);
+    event logPlayerWins(string description, address _contract, address _winner, uint _rolledDiceNumber, uint _profit);
     event logGameStatus(bool _status);
     event logNewOraclizeQuery(string description);
     event logContractBalance(uint _contractBalance);
     event logJackpotBalance(string description, address _ownerAddress, uint _ownerBalance);
     event logPayWinner(string description, address _playerAddress, uint _winAmount);
+    event logMaxAllowedBet(string description, uint _maxAllowedBet);
 
 
     constructor() 
@@ -81,8 +84,19 @@ contract Dice is usingOraclize, Ownable, StartStopGame {
         bytes32 oraclizeQueryId;        
         address payable player = msg.sender;                
 
-        uint betAmount = msg.value;        
-        require(DiceLib.isValidBet(betAmount, minimumBet));
+        uint betAmount = msg.value; 
+        uint maximumBet;
+        uint netPossibleProfit;
+        uint contractBalance = getContractBalance();
+
+
+        netPossibleProfit = calculateProfit(betAmount, risk);
+        maximumBet = contractBalance.sub(netPossibleProfit);
+        maximumBet = maximumBet.div(2); 
+        emit logMaxAllowedBet("Maximum bet accepted: ", maximumBet);
+
+        require(betAmount < contractBalance);       
+        require(DiceLib.isValidBet(betAmount, minimumBet, maximumBet));
         require(DiceLib.isValidRisk(risk, minimumRisk, maximumRisk));
         emit logPlayerBetAccepted(address(this), player, risk, betAmount);
 
@@ -112,13 +126,8 @@ contract Dice is usingOraclize, Ownable, StartStopGame {
     {
         
 
-        bool playerWins = false;       
-        uint grossProfit;
-        uint netProfit;
-        uint riskPercentage;
-        uint feeUnits = 1000000000000000000;
-        uint feeJackpot =  5000000000000000;  // Fund to jackpot 0.005 ether as a fee
-        uint feeOraclize = 4000000000000000; // Oraclize service charges 0.004 Ether as a fee for querying random.org
+        bool playerWins = false;     
+          
 
         require (msg.sender == oraclize_cbAddress());
         
@@ -137,16 +146,11 @@ contract Dice is usingOraclize, Ownable, StartStopGame {
            
         if(playerWins) {
             
-            // Calculate player profit            
-            riskPercentage = feeUnits.mul(risk); 
-            riskPercentage = riskPercentage.div(100);
-            grossProfit = betAmount.mul(riskPercentage);
-            grossProfit = grossProfit.div(feeUnits);               
-            netProfit = grossProfit.sub(feeJackpot);
-            netProfit = netProfit.sub(feeOraclize);
-
+            // Calculate player profit    
+            uint netProfit = calculateProfit(betAmount, risk);
+ 
             oraclizeCallbacks[myid].profit = netProfit;  
-            emit logPlayerWins("Player wins: ", address(this), player, rolledDiceNumber, netProfit, riskPercentage, grossProfit );
+            emit logPlayerWins("Player wins: ", address(this), player, rolledDiceNumber, netProfit);
 
             // Increase jackpot
             balances[owner] = balances[owner].add(feeJackpot);
@@ -175,14 +179,34 @@ contract Dice is usingOraclize, Ownable, StartStopGame {
 
  
     /** 
-     * @notice Fallback function - Called if other functions don't match call or sent ether without data
-     * Typically, called when invalid data is sent
-     * Added so ether sent to this contract is reverted if the contract fails. Otherwise, the sender's money is transferred to contract
+     * @notice Fallback function - Called if other functions don't match call or sent ether 
+     * The sender's money is transferred to contract
      */
     function () external payable{ 
-//        revert();        
     }
 
+    function calculateProfit(uint betAmount, uint risk) 
+    private
+    view 
+    returns (uint)
+    {
+        uint grossProfit;
+        uint netProfit;
+        uint riskPercentage;
+        uint feeUnits = 1000000000000000000;
+        uint feeOraclize = 4000000000000000; // Oraclize service charges 0.004 Ether as a fee for querying random.org
+
+       
+        riskPercentage = feeUnits.mul(risk); 
+        riskPercentage = riskPercentage.div(100);
+        grossProfit = betAmount.mul(riskPercentage);
+        grossProfit = grossProfit.div(feeUnits);               
+        netProfit = grossProfit.sub(feeJackpot);
+        netProfit = netProfit.sub(feeOraclize);
+
+        return (netProfit);
+
+    }
     function payWinner(address payable _player, uint _betAmount, uint _netProfit) 
     private 
     {

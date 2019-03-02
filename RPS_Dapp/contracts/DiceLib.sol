@@ -27,12 +27,12 @@ library DiceLib {
      * @param _minimumBet Indicates the minimum bet accepted to play the game
      * @return True if player's bet is at least equal to the minimum expected to allow the game, False otherwise.
      */
-    function isValidBet (uint _bet, uint _minimumBet)
+    function isValidBet (uint _bet, uint _minimumBet, uint _maximumBet)
         internal
         pure
         returns (bool)
     {
-        return (_bet >= _minimumBet);
+        return ((_bet >= _minimumBet) && (_bet < _maximumBet) );
     }
 
 }

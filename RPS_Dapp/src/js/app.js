@@ -29,6 +29,7 @@ App = {
       App.contracts.Dice.setProvider(App.web3Provider);
 
       App.showPlayersInfo();
+      App.cleanMaximumBet();
 
     });
 
@@ -115,6 +116,18 @@ App = {
        }
      })
 
+     var LogMaxAllowedBet = diceInstance.logMaxAllowedBet({});
+     LogMaxAllowedBet.watch(function (err, result) {
+       if (!err) {
+        console.log("------------------maximum allowed bet");
+        console.log((result.args._maxAllowedBet).valueOf());          
+        } else {
+          console.error(err);
+        }
+
+       //App.showMaxAllowedBet(web3.fromWei(result.args._maxAllowedBet.valueOf()));
+     })
+
      var LogRolledDiceNumber = diceInstance.logRolledDiceNumber({});
      LogRolledDiceNumber.watch(function (err, result) {
        if (!err) {
@@ -135,10 +148,7 @@ App = {
         console.log((result.args._contract).valueOf());
         console.log((result.args._winner).valueOf());
         console.log((result.args._rolledDiceNumber).valueOf());
-        console.log((result.args._profit).valueOf());
-        console.log((result.args._riskPer).valueOf());
-        console.log((result.args._grossP).valueOf());
-        
+        console.log((result.args._profit).valueOf());        
        } else {
          console.error(err);
        }
@@ -204,6 +214,15 @@ App = {
     });
 },
 
+
+
+showMaxAllowedBet: (MaxAllowedBet) => {
+  web3.eth.getAccounts(async (error, accounts) => {
+   
+    document.getElementById("MaxAllowedBet").innerHTML = "Maximum bet: " + MaxAllowedBet;
+  });
+},
+
 showResult: (NumberOutcome) => {
   web3.eth.getAccounts(async (error, accounts) => {
    
@@ -228,6 +247,14 @@ showResult: (NumberOutcome) => {
   });
 },
 
+cleanMaximumBet: () => {
+  web3.eth.getAccounts(async (error, accounts) => {
+   
+    const account = await accounts[0];
+    document.getElementById("MaxAllowedBet").innerHTML = "insert bet ...";
+  });
+},
+
 cleanResult: () => {
   web3.eth.getAccounts(async (error, accounts) => {
    
@@ -235,6 +262,8 @@ cleanResult: () => {
     document.getElementById("result").innerHTML = "waiting ...";
   });
 },
+
+
 
 };
 
