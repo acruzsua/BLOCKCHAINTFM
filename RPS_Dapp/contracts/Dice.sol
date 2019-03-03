@@ -68,6 +68,8 @@ contract Dice is usingOraclize, Ownable, StartStopGame {
     {
         // Replace the next line with your version:
         OAR = OraclizeAddrResolverI(0x6f485C8BF6fc43eA212E93BBF8ce046C7f1cb475);
+        // set Oraclize proof type
+        oraclize_setProof(proofType_TLSNotary | proofStorage_IPFS);
         setGameStatus(true);
         emit logGameStatus(getGameStatus());
 
@@ -103,6 +105,16 @@ contract Dice is usingOraclize, Ownable, StartStopGame {
         // Making oraclized query to random.org.
         emit logRollDice(address(this), player, "Oraclize query to random.org was sent, standing by for the answer.");
         oraclizeQueryId = oraclize_query("URL", "https://www.random.org/integers/?num=1&min=1&max=100&col=1&base=10&format=plain&rnd=new");
+        //oraclizeQueryId = oraclize_query("nested", "[URL] ['json(https://api.random.org/json-rpc/1/invoke).result.random[\"data\"]', '\\n{\"jsonrpc\": \"2.0\", \"method\": \"generateSignedIntegers\", \"params\": { \"apiKey\": \"00000000-0000-0000-0000-000000000000\", \"n\": 1, \"min\": 1, \"max\": 100, \"replacement\": true, \"base\": 10 }, \"id\": 14215 }']");        
+
+        // string memory string1 = "[URL] ['json(https://api.random.org/json-rpc/1/invoke).result.random', '\\n{\"jsonrpc\":\"2.0\",\"method\":\"generateIntegers\",\"params\":{\"apiKey\":${[decrypt] BKD+tJGCixBUsT9LDzuabmeZHbx3F24IkQduqfqZi99aYbnY6n7ZTn6OR1sGUfC3e5PJcuOxwX4TgLu6ty13lDxopp6W3heiOcgDR8F5aCgqRVzHyNcZUtcCVX9z17kQz5fWkCweJ0mfgYmN9DyJV12P82zz},\"n\":1,\"min\":1,\"max\":";
+        // string memory string2 = uint2str(100);
+        // string memory string3 = ",\"replacement\":true,\"base\":10${[identity] \"}\"},\"id\":1${[identity] \"}\"}']";
+        // string memory query = strConcat(string1, string2, string3);
+        // oraclizeQueryId = oraclize_query("nested", query);
+
+        //  oraclizeQueryId = oraclize_query("nested", "[URL] ['json(https://api.random.org/json-rpc/1/invoke).result.random[\"data\"]', '\\n{\"jsonrpc\":\"2.0\",\"method\":\"generateIntegers\",\"params\":{\"apiKey\":${[decrypt] BKD+tJGCixBUsT9LDzuabmeZHbx3F24IkQduqfqZi99aYbnY6n7ZTn6OR1sGUfC3e5PJcuOxwX4TgLu6ty13lDxopp6W3heiOcgDR8F5aCgqRVzHyNcZUtcCVX9z17kQz5fWkCweJ0mfgYmN9DyJV12P82zz},\"n\":1,\"min\":1,\"max\":100,\"replacement\":true,\"base\":10${[identity] \"}\"},\"id\":1${[identity] \"}\"}']");
+
 
         // Saving the struct        
         oraclizeCallbacks[oraclizeQueryId].queryId = oraclizeQueryId;
@@ -121,7 +133,7 @@ contract Dice is usingOraclize, Ownable, StartStopGame {
     * @param result The result of the query
     */
 
-    function __callback(bytes32 myid, string memory result) 
+    function __callback(bytes32 myid, string memory result, bytes memory proof) 
     public
     {
         
