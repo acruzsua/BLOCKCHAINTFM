@@ -41,16 +41,17 @@
         <div id="game-container" class="text-center">
 
           <form>
-            <div class="form-inline" id="bet-amount" >
+
+            <div class="form-inline" id="betAm" >
               <div class="form-group">
-                <label class="sr-only" for="betAmount">Bet Amount (in ethers)</label>
+                <label class="sr-only" for="bet">Bet in ethers</label>
                 <div class="input-group">
-                  <div class="input-group-addon">ETH</div>
-                  <input type="text" class="form-control" name="bet" value=0.5 id="betAmount" style="width: 80px; background-color:hsl(47, 96%, 88%);" required>
+                  <div class="input-group-addon">ETHER</div>
+                  <input type="text" class="form-control" name="rsk" value=50 placeholder=50 id="betAmount" style="width: 80px; background-color:hsl(47, 96%, 88%);" required>
                   </div>
                 </div>
             </div>
-
+            <br>
             <div class="form-inline" id="risk-probability" >
               <div class="form-group">
                 <label class="sr-only" for="risk">Probability</label>
@@ -60,8 +61,18 @@
                   </div>
                 </div>
             </div>
+            <br>
+
+            <div id="result-container">
+              <div id="MaxAllowedBet">&nbsp;</div>
+            </div>
+            <br>
 
             <button class="btn btn-choice btn-dice" type="button">Roll Dice</button>
+            
+            <div id="result-container">
+              <div id="result">&nbsp;</div>
+            </div>
           </form>
           </div>
       </div>

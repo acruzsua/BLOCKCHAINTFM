@@ -31,8 +31,11 @@ contract Dice is usingOraclize, Ownable, StartStopGame {
 
     uint public minimumBet = 0.0001 ether;
     uint public minimumRisk = 30;
+    uint public maximumRisk = 95;
+    uint public feeJackpot =  5000000000000000;  // Fund to jackpot 0.005 ether as a fee
+    
     uint public jackpot = 0;
-
+    
     // All oraclize calls will result in a common callback to __callback(...).
     struct oraclizeCallback {
         address payable player;
@@ -51,12 +54,13 @@ contract Dice is usingOraclize, Ownable, StartStopGame {
     event logRollDice(address _contract, address _player, string _description);
     event logRolledDiceNumber(address _contract, bytes32 _oraclizeQueryId, uint _risk, uint _rolledDiceNumber);
     event logPlayerLose(string description, address _contract, address _player, uint _rolledDiceNumber, uint _betAmount);
-    event logPlayerWins(string description, address _contract, address _winner, uint _rolledDiceNumber, uint _profit, uint _riskPer, uint _grossP);
+    event logPlayerWins(string description, address _contract, address _winner, uint _rolledDiceNumber, uint _profit);
     event logGameStatus(bool _status);
     event logNewOraclizeQuery(string description);
     event logContractBalance(uint _contractBalance);
     event logJackpotBalance(string description, address _ownerAddress, uint _ownerBalance);
     event logPayWinner(string description, address _playerAddress, uint _winAmount);
+    event logMaxAllowedBet(string description, uint _maxAllowedBet);
 
 
     constructor() 
@@ -64,6 +68,8 @@ contract Dice is usingOraclize, Ownable, StartStopGame {
     {
         // Replace the next line with your version:
         OAR = OraclizeAddrResolverI(0x6f485C8BF6fc43eA212E93BBF8ce046C7f1cb475);
+        // set Oraclize proof type
+        oraclize_setProof(proofType_TLSNotary | proofStorage_IPFS);
         setGameStatus(true);
         emit logGameStatus(getGameStatus());
 
@@ -80,14 +86,35 @@ contract Dice is usingOraclize, Ownable, StartStopGame {
         bytes32 oraclizeQueryId;        
         address payable player = msg.sender;                
 
-        uint betAmount = msg.value;        
-        require(DiceLib.isValidBet(betAmount, minimumBet));
-        require(DiceLib.isValidRisk(risk, minimumRisk));
+        uint betAmount = msg.value; 
+        uint maximumBet;
+        uint netPossibleProfit;
+        uint contractBalance = getContractBalance();
+
+
+        netPossibleProfit = calculateProfit(betAmount, risk);
+        maximumBet = contractBalance.sub(netPossibleProfit);
+        maximumBet = maximumBet.div(2); 
+        emit logMaxAllowedBet("Maximum bet accepted: ", maximumBet);
+
+        require(betAmount < contractBalance);       
+        require(DiceLib.isValidBet(betAmount, minimumBet, maximumBet));
+        require(DiceLib.isValidRisk(risk, minimumRisk, maximumRisk));
         emit logPlayerBetAccepted(address(this), player, risk, betAmount);
 
         // Making oraclized query to random.org.
         emit logRollDice(address(this), player, "Oraclize query to random.org was sent, standing by for the answer.");
         oraclizeQueryId = oraclize_query("URL", "https://www.random.org/integers/?num=1&min=1&max=100&col=1&base=10&format=plain&rnd=new");
+        //oraclizeQueryId = oraclize_query("nested", "[URL] ['json(https://api.random.org/json-rpc/1/invoke).result.random[\"data\"]', '\\n{\"jsonrpc\": \"2.0\", \"method\": \"generateSignedIntegers\", \"params\": { \"apiKey\": \"00000000-0000-0000-0000-000000000000\", \"n\": 1, \"min\": 1, \"max\": 100, \"replacement\": true, \"base\": 10 }, \"id\": 14215 }']");        
+
+        // string memory string1 = "[URL] ['json(https://api.random.org/json-rpc/1/invoke).result.random', '\\n{\"jsonrpc\":\"2.0\",\"method\":\"generateIntegers\",\"params\":{\"apiKey\":${[decrypt] BKD+tJGCixBUsT9LDzuabmeZHbx3F24IkQduqfqZi99aYbnY6n7ZTn6OR1sGUfC3e5PJcuOxwX4TgLu6ty13lDxopp6W3heiOcgDR8F5aCgqRVzHyNcZUtcCVX9z17kQz5fWkCweJ0mfgYmN9DyJV12P82zz},\"n\":1,\"min\":1,\"max\":";
+        // string memory string2 = uint2str(100);
+        // string memory string3 = ",\"replacement\":true,\"base\":10${[identity] \"}\"},\"id\":1${[identity] \"}\"}']";
+        // string memory query = strConcat(string1, string2, string3);
+        // oraclizeQueryId = oraclize_query("nested", query);
+
+        //  oraclizeQueryId = oraclize_query("nested", "[URL] ['json(https://api.random.org/json-rpc/1/invoke).result.random[\"data\"]', '\\n{\"jsonrpc\":\"2.0\",\"method\":\"generateIntegers\",\"params\":{\"apiKey\":${[decrypt] BKD+tJGCixBUsT9LDzuabmeZHbx3F24IkQduqfqZi99aYbnY6n7ZTn6OR1sGUfC3e5PJcuOxwX4TgLu6ty13lDxopp6W3heiOcgDR8F5aCgqRVzHyNcZUtcCVX9z17kQz5fWkCweJ0mfgYmN9DyJV12P82zz},\"n\":1,\"min\":1,\"max\":100,\"replacement\":true,\"base\":10${[identity] \"}\"},\"id\":1${[identity] \"}\"}']");
+
 
         // Saving the struct        
         oraclizeCallbacks[oraclizeQueryId].queryId = oraclizeQueryId;
@@ -106,18 +133,13 @@ contract Dice is usingOraclize, Ownable, StartStopGame {
     * @param result The result of the query
     */
 
-    function __callback(bytes32 myid, string memory result) 
-        public
+    function __callback(bytes32 myid, string memory result, bytes memory proof) 
+    public
     {
         
 
-        bool playerWins = false;       
-        uint grossProfit;
-        uint netProfit;
-        uint riskPercentage;
-        uint feeUnits = 1000000000000000000;
-        uint feeJackpot =  5000000000000000;  // Fund to jackpot 0.005 ether as a fee
-        uint feeOraclize = 4000000000000000; // Oraclize service charges 0.004 Ether as a fee for querying random.org
+        bool playerWins = false;     
+          
 
         require (msg.sender == oraclize_cbAddress());
         
@@ -136,16 +158,11 @@ contract Dice is usingOraclize, Ownable, StartStopGame {
            
         if(playerWins) {
             
-            // Calculate player profit            
-            riskPercentage = feeUnits.mul(risk); 
-            riskPercentage = riskPercentage.div(100);
-            grossProfit = betAmount.mul(riskPercentage);
-            grossProfit = grossProfit.div(feeUnits);               
-            netProfit = grossProfit.sub(feeJackpot);
-            netProfit = netProfit.sub(feeOraclize);
-
+            // Calculate player profit    
+            uint netProfit = calculateProfit(betAmount, risk);
+ 
             oraclizeCallbacks[myid].profit = netProfit;  
-            emit logPlayerWins("Player wins: ", address(this), player, rolledDiceNumber, netProfit, riskPercentage, grossProfit );
+            emit logPlayerWins("Player wins: ", address(this), player, rolledDiceNumber, netProfit);
 
             // Increase jackpot
             balances[owner] = balances[owner].add(feeJackpot);
@@ -174,14 +191,41 @@ contract Dice is usingOraclize, Ownable, StartStopGame {
 
  
     /** 
-     * @notice Fallback function - Called if other functions don't match call or sent ether without data
-     * Typically, called when invalid data is sent
-     * Added so ether sent to this contract is reverted if the contract fails. Otherwise, the sender's money is transferred to contract
+     * @notice Fallback function - Called if other functions don't match call or sent ether 
+     * The sender's money is transferred to contract
      */
     function () external payable{ 
-        revert();        
     }
 
+    /** 
+     * @notice sendMoney function is equivalent to fallback function
+     * The sender's money is transferred to contract
+     */
+    function sendMoney() public payable{ 
+    }
+
+    function calculateProfit(uint betAmount, uint risk) 
+    private
+    view 
+    returns (uint)
+    {
+        uint grossProfit;
+        uint netProfit;
+        uint riskPercentage;
+        uint feeUnits = 1000000000000000000;
+        uint feeOraclize = 4000000000000000; // Oraclize service charges 0.004 Ether as a fee for querying random.org
+
+       
+        riskPercentage = feeUnits.mul(risk); 
+        riskPercentage = riskPercentage.div(100);
+        grossProfit = betAmount.mul(riskPercentage);
+        grossProfit = grossProfit.div(feeUnits);               
+        netProfit = grossProfit.sub(feeJackpot);
+        netProfit = netProfit.sub(feeOraclize);
+
+        return (netProfit);
+
+    }
     function payWinner(address payable _player, uint _betAmount, uint _netProfit) 
     private 
     {
@@ -189,6 +233,17 @@ contract Dice is usingOraclize, Ownable, StartStopGame {
         require( address(this).balance >= winAmount );
         emit logPayWinner("Pay winner: ", _player, winAmount);            
         _player.transfer(winAmount);
+    }
+
+   /**
+    * @notice Enable the emergency stop.
+    * @dev Owner of the smart contract activate the emergency stop.
+    */
+    function enableEmergency() 
+        public 
+        onlyOwner
+    {
+        emergencyStop = !emergencyStop;        
     }
 
 }

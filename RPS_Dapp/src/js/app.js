@@ -27,7 +27,10 @@ App = {
 
       // Set the provider for our contract
       App.contracts.Dice.setProvider(App.web3Provider);
-      
+
+      App.showPlayersInfo();
+      App.cleanMaximumBet();
+
     });
 
     return App.bindEvents();
@@ -44,10 +47,41 @@ App = {
 
   },
 
+  showPlayersInfo: async() => {
+    diceInstance = await App.contracts.Dice.deployed();
+
+    const showAddress = () => {
+      web3.eth.getAccounts(async (error, accounts) => {
+        account = await accounts[0];
+        accountShorted = account.slice(0, 6) + '...' + account.slice(-4);
+        document.getElementById("metamask-player").innerHTML = accountShorted;
+      });
+    }
+
+    showAddress();
+
+    // Better, use Metamask's recommendation, polling every 100 ms.
+    // https://github.com/MetaMask/faq/blob/master/DEVELOPERS.md#ear-listening-for-selected-account-changes
+    web3.eth.getAccounts(async (error, accounts) => {
+      account = await accounts[0];
+
+      setInterval(() => {
+        if (web3.eth.accounts[0] !== account) {
+          account = web3.eth.accounts[0];
+
+          document.getElementById("result").innerHTML = "&nbsp;";
+          showAddress();
+        }
+      }, 100);
+    });
+  },  
+
   roll: async () => {
 
      const betAmount = web3.toWei($('#betAmount').val(), 'ether');
      const risk = ($('#risk').val());
+
+     App.cleanResult();
 
      console.log(betAmount);
      console.log(risk);
@@ -82,14 +116,29 @@ App = {
        }
      })
 
+     var LogMaxAllowedBet = diceInstance.logMaxAllowedBet({});
+     LogMaxAllowedBet.watch(function (err, result) {
+       if (!err) {
+        console.log("------------------maximum allowed bet");
+        console.log((result.args._maxAllowedBet).valueOf());          
+        } else {
+          console.error(err);
+        }
+
+       //App.showMaxAllowedBet(web3.fromWei(result.args._maxAllowedBet.valueOf()));
+     })
+
      var LogRolledDiceNumber = diceInstance.logRolledDiceNumber({});
      LogRolledDiceNumber.watch(function (err, result) {
        if (!err) {
         console.log("getting number");
-        console.log((result.args._rolledDiceNumber).valueOf());
-       } else {
-         console.error(err);
-       }
+        console.log((result.args._rolledDiceNumber).valueOf());          
+        } else {
+          console.error(err);
+        }
+
+       App.showResult(result.args._rolledDiceNumber.valueOf());
+
      })
 
      var LogPlayerWins = diceInstance.logPlayerWins({});
@@ -99,10 +148,7 @@ App = {
         console.log((result.args._contract).valueOf());
         console.log((result.args._winner).valueOf());
         console.log((result.args._rolledDiceNumber).valueOf());
-        console.log((result.args._profit).valueOf());
-        console.log((result.args._riskPer).valueOf());
-        console.log((result.args._grossP).valueOf());
-        
+        console.log((result.args._profit).valueOf());        
        } else {
          console.error(err);
        }
@@ -143,10 +189,10 @@ App = {
        }
      })
 
-    App.getContractBalance();
-
-
     }); 
+   
+        
+    App.getContractBalance();   
 
   },
 
@@ -167,6 +213,57 @@ App = {
       });
     });
 },
+
+
+
+showMaxAllowedBet: (MaxAllowedBet) => {
+  web3.eth.getAccounts(async (error, accounts) => {
+   
+    document.getElementById("MaxAllowedBet").innerHTML = "Maximum bet: " + MaxAllowedBet;
+  });
+},
+
+showResult: (NumberOutcome) => {
+  web3.eth.getAccounts(async (error, accounts) => {
+   
+    const account = await accounts[0];
+    const risk = ($('#risk').val());
+    var result;
+
+    console.log("NumberOutcome");
+    console.log(NumberOutcome);
+    
+
+   if (NumberOutcome > risk) 
+   {
+      result = NumberOutcome + " - You win!";
+   }
+   if (NumberOutcome <= risk) 
+   {
+      result = NumberOutcome + " - You lose!";
+   }
+
+    document.getElementById("result").innerHTML = result;
+  });
+},
+
+cleanMaximumBet: () => {
+  web3.eth.getAccounts(async (error, accounts) => {
+   
+    const account = await accounts[0];
+    document.getElementById("MaxAllowedBet").innerHTML = "insert bet ...";
+  });
+},
+
+cleanResult: () => {
+  web3.eth.getAccounts(async (error, accounts) => {
+   
+    const account = await accounts[0];
+    document.getElementById("result").innerHTML = "waiting ...";
+  });
+},
+
+
 
 };
 
