@@ -1,7 +1,7 @@
-pragma solidity ^0.4.25;
+pragma solidity >=0.4.25;
 
-import "zeppelin-solidity/contracts/ownership/Ownable.sol";
-import "zeppelin-solidity/contracts/math/SafeMath.sol";
+import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
+import "openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 
 /** @title RPS - RockPaperScissor P2P game, playing also for a jackpot.
@@ -33,7 +33,7 @@ contract RPS is Ownable {
     uint businessFeeRate = 2 * lotteryRate;
     uint public totalBusinessFee = 0;
     uint public minBusinessFeePayment = 0.01 ether;
-    address public businessAddress = 0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359;  // Ethereum foundation address
+    address payable public businessAddress = 0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359;  // Ethereum foundation address
 
     /* Not used yet
     uint maxJackpot;
@@ -44,14 +44,14 @@ contract RPS is Ownable {
     struct Player {
         Choice choice;
         bytes32 secretChoice;
-        address playerAddress;
+        address payable playerAddress;
     }
 
     struct Round {
         Player player1;
         Player player2;
         uint betAmount;
-        address winner;
+        address payable winner;
         bool isClosed;
         bool isSolo;
         address lotteryWinner;
@@ -102,7 +102,7 @@ contract RPS is Ownable {
 
     /** @notice Fallback, just in case of receiving funds, to the jackpot
     */
-    function () public payable {
+    function () external payable {
         jackpot = jackpot.add(msg.value);
     }
 
@@ -185,7 +185,7 @@ contract RPS is Ownable {
     /** @notice Withdraw funds in case of an emergengy. Set jackpot to 0.
       * @param _myAddress addres to withdraw funds to
     */
-    function withdrawFunds(address _myAddress) public onlyOwner gameIsRunning(false) {
+    function withdrawFunds(address payable _myAddress) public onlyOwner gameIsRunning(false) {
         _myAddress.transfer(address(this).balance);
         jackpot = 0;
     }
@@ -287,9 +287,8 @@ contract RPS is Ownable {
     }
 
     /** @notice Player 1 reveals choice when other player has joined to player 1's round
-                
      */
-    function revealChoice(uint _roundId, uint256 _choice, string _secret) public gameIsRunning(true) {
+    function revealChoice(uint _roundId, uint256 _choice, string memory _secret) public gameIsRunning(true) {
         Round storage myRound = rounds[_roundId];  // Pointer to round
         require(myRound.player2.playerAddress != address(0), "Nobody joined to the round, it can't be resolved");
         require(keccak256(abi.encodePacked(_choice, _secret)) == myRound.player1.secretChoice, "Error trying to reveal choice");
@@ -301,7 +300,7 @@ contract RPS is Ownable {
         }
     }
 
-    function cancelRound(uint _roundId, uint256 _choice, string _secret) public {
+    function cancelRound(uint _roundId, uint256 _choice, string memory _secret) public {
         require(keccak256(abi.encodePacked(_choice, _secret)) == rounds[_roundId].player1.secretChoice, "Error trying to cancel round: wrong choice or secret");
         _cancelRound(_roundId);
     }
@@ -358,7 +357,7 @@ contract RPS is Ownable {
      */
     function _payRound(uint _roundId) private {
         Round storage myRound = rounds[_roundId];  // Pointer to round
-        address winner = myRound.winner;
+        address payable winner = myRound.winner;
 
         // I think this is necessary to avoid possible reentrancy attacks (although we're using transfer).
         // I also think we are protected since this function is private, the one which calls this one is
@@ -422,7 +421,7 @@ contract RPS is Ownable {
       * @param player2 player struct (with player's address and choice)
       * @return address of the winner
      */
-    function _checkWinner(Player player1, Player player2) private pure returns(address) {
+    function _checkWinner(Player memory player1, Player memory player2) private pure returns(address payable) {
         if ((uint(player1.choice) + 1) % 3 == uint(player2.choice)) {
             return player2.playerAddress;
         } else if ((uint(player1.choice) + 2) % 3 == uint(player2.choice)) {
@@ -459,11 +458,11 @@ contract RPS is Ownable {
       * @return if player wins the lottery or not
      */
 
-    function _playLottery(address playerAddress, uint _roundId) private returns (bool) {
+    function _playLottery(address payable playerAddress, uint _roundId) private returns (bool) {
 
         if (uint(keccak256(abi.encodePacked(roundCount, playerAddress, blockhash(block.number - 1)))) % lotteryRate == 0) {
             Round storage myRound = rounds[_roundId];  // Pointer to round
-            require(myRound.lotteryWinner == 0, "Only one loterry winner per round");
+            require(myRound.lotteryWinner == address(0), "Only one loterry winner per round");
             myRound.lotteryWinner = playerAddress;
             _payLotteryWinner(playerAddress);
             return true;
@@ -474,7 +473,7 @@ contract RPS is Ownable {
     /** @notice Pay winner of the lottery
       * @param _winnerAddress address of the winner
      */
-    function _payLotteryWinner(address _winnerAddress) private {
+    function _payLotteryWinner(address payable _winnerAddress) private {
         require(jackpot <= address(this).balance, "Jackpot is higher than contract balance");
 
         // I think we dont need to avoid reentrancy since no problem using transfer.
