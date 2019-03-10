@@ -1,6 +1,7 @@
 pragma solidity >=0.5;
 
 import "./GamblingGame.sol";
+import "./LotteryGame.sol";
 
 
 /** @title RPS - RockPaperScissor P2P game, playing also for a jackpot.
@@ -10,7 +11,7 @@ import "./GamblingGame.sol";
             it has some known vulnerabilities.
   * @dev My first smartcontract, so probably code could be improved.
  */
-contract RPS is GamblingGame {
+contract RPS is GamblingGame, LotteryGame {
 
     using SafeMath for uint;
 
@@ -233,6 +234,21 @@ contract RPS is GamblingGame {
         _cancelRound(_roundId);
     }
 
+    function startGame() public {
+        super.startGame();
+        startLottery();
+    }
+
+    function stopGame() public {
+        super.stopGame();
+        stopLottery();
+    }
+
+    function withdrawFunds(address payable _myAddress) public {
+        super.withdrawFunds(_myAddress);
+        jackpot = 0;
+    }
+
     function _cancelRound(uint _roundId) private {
         Round storage myRound = rounds[_roundId];  // Pointer to round
         require(myRound.player2.playerAddress == address(0), "Only possible to cancel round when nobody has joined");
@@ -362,7 +378,6 @@ contract RPS is GamblingGame {
       * @param _roundId id number that identify the round to resolve
       * @return if player wins the lottery or not
      */
-
     function _playLottery(address payable playerAddress, uint _roundId) private returns (bool) {
 
         if (uint(keccak256(abi.encodePacked(roundCount, playerAddress, blockhash(block.number - 1)))) % lotteryRate == 0) {
