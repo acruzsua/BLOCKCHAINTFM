@@ -65,7 +65,7 @@ contract("RPS", async (accounts) => {
         rps.fundGame({from: accounts[2], value: fund2});
         rps.fundGame({from: accounts[0], value: fund3});
 
-        currentJackpot = (await rps.jackpot({from: accounts[0]})).toString();
+        currentJackpot = parseInt(await rps.jackpot({from: accounts[0]}));
 
         assert.equal(currentJackpot, totalFund, 'Current jackpot not as expected');
     });

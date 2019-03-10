@@ -119,7 +119,9 @@ contract("RPS", async (accounts) => {
         await rps.createRound(web3.utils.soliditySha3(player1.choice, SECRET), {from: player1.address, value: betAmount})
         lastRound = await rps.roundCount();
 
-        await rps.cancelRound(lastRound, {from: player1.address});
+        // For some reason, overloading that used to work fine now it fails, so I've changed the name of the funciton
+        // to differentiate from the other cancelRound
+        await rps.cancelRoundSender(lastRound, {from: player1.address});
 
         roundInfo = await rps.getRoundInfo(lastRound);
         var newPlayersBalance = parseInt(await web3.eth.getBalance(player1.address));

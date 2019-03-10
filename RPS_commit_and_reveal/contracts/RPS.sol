@@ -1,7 +1,6 @@
-pragma solidity >=0.4.25;
+pragma solidity >=0.5;
 
-import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
-import "openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "./GamblingGame.sol";
 
 
 /** @title RPS - RockPaperScissor P2P game, playing also for a jackpot.
@@ -11,29 +10,11 @@ import "openzeppelin-solidity/contracts/math/SafeMath.sol";
             it has some known vulnerabilities.
   * @dev My first smartcontract, so probably code could be improved.
  */
-contract RPS is Ownable {
+contract RPS is GamblingGame {
 
     using SafeMath for uint;
 
-    uint public jackpot;
-    uint public minJackpot = 1 ether;
-    uint public minimumBet = 0.0001 ether;
     uint public roundCount;
-    bool public gameRunning;
-    bool public lotteryOn;
-
-    uint public lotteryRate = 1000;
-
-    // Since we can't use decimals, represent the rate as ppm (part-per-million)
-    // Used constant that saves gas, but it might be a good idea to set it as public
-    // and be able to adjust the fee rate.
-    // Set them as constnts althoug we could make them public vars
-    uint constant jackpotFeeRate = 5000;
-    uint constant feeUnits = 1000000;
-    uint businessFeeRate = 2 * lotteryRate;
-    uint public totalBusinessFee = 0;
-    uint public minBusinessFeePayment = 0.01 ether;
-    address payable public businessAddress = 0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359;  // Ethereum foundation address
 
     /* Not used yet
     uint maxJackpot;
@@ -82,28 +63,11 @@ contract RPS is Ownable {
 
     event Secret(bytes32 secret);
 
-    event Payment(address paidAddress, uint amount);
-    event LotteryWin(address winner, uint jackpot);
-
     event BusinessPayment(address businessAddress, uint payment);
-
-    /** @dev Modifier for functions available only when game is running
-      * @param _isRunning bool to check is we need the game is running or not
-    */
-    modifier gameIsRunning(bool _isRunning) {
-        require(gameRunning == _isRunning, "Function available only when game is running");
-        _;
-    }
 
     constructor() public payable {
         // We could handle games through constructor and setting variables like
         // minimum bet, max jackpot, fees, etc.
-    }
-
-    /** @notice Fallback, just in case of receiving funds, to the jackpot
-    */
-    function () external payable {
-        jackpot = jackpot.add(msg.value);
     }
 
     /** @notice Get info from rounds.
@@ -144,50 +108,6 @@ contract RPS is Ownable {
             myRound.winner,
             myRound.isSolo
         );
-    }
-
-    /** @notice Payable, to fund game by adding ethers to contract and to the jackpot
-      * @dev It's just the same as fallback function.
-    */
-    function fundGame() public payable {
-        jackpot = jackpot.add(msg.value);
-    }
-
-    /** @notice When we have everything ready owner can start game so anyone can play. Also it starts lottery.
-                Also for restarting game after having stopped it
-    */
-    function startGame() public onlyOwner gameIsRunning(false){
-        require(jackpot <= address(this).balance, "Jackpot lower than SC balance");
-        require((address(this).balance >= minJackpot) && (jackpot >= minJackpot), "Minimum Jackpot is needed for starting game");
-        gameRunning = true;
-        lotteryOn = true;
-    }
-
-    /** @notice Function for emergengies. Also it stops lottery.
-    */
-    function stopGame() public onlyOwner gameIsRunning(true){
-        gameRunning = false;
-        lotteryOn = false;
-    }
-
-    /** @notice Stop lottery (this means stop playing for jackpot)
-    */
-    function stopLottery() public onlyOwner {
-        lotteryOn = false;
-    }
-
-    /** @notice Start lottery (this means playing for jackpot)
-    */
-    function startLottery() public onlyOwner {
-        lotteryOn = true;
-    }
-
-    /** @notice Withdraw funds in case of an emergengy. Set jackpot to 0.
-      * @param _myAddress addres to withdraw funds to
-    */
-    function withdrawFunds(address payable _myAddress) public onlyOwner gameIsRunning(false) {
-        _myAddress.transfer(address(this).balance);
-        jackpot = 0;
     }
 
     /** @notice Function called each time we want to play individually vs the house/blockchain.
@@ -300,13 +220,16 @@ contract RPS is Ownable {
         }
     }
 
-    function cancelRound(uint _roundId, uint256 _choice, string memory _secret) public {
-        require(keccak256(abi.encodePacked(_choice, _secret)) == rounds[_roundId].player1.secretChoice, "Error trying to cancel round: wrong choice or secret");
+    /**  @dev For some reason, overloading that used to work fine now it fails, so I've changed the name of the funciton
+              to differentiate from the other cancelRound
+    */
+    function cancelRoundSender(uint _roundId) public {
+        require(rounds[_roundId].player1.playerAddress == msg.sender, "Error trying to cancel round: the sender is not the creator of the round");
         _cancelRound(_roundId);
     }
 
-    function cancelRound(uint _roundId) public {
-        require(rounds[_roundId].player1.playerAddress == msg.sender, "Error trying to cancel round: the sender is not the creator of the round");
+    function cancelRound(uint _roundId, uint256 _choice, string memory _secret) public {
+        require(keccak256(abi.encodePacked(_choice, _secret)) == rounds[_roundId].player1.secretChoice, "Error trying to cancel round: wrong choice or secret");
         _cancelRound(_roundId);
     }
 
@@ -431,24 +354,6 @@ contract RPS is Ownable {
         }
     }
 
-    /** @notice Set the lottery rate in percentage, how easy is to hit the jackpot
-      * @dev Mostly for testing porpuse. It should be removed in final deployment or no modifiable by anyone
-      * @param newLotteryRate new lottery rate
-     */
-    // Mostly for testing porpuse.
-    function setLotteryRate(uint newLotteryRate) public onlyOwner {
-        lotteryRate = newLotteryRate;
-    }
-
-    /** @notice Set the minimum amount of ETH to be transfered when collecting business fees
-      * @dev Mostly for testing porpuse. It should be removed in final deployment or no modifiable by anyone
-      * @param newMinBusinessFeePayment new min amount of ETH to transfer to business
-     */
-    // Mostly for testing porpuse.
-    function setminBusinessFeePayment(uint newMinBusinessFeePayment) public onlyOwner {
-        minBusinessFeePayment = newMinBusinessFeePayment;
-    }
-
     /** @notice Play lottery for the round
       * @dev TODO: Current randomness is not the best way for gambling since it can be attacked by miners.
              TODO: It is needed to implement a mechanism that assures that existing rounds can be paid altoudh
@@ -468,19 +373,6 @@ contract RPS is Ownable {
             return true;
         }
         return false;
-    }
-
-    /** @notice Pay winner of the lottery
-      * @param _winnerAddress address of the winner
-     */
-    function _payLotteryWinner(address payable _winnerAddress) private {
-        require(jackpot <= address(this).balance, "Jackpot is higher than contract balance");
-
-        // I think we dont need to avoid reentrancy since no problem using transfer.
-        _winnerAddress.transfer(jackpot);
-        emit LotteryWin(_winnerAddress, jackpot);
-        emit Payment(_winnerAddress, jackpot);
-        jackpot = 0;
     }
 
 }
