@@ -67,6 +67,8 @@ contract GamblingGame is Ownable {
 
     function _payRound(uint _roundId) private;
 
+    // function _checkWinner(Player memory player1, Player memory player2) private pure returns(address payable);
+
     /** @notice Set the minimum amount of ETH to be transfered when collecting business fees
       * @dev Mostly for testing porpuse. It should be removed in final deployment or no modifiable by anyone
       * @param newMinBusinessFeePayment new min amount of ETH to transfer to business
@@ -75,5 +77,9 @@ contract GamblingGame is Ownable {
     function setminBusinessFeePayment(uint newMinBusinessFeePayment) public onlyOwner {
         minBusinessFeePayment = newMinBusinessFeePayment;
     }
+
+    function playSoloRound(uint _choice) public payable returns(uint);
+
+    //function playSoloRound(uint _choice1, uint _choice2) public payable returns(uint);
 
 }

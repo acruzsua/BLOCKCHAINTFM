@@ -1,6 +1,6 @@
 pragma solidity >=0.5;
 
-import "./GamblingGame.sol";
+import "./P2PGamblingGame.sol";
 import "./LotteryGame.sol";
 
 
@@ -11,7 +11,7 @@ import "./LotteryGame.sol";
             it has some known vulnerabilities.
   * @dev My first smartcontract, so probably code could be improved.
  */
-contract RPS is GamblingGame, LotteryGame {
+contract RPS is P2PGamblingGame, LotteryGame {
 
     using SafeMath for uint;
 
@@ -44,6 +44,11 @@ contract RPS is GamblingGame, LotteryGame {
 
     // We could add another mapping to check rounds per address:
     // mapping(address=>uint[])
+
+    modifier isChoice(uint choice) {
+        require(choice <= uint(Choice.Scissors), "RPS choice not valid");
+        _;
+    }
 
     event RoundCreated(
         uint roundId,
@@ -83,6 +88,8 @@ contract RPS is GamblingGame, LotteryGame {
       * @return player2Choice choice of player2
       * @return betAmount amount of the bet of this round, in wei.
       * @return winner address of the winner, it's 0x0 if not finished or draw
+      TODO: THIS CAN'T BE ACCESSIBLE BECAUSE ANYAONE COULD KNOW THE CHOICES JUST
+            REQUESTING THIS FUNCTION
     */
     function getRoundInfo(
         uint roundId
@@ -116,19 +123,20 @@ contract RPS is GamblingGame, LotteryGame {
       * @param _choice choose Choice enum value: ROCK, PAPER, SCISSOR
       * @return roundId id number that identify the round created
      */
-    function playSoloRound(Choice _choice)
+    function playSoloRound(uint _choice)
         public
         gameIsRunning(true)
+        isChoice(_choice)
         payable
         returns(uint)
     {
         require(msg.value >= minimumBet, "Not enough amount bet");
-
+        Choice choice = Choice(_choice);
         roundCount++;
         uint roundId = roundCount;
         Round storage round = rounds[roundId];
         round.player1.playerAddress = msg.sender;
-        round.player1.choice = _choice;
+        round.player1.choice = choice;
         round.betAmount = msg.value;
         round.isSolo = true;
 
@@ -190,7 +198,7 @@ contract RPS is GamblingGame, LotteryGame {
       * @param _roundId id number that identify the round to join
       * @param _choice choose Choice enum value: ROCK, PAPER, SCISSOR
      */
-    function joinRound(uint _roundId, Choice _choice) public gameIsRunning(true) payable {
+    function joinRound(uint _roundId, uint _choice) public gameIsRunning(true) isChoice(_choice) payable {
         Round storage myRound = rounds[_roundId];  // Pointer to round
         require(myRound.player1.playerAddress != address(0), "Round does not exist");
         require(myRound.player2.playerAddress == address(0) && !myRound.isClosed, "Round already finished");
@@ -204,7 +212,7 @@ contract RPS is GamblingGame, LotteryGame {
         msg.sender.transfer(msg.value - myRound.betAmount);  // No need to use SafeMath since this can't be negative
 
         myRound.player2.playerAddress = msg.sender;
-        myRound.player2.choice = _choice;
+        myRound.player2.choice = Choice(_choice);
     }
 
     /** @notice Player 1 reveals choice when other player has joined to player 1's round
