@@ -1354,10 +1354,100 @@
       "links": {},
       "address": "0xC2da95D0383C686E92cA23b24959AD48a008DB8c",
       "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1551552314988": {
+      "events": {},
+      "links": {},
+      "address": "0x9f61F22537e0862da4408bA20f355C629D8511B9",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1551552929234": {
+      "events": {},
+      "links": {},
+      "address": "0x59F6bAF8a35BEC827588969a56aB1AF6149bC732",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1551554392105": {
+      "events": {},
+      "links": {},
+      "address": "0xa977eae0595384Bc8bB75156A2ABCD13Ff12eFf6",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1551554930312": {
+      "events": {},
+      "links": {},
+      "address": "0x895B9409BBCAF3a1F0dD0954F48E66993268e49C",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1551555238955": {
+      "events": {},
+      "links": {},
+      "address": "0xdf618aadFe2A4B6Aa05eABc4145D09A5f7A8F34D",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1551558999640": {
+      "events": {},
+      "links": {},
+      "address": "0xf42ed18F4698C7D7d846c9eE2eDe93e03aC2C3c2",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1551559786648": {
+      "events": {},
+      "links": {},
+      "address": "0x0e2f0F7A5101A901dD00526C73b15ea5c2aEe652",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1551559964742": {
+      "events": {},
+      "links": {},
+      "address": "0x7E74B6bf716A0b1B597853A24e8C25Cc19767974",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1551560352832": {
+      "events": {},
+      "links": {},
+      "address": "0x24072d30a2B3847cF31725e9a5DD396C85c0dF82",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1551560568774": {
+      "events": {},
+      "links": {},
+      "address": "0x2E1717e7Ea46cb475F06343479EcF77d3063c970",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1551560922974": {
+      "events": {},
+      "links": {},
+      "address": "0x02476560863030Fe3ce85a797793512AD805CeDb",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1551561374230": {
+      "events": {},
+      "links": {},
+      "address": "0x6d48F2c0Be907a6585DDF32F90419e7F24920782",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1552208465560": {
+      "events": {},
+      "links": {},
+      "address": "0x5F2D110C994eea06C5CEF2DF776d6441f6dD1070",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
+    },
+    "1552755669391": {
+      "events": {},
+      "links": {},
+      "address": "0x5eFA33De7bAa04919BC27716588aa4f2b907381B",
+      "transactionHash": "0x0e5dfb2ef879c2a40a6fc6b93f3377cd4897907f4205dc09977e7af48c6d75e7"
+    },
+    "1553444138928": {
+      "events": {},
+      "links": {},
+      "address": "0xA6B89AdE7aC4FB1f85E13C500edE45022cE983C1",
+      "transactionHash": "0x2378899e1fffe060194efb4ded024b75e1a59bc0860770dafb01ac3e04d07fc3"
     }
   },
   "schemaVersion": "3.0.2",
-  "updatedAt": "2019-03-02T17:38:02.039Z",
+  "updatedAt": "2019-03-24T16:20:21.534Z",
   "devdoc": {
     "author": "Antonio Cruz",
     "details": "For more implementation details read the \"design_pattern_decisions.md\" document. ",

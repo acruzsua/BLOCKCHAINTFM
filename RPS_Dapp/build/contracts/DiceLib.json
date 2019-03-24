@@ -1487,10 +1487,100 @@
       "links": {},
       "address": "0x53B6E956ee98aEe36B4261d116e5237Afe99e851",
       "transactionHash": "0x7d9cbf3f3b8024ee059ce7882d7f5d22b24b8bef790babc146cb48d6566a543a"
+    },
+    "1551552314988": {
+      "events": {},
+      "links": {},
+      "address": "0xFC68777b5358b69E675663C2144B3F07fAAf3F9D",
+      "transactionHash": "0x7d9cbf3f3b8024ee059ce7882d7f5d22b24b8bef790babc146cb48d6566a543a"
+    },
+    "1551552929234": {
+      "events": {},
+      "links": {},
+      "address": "0xc581D41811da3A1123BDa4A624F67a16e248bF21",
+      "transactionHash": "0x7d9cbf3f3b8024ee059ce7882d7f5d22b24b8bef790babc146cb48d6566a543a"
+    },
+    "1551554392105": {
+      "events": {},
+      "links": {},
+      "address": "0x06AcEE18A2Fc90a091A1bee04171023AA99640FE",
+      "transactionHash": "0x7d9cbf3f3b8024ee059ce7882d7f5d22b24b8bef790babc146cb48d6566a543a"
+    },
+    "1551554930312": {
+      "events": {},
+      "links": {},
+      "address": "0x19a4c9e6ec72995cC97D5f2A204bc7BbD4c9b1D5",
+      "transactionHash": "0x7d9cbf3f3b8024ee059ce7882d7f5d22b24b8bef790babc146cb48d6566a543a"
+    },
+    "1551555238955": {
+      "events": {},
+      "links": {},
+      "address": "0xe5664cf33F7da894E6Cff16601C8e2d43D50E2ba",
+      "transactionHash": "0x7d9cbf3f3b8024ee059ce7882d7f5d22b24b8bef790babc146cb48d6566a543a"
+    },
+    "1551558999640": {
+      "events": {},
+      "links": {},
+      "address": "0xC2610D9d000dda9C931fbF6D9b8E10aA7E1877b8",
+      "transactionHash": "0x7d9cbf3f3b8024ee059ce7882d7f5d22b24b8bef790babc146cb48d6566a543a"
+    },
+    "1551559786648": {
+      "events": {},
+      "links": {},
+      "address": "0x6A6967e43cBBd190B55F335429A04c53741391Cb",
+      "transactionHash": "0x7d9cbf3f3b8024ee059ce7882d7f5d22b24b8bef790babc146cb48d6566a543a"
+    },
+    "1551559964742": {
+      "events": {},
+      "links": {},
+      "address": "0x25506Df229EDF1DBffCcbe735152CD64d7543032",
+      "transactionHash": "0x7d9cbf3f3b8024ee059ce7882d7f5d22b24b8bef790babc146cb48d6566a543a"
+    },
+    "1551560352832": {
+      "events": {},
+      "links": {},
+      "address": "0xCC936c519b4F97Bc5E47c74056086232caE17c4d",
+      "transactionHash": "0x7d9cbf3f3b8024ee059ce7882d7f5d22b24b8bef790babc146cb48d6566a543a"
+    },
+    "1551560568774": {
+      "events": {},
+      "links": {},
+      "address": "0xdC202Cda9806CD37737F3DAC3Ad4ce8Cc017fb56",
+      "transactionHash": "0x7d9cbf3f3b8024ee059ce7882d7f5d22b24b8bef790babc146cb48d6566a543a"
+    },
+    "1551560922974": {
+      "events": {},
+      "links": {},
+      "address": "0xb062702e954B83D0cCa2632530a9403ABefF22cE",
+      "transactionHash": "0x7d9cbf3f3b8024ee059ce7882d7f5d22b24b8bef790babc146cb48d6566a543a"
+    },
+    "1551561374230": {
+      "events": {},
+      "links": {},
+      "address": "0xd8adfeb50339D59B1c83595Fd743703749614E94",
+      "transactionHash": "0x7d9cbf3f3b8024ee059ce7882d7f5d22b24b8bef790babc146cb48d6566a543a"
+    },
+    "1552208465560": {
+      "events": {},
+      "links": {},
+      "address": "0xF457d9046CEcD1eA3B74a9759FC961A75d8618E8",
+      "transactionHash": "0x7d9cbf3f3b8024ee059ce7882d7f5d22b24b8bef790babc146cb48d6566a543a"
+    },
+    "1552755669391": {
+      "events": {},
+      "links": {},
+      "address": "0x07B93d8F7F28CB324ADA48C8d25ef06542Dc4caE",
+      "transactionHash": "0xe68d63d35f8889e8e65a5eeaf14643120f68bf78caf45059a2c9d41d9087f663"
+    },
+    "1553444138928": {
+      "events": {},
+      "links": {},
+      "address": "0x6223249d7C17CBF5EF5F2872127b93d33d459dB0",
+      "transactionHash": "0x7d9cbf3f3b8024ee059ce7882d7f5d22b24b8bef790babc146cb48d6566a543a"
     }
   },
   "schemaVersion": "3.0.2",
-  "updatedAt": "2019-03-02T17:38:02.037Z",
+  "updatedAt": "2019-03-24T16:20:21.531Z",
   "devdoc": {
     "author": "Antonio Cruz",
     "details": "Set of functions used to allow playihng Dice game",
