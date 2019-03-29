@@ -232,7 +232,7 @@
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "pragma solidity >=0.5;\n\nimport \"openzeppelin-solidity/contracts/ownership/Ownable.sol\";\nimport \"openzeppelin-solidity/contracts/math/SafeMath.sol\";\n\n/** @title RPS - RockPaperScissor P2P game, playing also for a jackpot.\n  * @author rggentil\n  * @notice This is just a simple game done mostly for learning solidity\n            and web3 development, do not use betting real value since\n            it has some known vulnerabilities.\n  * @dev My first smartcontract, so probably code could be improved.\n */\ncontract GamblingGame is Ownable {\n    using SafeMath for uint;\n\n    uint constant LOTERY_RATE = 1000;\n\n    bool public gameRunning;\n\n    uint public minimumBet = 0.0001 ether;\n\n    // Since we can't use decimals, represent the rate as ppm (part-per-million)\n    // Used constant that saves gas, but it might be a good idea to set it as public\n    // and be able to adjust the fee rate.\n    // Set them as constnts althoug we could make them public vars\n    uint constant jackpotFeeRate = 5000;\n    uint constant feeUnits = 1000000;\n    uint businessFeeRate = 2 * LOTERY_RATE;\n    uint public totalBusinessFee = 0;\n    uint public minBusinessFeePayment = 0.01 ether;\n    address payable public businessAddress = 0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359;  // Ethereum foundation address\n\n    event Payment(address paidAddress, uint amount);\n\n    /** @dev Modifier for functions available only when game is running\n      * @param _isRunning bool to check is we need the game is running or not\n    */\n    modifier gameIsRunning(bool _isRunning) {\n        require(gameRunning == _isRunning, \"Function available only when game is running\");\n        _;\n    }\n\n    constructor() public payable {\n        // We could handle games through constructor and setting variables like\n        // minimum bet, max jackpot, fees, etc.\n    }\n\n    /** @notice When we have everything ready owner can start game so anyone can play. Also it starts lottery.\n                Also for restarting game after having stopped it\n    */\n    function startGame() public onlyOwner gameIsRunning(false){\n        gameRunning = true;\n    }\n\n    /** @notice Function for emergengies. Also it stops lottery.\n    */\n    function stopGame() public onlyOwner gameIsRunning(true){\n        gameRunning = false;\n    }\n\n    /** @notice Withdraw funds in case of an emergengy. Set jackpot to 0.\n      * @param _myAddress addres to withdraw funds to\n    */\n    function withdrawFunds(address payable _myAddress) public onlyOwner gameIsRunning(false) {\n        _myAddress.transfer(address(this).balance);\n    }\n\n    function _payRound(uint _roundId) private;\n\n    // function _checkWinner(Player memory player1, Player memory player2) private pure returns(address payable);\n\n    /** @notice Set the minimum amount of ETH to be transfered when collecting business fees\n      * @dev Mostly for testing porpuse. It should be removed in final deployment or no modifiable by anyone\n      * @param newMinBusinessFeePayment new min amount of ETH to transfer to business\n     */\n    // Mostly for testing porpuse.\n    function setminBusinessFeePayment(uint newMinBusinessFeePayment) public onlyOwner {\n        minBusinessFeePayment = newMinBusinessFeePayment;\n    }\n\n    function playSoloRound(uint _choice) public payable returns(uint);\n\n    //function playSoloRound(uint _choice1, uint _choice2) public payable returns(uint);\n\n}",
+  "source": "pragma solidity >=0.5;\n\nimport \"openzeppelin-solidity/contracts/ownership/Ownable.sol\";\nimport \"openzeppelin-solidity/contracts/math/SafeMath.sol\";\n\n/** @title RPS - RockPaperScissor P2P game, playing also for a jackpot.\n  * @author rggentil\n  * @notice This is just a simple game done mostly for learning solidity\n            and web3 development, do not use betting real value since\n            it has some known vulnerabilities.\n  * @dev My first smartcontract, so probably code could be improved.\n */\ncontract GamblingGame is Ownable {\n    using SafeMath for uint;\n\n    uint constant LOTERY_RATE = 1000;\n\n    bool public gameRunning;\n\n    uint public minimumBet = 0.0001 ether;\n\n    // Since we can't use decimals, represent the rate as ppm (part-per-million)\n    // Used constant that saves gas, but it might be a good idea to set it as public\n    // and be able to adjust the fee rate.\n    // Set them as constnts althoug we could make them public vars\n    uint constant jackpotFeeRate = 5000;\n    uint constant feeUnits = 1000000;\n    uint businessFeeRate = 2 * LOTERY_RATE;\n    uint public totalBusinessFee = 0;\n    uint public minBusinessFeePayment = 0.01 ether;\n    address payable public businessAddress = 0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359;  // Ethereum foundation address\n\n    event Payment(address paidAddress, uint amount);\n\n    /** @dev Modifier for functions available only when game is running\n      * @param _isRunning bool to check is we need the game is running or not\n    */\n    modifier gameIsOn(bool _isRunning) {\n        require(gameRunning == _isRunning, \"Function available only when game is running\");\n        _;\n    }\n\n    constructor() public payable {\n        // We could handle games through constructor and setting variables like\n        // minimum bet, max jackpot, fees, etc.\n    }\n\n    /** @notice When we have everything ready owner can start game so anyone can play. Also it starts lottery.\n                Also for restarting game after having stopped it\n    */\n    function startGame() public onlyOwner gameIsOn(false){\n        gameRunning = true;\n    }\n\n    /** @notice Function for emergengies. Also it stops lottery.\n    */\n    function stopGame() public onlyOwner gameIsOn(true){\n        gameRunning = false;\n    }\n\n    /** @notice Withdraw funds in case of an emergengy. Set jackpot to 0.\n      * @param _myAddress addres to withdraw funds to\n    */\n    function withdrawFunds(address payable _myAddress) public onlyOwner gameIsOn(false) {\n        _myAddress.transfer(address(this).balance);\n    }\n\n    function _payRound(uint _roundId) private;\n\n    // function _checkWinner(Player memory player1, Player memory player2) private pure returns(address payable);\n\n    /** @notice Set the minimum amount of ETH to be transfered when collecting business fees\n      * @dev Mostly for testing porpuse. It should be removed in final deployment or no modifiable by anyone\n      * @param newMinBusinessFeePayment new min amount of ETH to transfer to business\n     */\n    // Mostly for testing porpuse.\n    function setminBusinessFeePayment(uint newMinBusinessFeePayment) public onlyOwner {\n        minBusinessFeePayment = newMinBusinessFeePayment;\n    }\n\n    function playSoloRound(uint _choice) public payable returns(uint);\n\n    //function playSoloRound(uint _choice1, uint _choice2) public payable returns(uint);\n\n}",
   "sourcePath": "/home/rggentil/Documents/master_ethereum/BLOCKCHAINTFM/RPS_commit_and_reveal/contracts/GamblingGame.sol",
   "ast": {
     "absolutePath": "/home/rggentil/Documents/master_ethereum/BLOCKCHAINTFM/RPS_commit_and_reveal/contracts/GamblingGame.sol",
@@ -260,7 +260,7 @@
         "id": 2,
         "nodeType": "ImportDirective",
         "scope": 131,
-        "sourceUnit": 1765,
+        "sourceUnit": 8040,
         "src": "24:63:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -271,7 +271,7 @@
         "id": 3,
         "nodeType": "ImportDirective",
         "scope": 131,
-        "sourceUnit": 1656,
+        "sourceUnit": 7931,
         "src": "88:59:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -285,10 +285,10 @@
               "id": 4,
               "name": "Ownable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1764,
+              "referencedDeclaration": 8039,
               "src": "530:7:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Ownable_$1764",
+                "typeIdentifier": "t_contract$_Ownable_$8039",
                 "typeString": "contract Ownable"
               }
             },
@@ -298,7 +298,7 @@
           }
         ],
         "contractDependencies": [
-          1764
+          8039
         ],
         "contractKind": "contract",
         "documentation": "@title RPS - RockPaperScissor P2P game, playing also for a jackpot.\n@author rggentil\n@notice This is just a simple game done mostly for learning solidity\nand web3 development, do not use betting real value since\nit has some known vulnerabilities.\n@dev My first smartcontract, so probably code could be improved.",
@@ -306,7 +306,7 @@
         "id": 130,
         "linearizedBaseContracts": [
           130,
-          1764
+          8039
         ],
         "name": "GamblingGame",
         "nodeType": "ContractDefinition",
@@ -318,10 +318,10 @@
               "id": 6,
               "name": "SafeMath",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1655,
+              "referencedDeclaration": 7930,
               "src": "550:8:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_SafeMath_$1655",
+                "typeIdentifier": "t_contract$_SafeMath_$7930",
                 "typeString": "library SafeMath"
               }
             },
@@ -815,7 +815,7 @@
             "body": {
               "id": 54,
               "nodeType": "Block",
-              "src": "1549:110:0",
+              "src": "1544:110:0",
               "statements": [
                 {
                   "expression": {
@@ -839,7 +839,7 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 13,
-                          "src": "1567:11:0",
+                          "src": "1562:11:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bool",
                             "typeString": "bool"
@@ -854,13 +854,13 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 44,
-                          "src": "1582:10:0",
+                          "src": "1577:10:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bool",
                             "typeString": "bool"
                           }
                         },
-                        "src": "1567:25:0",
+                        "src": "1562:25:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
@@ -876,7 +876,7 @@
                         "kind": "string",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "1594:46:0",
+                        "src": "1589:46:0",
                         "subdenomination": null,
                         "typeDescriptions": {
                           "typeIdentifier": "t_stringliteral_8c88674830c20c99ce412b9680abd8ccdc5e24bda4313ba946d21f05051884f8",
@@ -900,11 +900,11 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1782,
-                        1783
+                        8057,
+                        8058
                       ],
-                      "referencedDeclaration": 1783,
-                      "src": "1559:7:0",
+                      "referencedDeclaration": 8058,
+                      "src": "1554:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (bool,string memory) pure"
@@ -918,7 +918,7 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1559:82:0",
+                    "src": "1554:82:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
@@ -926,18 +926,18 @@
                   },
                   "id": 52,
                   "nodeType": "ExpressionStatement",
-                  "src": "1559:82:0"
+                  "src": "1554:82:0"
                 },
                 {
                   "id": 53,
                   "nodeType": "PlaceholderStatement",
-                  "src": "1651:1:0"
+                  "src": "1646:1:0"
                 }
               ]
             },
             "documentation": "@dev Modifier for functions available only when game is running\n@param _isRunning bool to check is we need the game is running or not",
             "id": 55,
-            "name": "gameIsRunning",
+            "name": "gameIsOn",
             "nodeType": "ModifierDefinition",
             "parameters": {
               "id": 45,
@@ -949,7 +949,7 @@
                   "name": "_isRunning",
                   "nodeType": "VariableDeclaration",
                   "scope": 55,
-                  "src": "1532:15:0",
+                  "src": "1527:15:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -960,7 +960,7 @@
                     "id": 43,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1532:4:0",
+                    "src": "1527:4:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -970,16 +970,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1531:17:0"
+              "src": "1526:17:0"
             },
-            "src": "1509:150:0",
+            "src": "1509:145:0",
             "visibility": "internal"
           },
           {
             "body": {
               "id": 58,
               "nodeType": "Block",
-              "src": "1694:135:0",
+              "src": "1689:135:0",
               "statements": []
             },
             "documentation": null,
@@ -993,16 +993,16 @@
               "id": 56,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1676:2:0"
+              "src": "1671:2:0"
             },
             "returnParameters": {
               "id": 57,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1694:0:0"
+              "src": "1689:0:0"
             },
             "scope": 130,
-            "src": "1665:164:0",
+            "src": "1660:164:0",
             "stateMutability": "payable",
             "superFunction": null,
             "visibility": "public"
@@ -1011,7 +1011,7 @@
             "body": {
               "id": 71,
               "nodeType": "Block",
-              "src": "2076:35:0",
+              "src": "2066:35:0",
               "statements": [
                 {
                   "expression": {
@@ -1028,7 +1028,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 13,
-                      "src": "2086:11:0",
+                      "src": "2076:11:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
                         "typeString": "bool"
@@ -1046,7 +1046,7 @@
                       "kind": "bool",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "2100:4:0",
+                      "src": "2090:4:0",
                       "subdenomination": null,
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
@@ -1054,7 +1054,7 @@
                       },
                       "value": "true"
                     },
-                    "src": "2086:18:0",
+                    "src": "2076:18:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -1062,7 +1062,7 @@
                   },
                   "id": 70,
                   "nodeType": "ExpressionStatement",
-                  "src": "2086:18:0"
+                  "src": "2076:18:0"
                 }
               ]
             },
@@ -1080,15 +1080,15 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1698,
-                  "src": "2046:9:0",
+                  "referencedDeclaration": 7973,
+                  "src": "2041:9:0",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
                     "typeString": "modifier ()"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "2046:9:0"
+                "src": "2041:9:0"
               },
               {
                 "arguments": [
@@ -1102,7 +1102,7 @@
                     "kind": "bool",
                     "lValueRequested": false,
                     "nodeType": "Literal",
-                    "src": "2070:5:0",
+                    "src": "2060:5:0",
                     "subdenomination": null,
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
@@ -1115,18 +1115,18 @@
                 "modifierName": {
                   "argumentTypes": null,
                   "id": 63,
-                  "name": "gameIsRunning",
+                  "name": "gameIsOn",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
                   "referencedDeclaration": 55,
-                  "src": "2056:13:0",
+                  "src": "2051:8:0",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$_t_bool_$",
                     "typeString": "modifier (bool)"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "2056:20:0"
+                "src": "2051:15:0"
               }
             ],
             "name": "startGame",
@@ -1135,16 +1135,16 @@
               "id": 60,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "2036:2:0"
+              "src": "2031:2:0"
             },
             "returnParameters": {
               "id": 66,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "2076:0:0"
+              "src": "2066:0:0"
             },
             "scope": 130,
-            "src": "2018:93:0",
+            "src": "2013:88:0",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
@@ -1153,7 +1153,7 @@
             "body": {
               "id": 84,
               "nodeType": "Block",
-              "src": "2245:36:0",
+              "src": "2230:36:0",
               "statements": [
                 {
                   "expression": {
@@ -1170,7 +1170,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 13,
-                      "src": "2255:11:0",
+                      "src": "2240:11:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
                         "typeString": "bool"
@@ -1188,7 +1188,7 @@
                       "kind": "bool",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "2269:5:0",
+                      "src": "2254:5:0",
                       "subdenomination": null,
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
@@ -1196,7 +1196,7 @@
                       },
                       "value": "false"
                     },
-                    "src": "2255:19:0",
+                    "src": "2240:19:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -1204,7 +1204,7 @@
                   },
                   "id": 83,
                   "nodeType": "ExpressionStatement",
-                  "src": "2255:19:0"
+                  "src": "2240:19:0"
                 }
               ]
             },
@@ -1222,15 +1222,15 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1698,
-                  "src": "2216:9:0",
+                  "referencedDeclaration": 7973,
+                  "src": "2206:9:0",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
                     "typeString": "modifier ()"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "2216:9:0"
+                "src": "2206:9:0"
               },
               {
                 "arguments": [
@@ -1244,7 +1244,7 @@
                     "kind": "bool",
                     "lValueRequested": false,
                     "nodeType": "Literal",
-                    "src": "2240:4:0",
+                    "src": "2225:4:0",
                     "subdenomination": null,
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
@@ -1257,18 +1257,18 @@
                 "modifierName": {
                   "argumentTypes": null,
                   "id": 76,
-                  "name": "gameIsRunning",
+                  "name": "gameIsOn",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
                   "referencedDeclaration": 55,
-                  "src": "2226:13:0",
+                  "src": "2216:8:0",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$_t_bool_$",
                     "typeString": "modifier (bool)"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "2226:19:0"
+                "src": "2216:14:0"
               }
             ],
             "name": "stopGame",
@@ -1277,16 +1277,16 @@
               "id": 73,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "2206:2:0"
+              "src": "2196:2:0"
             },
             "returnParameters": {
               "id": 79,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "2245:0:0"
+              "src": "2230:0:0"
             },
             "scope": 130,
-            "src": "2189:92:0",
+            "src": "2179:87:0",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
@@ -1295,7 +1295,7 @@
             "body": {
               "id": 104,
               "nodeType": "Block",
-              "src": "2511:59:0",
+              "src": "2491:59:0",
               "statements": [
                 {
                   "expression": {
@@ -1312,8 +1312,8 @@
                               "name": "this",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 1797,
-                              "src": "2549:4:0",
+                              "referencedDeclaration": 8072,
+                              "src": "2529:4:0",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_contract$_GamblingGame_$130",
                                 "typeString": "contract GamblingGame"
@@ -1333,7 +1333,7 @@
                             "isPure": true,
                             "lValueRequested": false,
                             "nodeType": "ElementaryTypeNameExpression",
-                            "src": "2541:7:0",
+                            "src": "2521:7:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_type$_t_address_$",
                               "typeString": "type(address)"
@@ -1348,7 +1348,7 @@
                           "lValueRequested": false,
                           "names": [],
                           "nodeType": "FunctionCall",
-                          "src": "2541:13:0",
+                          "src": "2521:13:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
                             "typeString": "address"
@@ -1362,7 +1362,7 @@
                         "memberName": "balance",
                         "nodeType": "MemberAccess",
                         "referencedDeclaration": null,
-                        "src": "2541:21:0",
+                        "src": "2521:21:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -1383,7 +1383,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 87,
-                        "src": "2521:10:0",
+                        "src": "2501:10:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address_payable",
                           "typeString": "address payable"
@@ -1397,7 +1397,7 @@
                       "memberName": "transfer",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": null,
-                      "src": "2521:19:0",
+                      "src": "2501:19:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_transfer_nonpayable$_t_uint256_$returns$__$",
                         "typeString": "function (uint256)"
@@ -1411,7 +1411,7 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "2521:42:0",
+                    "src": "2501:42:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
@@ -1419,7 +1419,7 @@
                   },
                   "id": 103,
                   "nodeType": "ExpressionStatement",
-                  "src": "2521:42:0"
+                  "src": "2501:42:0"
                 }
               ]
             },
@@ -1437,15 +1437,15 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1698,
-                  "src": "2480:9:0",
+                  "referencedDeclaration": 7973,
+                  "src": "2465:9:0",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
                     "typeString": "modifier ()"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "2480:9:0"
+                "src": "2465:9:0"
               },
               {
                 "arguments": [
@@ -1459,7 +1459,7 @@
                     "kind": "bool",
                     "lValueRequested": false,
                     "nodeType": "Literal",
-                    "src": "2504:5:0",
+                    "src": "2484:5:0",
                     "subdenomination": null,
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
@@ -1472,18 +1472,18 @@
                 "modifierName": {
                   "argumentTypes": null,
                   "id": 91,
-                  "name": "gameIsRunning",
+                  "name": "gameIsOn",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
                   "referencedDeclaration": 55,
-                  "src": "2490:13:0",
+                  "src": "2475:8:0",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$_t_bool_$",
                     "typeString": "modifier (bool)"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "2490:20:0"
+                "src": "2475:15:0"
               }
             ],
             "name": "withdrawFunds",
@@ -1498,7 +1498,7 @@
                   "name": "_myAddress",
                   "nodeType": "VariableDeclaration",
                   "scope": 105,
-                  "src": "2445:26:0",
+                  "src": "2430:26:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1509,7 +1509,7 @@
                     "id": 86,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2445:15:0",
+                    "src": "2430:15:0",
                     "stateMutability": "payable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address_payable",
@@ -1520,16 +1520,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2444:28:0"
+              "src": "2429:28:0"
             },
             "returnParameters": {
               "id": 94,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "2511:0:0"
+              "src": "2491:0:0"
             },
             "scope": 130,
-            "src": "2422:148:0",
+            "src": "2407:143:0",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
@@ -1553,7 +1553,7 @@
                   "name": "_roundId",
                   "nodeType": "VariableDeclaration",
                   "scope": 110,
-                  "src": "2595:13:0",
+                  "src": "2575:13:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1564,7 +1564,7 @@
                     "id": 106,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2595:4:0",
+                    "src": "2575:4:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1574,16 +1574,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2594:15:0"
+              "src": "2574:15:0"
             },
             "returnParameters": {
               "id": 109,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "2617:0:0"
+              "src": "2597:0:0"
             },
             "scope": 130,
-            "src": "2576:42:0",
+            "src": "2556:42:0",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "private"
@@ -1592,7 +1592,7 @@
             "body": {
               "id": 121,
               "nodeType": "Block",
-              "src": "3152:65:0",
+              "src": "3132:65:0",
               "statements": [
                 {
                   "expression": {
@@ -1609,7 +1609,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 33,
-                      "src": "3162:21:0",
+                      "src": "3142:21:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -1624,13 +1624,13 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 112,
-                      "src": "3186:24:0",
+                      "src": "3166:24:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "src": "3162:48:0",
+                    "src": "3142:48:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1638,7 +1638,7 @@
                   },
                   "id": 120,
                   "nodeType": "ExpressionStatement",
-                  "src": "3162:48:0"
+                  "src": "3142:48:0"
                 }
               ]
             },
@@ -1656,15 +1656,15 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1698,
-                  "src": "3142:9:0",
+                  "referencedDeclaration": 7973,
+                  "src": "3122:9:0",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
                     "typeString": "modifier ()"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "3142:9:0"
+                "src": "3122:9:0"
               }
             ],
             "name": "setminBusinessFeePayment",
@@ -1679,7 +1679,7 @@
                   "name": "newMinBusinessFeePayment",
                   "nodeType": "VariableDeclaration",
                   "scope": 122,
-                  "src": "3104:29:0",
+                  "src": "3084:29:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1690,7 +1690,7 @@
                     "id": 111,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "3104:4:0",
+                    "src": "3084:4:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1700,16 +1700,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "3103:31:0"
+              "src": "3083:31:0"
             },
             "returnParameters": {
               "id": 116,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "3152:0:0"
+              "src": "3132:0:0"
             },
             "scope": 130,
-            "src": "3070:147:0",
+            "src": "3050:147:0",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
@@ -1733,7 +1733,7 @@
                   "name": "_choice",
                   "nodeType": "VariableDeclaration",
                   "scope": 129,
-                  "src": "3246:12:0",
+                  "src": "3226:12:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1744,7 +1744,7 @@
                     "id": 123,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "3246:4:0",
+                    "src": "3226:4:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1754,7 +1754,7 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "3245:14:0"
+              "src": "3225:14:0"
             },
             "returnParameters": {
               "id": 128,
@@ -1766,7 +1766,7 @@
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "scope": 129,
-                  "src": "3283:4:0",
+                  "src": "3263:4:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1777,7 +1777,7 @@
                     "id": 126,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "3283:4:0",
+                    "src": "3263:4:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1787,20 +1787,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "3282:6:0"
+              "src": "3262:6:0"
             },
             "scope": 130,
-            "src": "3223:66:0",
+            "src": "3203:66:0",
             "stateMutability": "payable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
         "scope": 131,
-        "src": "505:2877:0"
+        "src": "505:2857:0"
       }
     ],
-    "src": "0:3382:0"
+    "src": "0:3362:0"
   },
   "legacyAST": {
     "absolutePath": "/home/rggentil/Documents/master_ethereum/BLOCKCHAINTFM/RPS_commit_and_reveal/contracts/GamblingGame.sol",
@@ -1828,7 +1828,7 @@
         "id": 2,
         "nodeType": "ImportDirective",
         "scope": 131,
-        "sourceUnit": 1765,
+        "sourceUnit": 8040,
         "src": "24:63:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -1839,7 +1839,7 @@
         "id": 3,
         "nodeType": "ImportDirective",
         "scope": 131,
-        "sourceUnit": 1656,
+        "sourceUnit": 7931,
         "src": "88:59:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -1853,10 +1853,10 @@
               "id": 4,
               "name": "Ownable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1764,
+              "referencedDeclaration": 8039,
               "src": "530:7:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Ownable_$1764",
+                "typeIdentifier": "t_contract$_Ownable_$8039",
                 "typeString": "contract Ownable"
               }
             },
@@ -1866,7 +1866,7 @@
           }
         ],
         "contractDependencies": [
-          1764
+          8039
         ],
         "contractKind": "contract",
         "documentation": "@title RPS - RockPaperScissor P2P game, playing also for a jackpot.\n@author rggentil\n@notice This is just a simple game done mostly for learning solidity\nand web3 development, do not use betting real value since\nit has some known vulnerabilities.\n@dev My first smartcontract, so probably code could be improved.",
@@ -1874,7 +1874,7 @@
         "id": 130,
         "linearizedBaseContracts": [
           130,
-          1764
+          8039
         ],
         "name": "GamblingGame",
         "nodeType": "ContractDefinition",
@@ -1886,10 +1886,10 @@
               "id": 6,
               "name": "SafeMath",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1655,
+              "referencedDeclaration": 7930,
               "src": "550:8:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_SafeMath_$1655",
+                "typeIdentifier": "t_contract$_SafeMath_$7930",
                 "typeString": "library SafeMath"
               }
             },
@@ -2383,7 +2383,7 @@
             "body": {
               "id": 54,
               "nodeType": "Block",
-              "src": "1549:110:0",
+              "src": "1544:110:0",
               "statements": [
                 {
                   "expression": {
@@ -2407,7 +2407,7 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 13,
-                          "src": "1567:11:0",
+                          "src": "1562:11:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bool",
                             "typeString": "bool"
@@ -2422,13 +2422,13 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 44,
-                          "src": "1582:10:0",
+                          "src": "1577:10:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bool",
                             "typeString": "bool"
                           }
                         },
-                        "src": "1567:25:0",
+                        "src": "1562:25:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
@@ -2444,7 +2444,7 @@
                         "kind": "string",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "1594:46:0",
+                        "src": "1589:46:0",
                         "subdenomination": null,
                         "typeDescriptions": {
                           "typeIdentifier": "t_stringliteral_8c88674830c20c99ce412b9680abd8ccdc5e24bda4313ba946d21f05051884f8",
@@ -2468,11 +2468,11 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1782,
-                        1783
+                        8057,
+                        8058
                       ],
-                      "referencedDeclaration": 1783,
-                      "src": "1559:7:0",
+                      "referencedDeclaration": 8058,
+                      "src": "1554:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (bool,string memory) pure"
@@ -2486,7 +2486,7 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1559:82:0",
+                    "src": "1554:82:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
@@ -2494,18 +2494,18 @@
                   },
                   "id": 52,
                   "nodeType": "ExpressionStatement",
-                  "src": "1559:82:0"
+                  "src": "1554:82:0"
                 },
                 {
                   "id": 53,
                   "nodeType": "PlaceholderStatement",
-                  "src": "1651:1:0"
+                  "src": "1646:1:0"
                 }
               ]
             },
             "documentation": "@dev Modifier for functions available only when game is running\n@param _isRunning bool to check is we need the game is running or not",
             "id": 55,
-            "name": "gameIsRunning",
+            "name": "gameIsOn",
             "nodeType": "ModifierDefinition",
             "parameters": {
               "id": 45,
@@ -2517,7 +2517,7 @@
                   "name": "_isRunning",
                   "nodeType": "VariableDeclaration",
                   "scope": 55,
-                  "src": "1532:15:0",
+                  "src": "1527:15:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2528,7 +2528,7 @@
                     "id": 43,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1532:4:0",
+                    "src": "1527:4:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -2538,16 +2538,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1531:17:0"
+              "src": "1526:17:0"
             },
-            "src": "1509:150:0",
+            "src": "1509:145:0",
             "visibility": "internal"
           },
           {
             "body": {
               "id": 58,
               "nodeType": "Block",
-              "src": "1694:135:0",
+              "src": "1689:135:0",
               "statements": []
             },
             "documentation": null,
@@ -2561,16 +2561,16 @@
               "id": 56,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1676:2:0"
+              "src": "1671:2:0"
             },
             "returnParameters": {
               "id": 57,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1694:0:0"
+              "src": "1689:0:0"
             },
             "scope": 130,
-            "src": "1665:164:0",
+            "src": "1660:164:0",
             "stateMutability": "payable",
             "superFunction": null,
             "visibility": "public"
@@ -2579,7 +2579,7 @@
             "body": {
               "id": 71,
               "nodeType": "Block",
-              "src": "2076:35:0",
+              "src": "2066:35:0",
               "statements": [
                 {
                   "expression": {
@@ -2596,7 +2596,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 13,
-                      "src": "2086:11:0",
+                      "src": "2076:11:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
                         "typeString": "bool"
@@ -2614,7 +2614,7 @@
                       "kind": "bool",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "2100:4:0",
+                      "src": "2090:4:0",
                       "subdenomination": null,
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
@@ -2622,7 +2622,7 @@
                       },
                       "value": "true"
                     },
-                    "src": "2086:18:0",
+                    "src": "2076:18:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -2630,7 +2630,7 @@
                   },
                   "id": 70,
                   "nodeType": "ExpressionStatement",
-                  "src": "2086:18:0"
+                  "src": "2076:18:0"
                 }
               ]
             },
@@ -2648,15 +2648,15 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1698,
-                  "src": "2046:9:0",
+                  "referencedDeclaration": 7973,
+                  "src": "2041:9:0",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
                     "typeString": "modifier ()"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "2046:9:0"
+                "src": "2041:9:0"
               },
               {
                 "arguments": [
@@ -2670,7 +2670,7 @@
                     "kind": "bool",
                     "lValueRequested": false,
                     "nodeType": "Literal",
-                    "src": "2070:5:0",
+                    "src": "2060:5:0",
                     "subdenomination": null,
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
@@ -2683,18 +2683,18 @@
                 "modifierName": {
                   "argumentTypes": null,
                   "id": 63,
-                  "name": "gameIsRunning",
+                  "name": "gameIsOn",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
                   "referencedDeclaration": 55,
-                  "src": "2056:13:0",
+                  "src": "2051:8:0",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$_t_bool_$",
                     "typeString": "modifier (bool)"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "2056:20:0"
+                "src": "2051:15:0"
               }
             ],
             "name": "startGame",
@@ -2703,16 +2703,16 @@
               "id": 60,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "2036:2:0"
+              "src": "2031:2:0"
             },
             "returnParameters": {
               "id": 66,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "2076:0:0"
+              "src": "2066:0:0"
             },
             "scope": 130,
-            "src": "2018:93:0",
+            "src": "2013:88:0",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
@@ -2721,7 +2721,7 @@
             "body": {
               "id": 84,
               "nodeType": "Block",
-              "src": "2245:36:0",
+              "src": "2230:36:0",
               "statements": [
                 {
                   "expression": {
@@ -2738,7 +2738,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 13,
-                      "src": "2255:11:0",
+                      "src": "2240:11:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
                         "typeString": "bool"
@@ -2756,7 +2756,7 @@
                       "kind": "bool",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "2269:5:0",
+                      "src": "2254:5:0",
                       "subdenomination": null,
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
@@ -2764,7 +2764,7 @@
                       },
                       "value": "false"
                     },
-                    "src": "2255:19:0",
+                    "src": "2240:19:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -2772,7 +2772,7 @@
                   },
                   "id": 83,
                   "nodeType": "ExpressionStatement",
-                  "src": "2255:19:0"
+                  "src": "2240:19:0"
                 }
               ]
             },
@@ -2790,15 +2790,15 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1698,
-                  "src": "2216:9:0",
+                  "referencedDeclaration": 7973,
+                  "src": "2206:9:0",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
                     "typeString": "modifier ()"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "2216:9:0"
+                "src": "2206:9:0"
               },
               {
                 "arguments": [
@@ -2812,7 +2812,7 @@
                     "kind": "bool",
                     "lValueRequested": false,
                     "nodeType": "Literal",
-                    "src": "2240:4:0",
+                    "src": "2225:4:0",
                     "subdenomination": null,
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
@@ -2825,18 +2825,18 @@
                 "modifierName": {
                   "argumentTypes": null,
                   "id": 76,
-                  "name": "gameIsRunning",
+                  "name": "gameIsOn",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
                   "referencedDeclaration": 55,
-                  "src": "2226:13:0",
+                  "src": "2216:8:0",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$_t_bool_$",
                     "typeString": "modifier (bool)"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "2226:19:0"
+                "src": "2216:14:0"
               }
             ],
             "name": "stopGame",
@@ -2845,16 +2845,16 @@
               "id": 73,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "2206:2:0"
+              "src": "2196:2:0"
             },
             "returnParameters": {
               "id": 79,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "2245:0:0"
+              "src": "2230:0:0"
             },
             "scope": 130,
-            "src": "2189:92:0",
+            "src": "2179:87:0",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
@@ -2863,7 +2863,7 @@
             "body": {
               "id": 104,
               "nodeType": "Block",
-              "src": "2511:59:0",
+              "src": "2491:59:0",
               "statements": [
                 {
                   "expression": {
@@ -2880,8 +2880,8 @@
                               "name": "this",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 1797,
-                              "src": "2549:4:0",
+                              "referencedDeclaration": 8072,
+                              "src": "2529:4:0",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_contract$_GamblingGame_$130",
                                 "typeString": "contract GamblingGame"
@@ -2901,7 +2901,7 @@
                             "isPure": true,
                             "lValueRequested": false,
                             "nodeType": "ElementaryTypeNameExpression",
-                            "src": "2541:7:0",
+                            "src": "2521:7:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_type$_t_address_$",
                               "typeString": "type(address)"
@@ -2916,7 +2916,7 @@
                           "lValueRequested": false,
                           "names": [],
                           "nodeType": "FunctionCall",
-                          "src": "2541:13:0",
+                          "src": "2521:13:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
                             "typeString": "address"
@@ -2930,7 +2930,7 @@
                         "memberName": "balance",
                         "nodeType": "MemberAccess",
                         "referencedDeclaration": null,
-                        "src": "2541:21:0",
+                        "src": "2521:21:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -2951,7 +2951,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 87,
-                        "src": "2521:10:0",
+                        "src": "2501:10:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address_payable",
                           "typeString": "address payable"
@@ -2965,7 +2965,7 @@
                       "memberName": "transfer",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": null,
-                      "src": "2521:19:0",
+                      "src": "2501:19:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_transfer_nonpayable$_t_uint256_$returns$__$",
                         "typeString": "function (uint256)"
@@ -2979,7 +2979,7 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "2521:42:0",
+                    "src": "2501:42:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
@@ -2987,7 +2987,7 @@
                   },
                   "id": 103,
                   "nodeType": "ExpressionStatement",
-                  "src": "2521:42:0"
+                  "src": "2501:42:0"
                 }
               ]
             },
@@ -3005,15 +3005,15 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1698,
-                  "src": "2480:9:0",
+                  "referencedDeclaration": 7973,
+                  "src": "2465:9:0",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
                     "typeString": "modifier ()"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "2480:9:0"
+                "src": "2465:9:0"
               },
               {
                 "arguments": [
@@ -3027,7 +3027,7 @@
                     "kind": "bool",
                     "lValueRequested": false,
                     "nodeType": "Literal",
-                    "src": "2504:5:0",
+                    "src": "2484:5:0",
                     "subdenomination": null,
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
@@ -3040,18 +3040,18 @@
                 "modifierName": {
                   "argumentTypes": null,
                   "id": 91,
-                  "name": "gameIsRunning",
+                  "name": "gameIsOn",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
                   "referencedDeclaration": 55,
-                  "src": "2490:13:0",
+                  "src": "2475:8:0",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$_t_bool_$",
                     "typeString": "modifier (bool)"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "2490:20:0"
+                "src": "2475:15:0"
               }
             ],
             "name": "withdrawFunds",
@@ -3066,7 +3066,7 @@
                   "name": "_myAddress",
                   "nodeType": "VariableDeclaration",
                   "scope": 105,
-                  "src": "2445:26:0",
+                  "src": "2430:26:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3077,7 +3077,7 @@
                     "id": 86,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2445:15:0",
+                    "src": "2430:15:0",
                     "stateMutability": "payable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address_payable",
@@ -3088,16 +3088,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2444:28:0"
+              "src": "2429:28:0"
             },
             "returnParameters": {
               "id": 94,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "2511:0:0"
+              "src": "2491:0:0"
             },
             "scope": 130,
-            "src": "2422:148:0",
+            "src": "2407:143:0",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
@@ -3121,7 +3121,7 @@
                   "name": "_roundId",
                   "nodeType": "VariableDeclaration",
                   "scope": 110,
-                  "src": "2595:13:0",
+                  "src": "2575:13:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3132,7 +3132,7 @@
                     "id": 106,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2595:4:0",
+                    "src": "2575:4:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3142,16 +3142,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2594:15:0"
+              "src": "2574:15:0"
             },
             "returnParameters": {
               "id": 109,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "2617:0:0"
+              "src": "2597:0:0"
             },
             "scope": 130,
-            "src": "2576:42:0",
+            "src": "2556:42:0",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "private"
@@ -3160,7 +3160,7 @@
             "body": {
               "id": 121,
               "nodeType": "Block",
-              "src": "3152:65:0",
+              "src": "3132:65:0",
               "statements": [
                 {
                   "expression": {
@@ -3177,7 +3177,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 33,
-                      "src": "3162:21:0",
+                      "src": "3142:21:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -3192,13 +3192,13 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 112,
-                      "src": "3186:24:0",
+                      "src": "3166:24:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "src": "3162:48:0",
+                    "src": "3142:48:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3206,7 +3206,7 @@
                   },
                   "id": 120,
                   "nodeType": "ExpressionStatement",
-                  "src": "3162:48:0"
+                  "src": "3142:48:0"
                 }
               ]
             },
@@ -3224,15 +3224,15 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1698,
-                  "src": "3142:9:0",
+                  "referencedDeclaration": 7973,
+                  "src": "3122:9:0",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
                     "typeString": "modifier ()"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "3142:9:0"
+                "src": "3122:9:0"
               }
             ],
             "name": "setminBusinessFeePayment",
@@ -3247,7 +3247,7 @@
                   "name": "newMinBusinessFeePayment",
                   "nodeType": "VariableDeclaration",
                   "scope": 122,
-                  "src": "3104:29:0",
+                  "src": "3084:29:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3258,7 +3258,7 @@
                     "id": 111,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "3104:4:0",
+                    "src": "3084:4:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3268,16 +3268,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "3103:31:0"
+              "src": "3083:31:0"
             },
             "returnParameters": {
               "id": 116,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "3152:0:0"
+              "src": "3132:0:0"
             },
             "scope": 130,
-            "src": "3070:147:0",
+            "src": "3050:147:0",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
@@ -3301,7 +3301,7 @@
                   "name": "_choice",
                   "nodeType": "VariableDeclaration",
                   "scope": 129,
-                  "src": "3246:12:0",
+                  "src": "3226:12:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3312,7 +3312,7 @@
                     "id": 123,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "3246:4:0",
+                    "src": "3226:4:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3322,7 +3322,7 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "3245:14:0"
+              "src": "3225:14:0"
             },
             "returnParameters": {
               "id": 128,
@@ -3334,7 +3334,7 @@
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "scope": 129,
-                  "src": "3283:4:0",
+                  "src": "3263:4:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3345,7 +3345,7 @@
                     "id": 126,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "3283:4:0",
+                    "src": "3263:4:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3355,20 +3355,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "3282:6:0"
+              "src": "3262:6:0"
             },
             "scope": 130,
-            "src": "3223:66:0",
+            "src": "3203:66:0",
             "stateMutability": "payable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
         "scope": 131,
-        "src": "505:2877:0"
+        "src": "505:2857:0"
       }
     ],
-    "src": "0:3382:0"
+    "src": "0:3362:0"
   },
   "compiler": {
     "name": "solc",
@@ -3376,7 +3376,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.2",
-  "updatedAt": "2019-03-20T06:09:02.734Z",
+  "updatedAt": "2019-03-24T07:29:45.071Z",
   "devdoc": {
     "author": "rggentil",
     "details": "My first smartcontract, so probably code could be improved.",

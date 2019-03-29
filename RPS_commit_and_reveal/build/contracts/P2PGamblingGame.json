@@ -377,7 +377,7 @@
         ],
         "contractDependencies": [
           130,
-          1783
+          8039
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -386,7 +386,7 @@
         "linearizedBaseContracts": [
           387,
           130,
-          1783
+          8039
         ],
         "name": "P2PGamblingGame",
         "nodeType": "ContractDefinition",
@@ -933,7 +933,7 @@
         ],
         "contractDependencies": [
           130,
-          1783
+          8039
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -942,7 +942,7 @@
         "linearizedBaseContracts": [
           387,
           130,
-          1783
+          8039
         ],
         "name": "P2PGamblingGame",
         "nodeType": "ContractDefinition",
@@ -1441,7 +1441,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.2",
-  "updatedAt": "2019-03-20T06:09:33.077Z",
+  "updatedAt": "2019-03-24T07:29:45.064Z",
   "devdoc": {
     "methods": {
       "isOwner()": {

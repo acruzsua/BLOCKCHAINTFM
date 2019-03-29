@@ -35,7 +35,7 @@ contract GamblingGame is Ownable {
     /** @dev Modifier for functions available only when game is running
       * @param _isRunning bool to check is we need the game is running or not
     */
-    modifier gameIsRunning(bool _isRunning) {
+    modifier gameIsOn(bool _isRunning) {
         require(gameRunning == _isRunning, "Function available only when game is running");
         _;
     }
@@ -48,24 +48,40 @@ contract GamblingGame is Ownable {
     /** @notice When we have everything ready owner can start game so anyone can play. Also it starts lottery.
                 Also for restarting game after having stopped it
     */
-    function startGame() public onlyOwner gameIsRunning(false){
+    function startGame() public onlyOwner gameIsOn(false){
         gameRunning = true;
     }
 
     /** @notice Function for emergengies. Also it stops lottery.
     */
-    function stopGame() public onlyOwner gameIsRunning(true){
+    function stopGame() public onlyOwner gameIsOn(true){
         gameRunning = false;
     }
 
     /** @notice Withdraw funds in case of an emergengy. Set jackpot to 0.
       * @param _myAddress addres to withdraw funds to
     */
-    function withdrawFunds(address payable _myAddress) public onlyOwner gameIsRunning(false) {
+    function withdrawFunds(address payable _myAddress) public onlyOwner gameIsOn(false) {
         _myAddress.transfer(address(this).balance);
     }
 
+    function _resolveRound(uint _roundId) private;
+
     function _payRound(uint _roundId) private;
+
+    /**
+     * @notice Test if the player's bet is at least the minium required for playing
+     * @param _bet Indicates the bet risked by the user
+     * @param _minimumBet Indicates the minimum bet accepted to play the game
+     * @return True if player's bet is at least equal to the minimum expected to allow the game, False otherwise.
+     */
+    function isValidBet (uint _bet, uint _minimumBet, uint _maximumBet)
+        internal
+        pure
+        returns (bool)
+    {
+        return ((_bet >= _minimumBet) && (_bet < _maximumBet) );
+    }
 
     // function _checkWinner(Player memory player1, Player memory player2) private pure returns(address payable);
 

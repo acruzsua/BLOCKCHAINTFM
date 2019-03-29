@@ -125,12 +125,13 @@ contract RPS is P2PGamblingGame, LotteryGame {
      */
     function playSoloRound(uint _choice)
         public
-        gameIsRunning(true)
+        gameIsOn(true)
         isChoice(_choice)
         payable
         returns(uint)
     {
-        require(msg.value >= minimumBet, "Not enough amount bet");
+        require(isValidBet(msg.value, minimumBet, 1000000 ether));
+        //require(msg.value >= minimumBet, "Not enough amount bet");
         Choice choice = Choice(_choice);
         roundCount++;
         uint roundId = roundCount;
@@ -148,7 +149,8 @@ contract RPS is P2PGamblingGame, LotteryGame {
         );
 
         if (round.isSolo) {
-            require(msg.value <= jackpot, "Bet too high");
+            require(isValidBet(msg.value, minimumBet, jackpot));
+            //require(msg.value <= jackpot, "Bet too high");
             round.player2.playerAddress = address(this);
             round.player2.choice = getRandomChoice();
             _resolveRound(roundId);
@@ -167,7 +169,7 @@ contract RPS is P2PGamblingGame, LotteryGame {
      */
     function createRound(bytes32 _secretChoice)
         public
-        gameIsRunning(true)
+        gameIsOn(true)
         payable
         returns(uint)
     {
@@ -198,7 +200,7 @@ contract RPS is P2PGamblingGame, LotteryGame {
       * @param _roundId id number that identify the round to join
       * @param _choice choose Choice enum value: ROCK, PAPER, SCISSOR
      */
-    function joinRound(uint _roundId, uint _choice) public gameIsRunning(true) isChoice(_choice) payable {
+    function joinRound(uint _roundId, uint _choice) public gameIsOn(true) isChoice(_choice) payable {
         Round storage myRound = rounds[_roundId];  // Pointer to round
         require(myRound.player1.playerAddress != address(0), "Round does not exist");
         require(myRound.player2.playerAddress == address(0) && !myRound.isClosed, "Round already finished");
@@ -217,7 +219,7 @@ contract RPS is P2PGamblingGame, LotteryGame {
 
     /** @notice Player 1 reveals choice when other player has joined to player 1's round
      */
-    function revealChoice(uint _roundId, uint256 _choice, string memory _secret) public gameIsRunning(true) {
+    function revealChoice(uint _roundId, uint256 _choice, string memory _secret) public gameIsOn(true) {
         Round storage myRound = rounds[_roundId];  // Pointer to round
         require(myRound.player2.playerAddress != address(0), "Nobody joined to the round, it can't be resolved");
         require(keccak256(abi.encodePacked(_choice, _secret)) == myRound.player1.secretChoice, "Error trying to reveal choice");

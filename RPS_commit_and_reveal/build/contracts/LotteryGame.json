@@ -205,14 +205,14 @@
     "absolutePath": "/home/rggentil/Documents/master_ethereum/BLOCKCHAINTFM/RPS_commit_and_reveal/contracts/LotteryGame.sol",
     "exportedSymbols": {
       "LotteryGame": [
-        291
+        282
       ]
     },
-    "id": 292,
+    "id": 283,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 141,
+        "id": 132,
         "literals": [
           "solidity",
           ">=",
@@ -224,10 +224,10 @@
       {
         "absolutePath": "openzeppelin-solidity/contracts/ownership/Ownable.sol",
         "file": "openzeppelin-solidity/contracts/ownership/Ownable.sol",
-        "id": 142,
+        "id": 133,
         "nodeType": "ImportDirective",
-        "scope": 292,
-        "sourceUnit": 1793,
+        "scope": 283,
+        "sourceUnit": 8040,
         "src": "24:63:1",
         "symbolAliases": [],
         "unitAlias": ""
@@ -235,10 +235,10 @@
       {
         "absolutePath": "openzeppelin-solidity/contracts/math/SafeMath.sol",
         "file": "openzeppelin-solidity/contracts/math/SafeMath.sol",
-        "id": 143,
+        "id": 134,
         "nodeType": "ImportDirective",
-        "scope": 292,
-        "sourceUnit": 1684,
+        "scope": 283,
+        "sourceUnit": 7931,
         "src": "88:59:1",
         "symbolAliases": [],
         "unitAlias": ""
@@ -249,53 +249,53 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 144,
+              "id": 135,
               "name": "Ownable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1792,
+              "referencedDeclaration": 8039,
               "src": "173:7:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Ownable_$1792",
+                "typeIdentifier": "t_contract$_Ownable_$8039",
                 "typeString": "contract Ownable"
               }
             },
-            "id": 145,
+            "id": 136,
             "nodeType": "InheritanceSpecifier",
             "src": "173:7:1"
           }
         ],
         "contractDependencies": [
-          1792
+          8039
         ],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 291,
+        "id": 282,
         "linearizedBaseContracts": [
-          291,
-          1792
+          282,
+          8039
         ],
         "name": "LotteryGame",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
-            "id": 148,
+            "id": 139,
             "libraryName": {
               "contractScope": null,
-              "id": 146,
+              "id": 137,
               "name": "SafeMath",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1683,
+              "referencedDeclaration": 7930,
               "src": "193:8:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_SafeMath_$1683",
+                "typeIdentifier": "t_contract$_SafeMath_$7930",
                 "typeString": "library SafeMath"
               }
             },
             "nodeType": "UsingForDirective",
             "src": "187:24:1",
             "typeName": {
-              "id": 147,
+              "id": 138,
               "name": "uint",
               "nodeType": "ElementaryTypeName",
               "src": "206:4:1",
@@ -307,10 +307,10 @@
           },
           {
             "constant": false,
-            "id": 150,
+            "id": 141,
             "name": "jackpot",
             "nodeType": "VariableDeclaration",
-            "scope": 291,
+            "scope": 282,
             "src": "217:19:1",
             "stateVariable": true,
             "storageLocation": "default",
@@ -319,7 +319,7 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 149,
+              "id": 140,
               "name": "uint",
               "nodeType": "ElementaryTypeName",
               "src": "217:4:1",
@@ -333,10 +333,10 @@
           },
           {
             "constant": false,
-            "id": 152,
+            "id": 143,
             "name": "lotteryOn",
             "nodeType": "VariableDeclaration",
-            "scope": 291,
+            "scope": 282,
             "src": "242:21:1",
             "stateVariable": true,
             "storageLocation": "default",
@@ -345,7 +345,7 @@
               "typeString": "bool"
             },
             "typeName": {
-              "id": 151,
+              "id": 142,
               "name": "bool",
               "nodeType": "ElementaryTypeName",
               "src": "242:4:1",
@@ -359,10 +359,10 @@
           },
           {
             "constant": false,
-            "id": 155,
+            "id": 146,
             "name": "lotteryRate",
             "nodeType": "VariableDeclaration",
-            "scope": 291,
+            "scope": 282,
             "src": "269:30:1",
             "stateVariable": true,
             "storageLocation": "default",
@@ -371,7 +371,7 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 153,
+              "id": 144,
               "name": "uint",
               "nodeType": "ElementaryTypeName",
               "src": "269:4:1",
@@ -383,7 +383,7 @@
             "value": {
               "argumentTypes": null,
               "hexValue": "31303030",
-              "id": 154,
+              "id": 145,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -402,10 +402,10 @@
           },
           {
             "constant": false,
-            "id": 158,
+            "id": 149,
             "name": "minJackpot",
             "nodeType": "VariableDeclaration",
-            "scope": 291,
+            "scope": 282,
             "src": "320:32:1",
             "stateVariable": true,
             "storageLocation": "default",
@@ -414,7 +414,7 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 156,
+              "id": 147,
               "name": "uint",
               "nodeType": "ElementaryTypeName",
               "src": "320:4:1",
@@ -426,7 +426,7 @@
             "value": {
               "argumentTypes": null,
               "hexValue": "31",
-              "id": 157,
+              "id": 148,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -446,20 +446,20 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 164,
+            "id": 155,
             "name": "LotteryWin",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 163,
+              "id": 154,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 160,
+                  "id": 151,
                   "indexed": false,
                   "name": "winner",
                   "nodeType": "VariableDeclaration",
-                  "scope": 164,
+                  "scope": 155,
                   "src": "428:14:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -468,7 +468,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 159,
+                    "id": 150,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "428:7:1",
@@ -483,11 +483,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 162,
+                  "id": 153,
                   "indexed": false,
                   "name": "jackpot",
                   "nodeType": "VariableDeclaration",
-                  "scope": 164,
+                  "scope": 155,
                   "src": "444:12:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -496,7 +496,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 161,
+                    "id": 152,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "444:4:1",
@@ -515,31 +515,31 @@
           },
           {
             "body": {
-              "id": 167,
+              "id": 158,
               "nodeType": "Block",
               "src": "493:135:1",
               "statements": []
             },
             "documentation": null,
-            "id": 168,
+            "id": 159,
             "implemented": true,
             "kind": "constructor",
             "modifiers": [],
             "name": "",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 165,
+              "id": 156,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "475:2:1"
             },
             "returnParameters": {
-              "id": 166,
+              "id": 157,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "493:0:1"
             },
-            "scope": 291,
+            "scope": 282,
             "src": "464:164:1",
             "stateMutability": "payable",
             "superFunction": null,
@@ -547,25 +547,25 @@
           },
           {
             "body": {
-              "id": 179,
+              "id": 170,
               "nodeType": "Block",
               "src": "744:49:1",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 177,
+                    "id": 168,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 171,
+                      "id": 162,
                       "name": "jackpot",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 150,
+                      "referencedDeclaration": 141,
                       "src": "754:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -581,18 +581,18 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 174,
+                            "id": 165,
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1807,
+                            "referencedDeclaration": 8054,
                             "src": "776:3:1",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
                               "typeString": "msg"
                             }
                           },
-                          "id": 175,
+                          "id": 166,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -616,32 +616,32 @@
                         ],
                         "expression": {
                           "argumentTypes": null,
-                          "id": 172,
+                          "id": 163,
                           "name": "jackpot",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 150,
+                          "referencedDeclaration": 141,
                           "src": "764:7:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           }
                         },
-                        "id": 173,
+                        "id": 164,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "add",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 1662,
+                        "referencedDeclaration": 7909,
                         "src": "764:11:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
                           "typeString": "function (uint256,uint256) pure returns (uint256)"
                         }
                       },
-                      "id": 176,
+                      "id": 167,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -661,32 +661,32 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 178,
+                  "id": 169,
                   "nodeType": "ExpressionStatement",
                   "src": "754:32:1"
                 }
               ]
             },
             "documentation": "@notice Fallback, just in case of receiving funds, to the jackpot",
-            "id": 180,
+            "id": 171,
             "implemented": true,
             "kind": "fallback",
             "modifiers": [],
             "name": "",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 169,
+              "id": 160,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "724:2:1"
             },
             "returnParameters": {
-              "id": 170,
+              "id": 161,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "744:0:1"
             },
-            "scope": 291,
+            "scope": 282,
             "src": "715:78:1",
             "stateMutability": "payable",
             "superFunction": null,
@@ -694,25 +694,25 @@
           },
           {
             "body": {
-              "id": 189,
+              "id": 180,
               "nodeType": "Block",
               "src": "913:34:1",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 187,
+                    "id": 178,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 185,
+                      "id": 176,
                       "name": "lotteryOn",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 152,
+                      "referencedDeclaration": 143,
                       "src": "923:9:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
@@ -724,7 +724,7 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "66616c7365",
-                      "id": 186,
+                      "id": 177,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -745,27 +745,27 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 188,
+                  "id": 179,
                   "nodeType": "ExpressionStatement",
                   "src": "923:17:1"
                 }
               ]
             },
             "documentation": "@notice Stop lottery (this means stop playing for jackpot)",
-            "id": 190,
+            "id": 181,
             "implemented": true,
             "kind": "function",
             "modifiers": [
               {
                 "arguments": null,
-                "id": 183,
+                "id": 174,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 182,
+                  "id": 173,
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1726,
+                  "referencedDeclaration": 7973,
                   "src": "903:9:1",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -779,18 +779,18 @@
             "name": "stopLottery",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 181,
+              "id": 172,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "893:2:1"
             },
             "returnParameters": {
-              "id": 184,
+              "id": 175,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "913:0:1"
             },
-            "scope": 291,
+            "scope": 282,
             "src": "873:74:1",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -798,7 +798,7 @@
           },
           {
             "body": {
-              "id": 225,
+              "id": 216,
               "nodeType": "Block",
               "src": "1064:247:1",
               "statements": [
@@ -812,18 +812,18 @@
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         },
-                        "id": 201,
+                        "id": 192,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
                           "argumentTypes": null,
-                          "id": 196,
+                          "id": 187,
                           "name": "jackpot",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 150,
+                          "referencedDeclaration": 141,
                           "src": "1082:7:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
@@ -839,14 +839,14 @@
                             "arguments": [
                               {
                                 "argumentTypes": null,
-                                "id": 198,
+                                "id": 189,
                                 "name": "this",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 1827,
+                                "referencedDeclaration": 8074,
                                 "src": "1101:4:1",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_contract$_LotteryGame_$291",
+                                  "typeIdentifier": "t_contract$_LotteryGame_$282",
                                   "typeString": "contract LotteryGame"
                                 }
                               }
@@ -854,11 +854,11 @@
                             "expression": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_contract$_LotteryGame_$291",
+                                  "typeIdentifier": "t_contract$_LotteryGame_$282",
                                   "typeString": "contract LotteryGame"
                                 }
                               ],
-                              "id": 197,
+                              "id": 188,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
@@ -871,7 +871,7 @@
                               },
                               "typeName": "address"
                             },
-                            "id": 199,
+                            "id": 190,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -885,7 +885,7 @@
                               "typeString": "address payable"
                             }
                           },
-                          "id": 200,
+                          "id": 191,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -908,7 +908,7 @@
                       {
                         "argumentTypes": null,
                         "hexValue": "4a61636b706f74206c6f776572207468616e2053432062616c616e6365",
-                        "id": 202,
+                        "id": 193,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -935,21 +935,21 @@
                           "typeString": "literal_string \"Jackpot lower than SC balance\""
                         }
                       ],
-                      "id": 195,
+                      "id": 186,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1810,
-                        1811
+                        8057,
+                        8058
                       ],
-                      "referencedDeclaration": 1811,
+                      "referencedDeclaration": 8058,
                       "src": "1074:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 203,
+                    "id": 194,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -963,7 +963,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 204,
+                  "id": 195,
                   "nodeType": "ExpressionStatement",
                   "src": "1074:74:1"
                 },
@@ -977,7 +977,7 @@
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
                         },
-                        "id": 217,
+                        "id": 208,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -991,7 +991,7 @@
                                 "typeIdentifier": "t_uint256",
                                 "typeString": "uint256"
                               },
-                              "id": 211,
+                              "id": 202,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -1003,14 +1003,14 @@
                                   "arguments": [
                                     {
                                       "argumentTypes": null,
-                                      "id": 207,
+                                      "id": 198,
                                       "name": "this",
                                       "nodeType": "Identifier",
                                       "overloadedDeclarations": [],
-                                      "referencedDeclaration": 1827,
+                                      "referencedDeclaration": 8074,
                                       "src": "1175:4:1",
                                       "typeDescriptions": {
-                                        "typeIdentifier": "t_contract$_LotteryGame_$291",
+                                        "typeIdentifier": "t_contract$_LotteryGame_$282",
                                         "typeString": "contract LotteryGame"
                                       }
                                     }
@@ -1018,11 +1018,11 @@
                                   "expression": {
                                     "argumentTypes": [
                                       {
-                                        "typeIdentifier": "t_contract$_LotteryGame_$291",
+                                        "typeIdentifier": "t_contract$_LotteryGame_$282",
                                         "typeString": "contract LotteryGame"
                                       }
                                     ],
-                                    "id": 206,
+                                    "id": 197,
                                     "isConstant": false,
                                     "isLValue": false,
                                     "isPure": true,
@@ -1035,7 +1035,7 @@
                                     },
                                     "typeName": "address"
                                   },
-                                  "id": 208,
+                                  "id": 199,
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": false,
@@ -1049,7 +1049,7 @@
                                     "typeString": "address payable"
                                   }
                                 },
-                                "id": 209,
+                                "id": 200,
                                 "isConstant": false,
                                 "isLValue": false,
                                 "isPure": false,
@@ -1067,11 +1067,11 @@
                               "operator": ">=",
                               "rightExpression": {
                                 "argumentTypes": null,
-                                "id": 210,
+                                "id": 201,
                                 "name": "minJackpot",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 158,
+                                "referencedDeclaration": 149,
                                 "src": "1192:10:1",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -1085,7 +1085,7 @@
                               }
                             }
                           ],
-                          "id": 212,
+                          "id": 203,
                           "isConstant": false,
                           "isInlineArray": false,
                           "isLValue": false,
@@ -1109,18 +1109,18 @@
                                 "typeIdentifier": "t_uint256",
                                 "typeString": "uint256"
                               },
-                              "id": 215,
+                              "id": 206,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
                               "lValueRequested": false,
                               "leftExpression": {
                                 "argumentTypes": null,
-                                "id": 213,
+                                "id": 204,
                                 "name": "jackpot",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 150,
+                                "referencedDeclaration": 141,
                                 "src": "1208:7:1",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -1131,11 +1131,11 @@
                               "operator": ">=",
                               "rightExpression": {
                                 "argumentTypes": null,
-                                "id": 214,
+                                "id": 205,
                                 "name": "minJackpot",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 158,
+                                "referencedDeclaration": 149,
                                 "src": "1219:10:1",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -1149,7 +1149,7 @@
                               }
                             }
                           ],
-                          "id": 216,
+                          "id": 207,
                           "isConstant": false,
                           "isInlineArray": false,
                           "isLValue": false,
@@ -1171,7 +1171,7 @@
                       {
                         "argumentTypes": null,
                         "hexValue": "4d696e696d756d204a61636b706f74206973206e656564656420666f72207374617274696e672067616d65",
-                        "id": 218,
+                        "id": 209,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -1198,21 +1198,21 @@
                           "typeString": "literal_string \"Minimum Jackpot is needed for starting game\""
                         }
                       ],
-                      "id": 205,
+                      "id": 196,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1810,
-                        1811
+                        8057,
+                        8058
                       ],
-                      "referencedDeclaration": 1811,
+                      "referencedDeclaration": 8058,
                       "src": "1158:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 219,
+                    "id": 210,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1226,25 +1226,25 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 220,
+                  "id": 211,
                   "nodeType": "ExpressionStatement",
                   "src": "1158:120:1"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 223,
+                    "id": 214,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 221,
+                      "id": 212,
                       "name": "lotteryOn",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 152,
+                      "referencedDeclaration": 143,
                       "src": "1288:9:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
@@ -1256,7 +1256,7 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "74727565",
-                      "id": 222,
+                      "id": 213,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -1277,27 +1277,27 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 224,
+                  "id": 215,
                   "nodeType": "ExpressionStatement",
                   "src": "1288:16:1"
                 }
               ]
             },
             "documentation": "@notice Start lottery (this means playing for jackpot)",
-            "id": 226,
+            "id": 217,
             "implemented": true,
             "kind": "function",
             "modifiers": [
               {
                 "arguments": null,
-                "id": 193,
+                "id": 184,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 192,
+                  "id": 183,
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1726,
+                  "referencedDeclaration": 7973,
                   "src": "1054:9:1",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -1311,18 +1311,18 @@
             "name": "startLottery",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 191,
+              "id": 182,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1044:2:1"
             },
             "returnParameters": {
-              "id": 194,
+              "id": 185,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1064:0:1"
             },
-            "scope": 291,
+            "scope": 282,
             "src": "1023:288:1",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1330,25 +1330,25 @@
           },
           {
             "body": {
-              "id": 237,
+              "id": 228,
               "nodeType": "Block",
               "src": "1661:45:1",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 235,
+                    "id": 226,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 233,
+                      "id": 224,
                       "name": "lotteryRate",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 155,
+                      "referencedDeclaration": 146,
                       "src": "1671:11:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -1359,11 +1359,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 234,
+                      "id": 225,
                       "name": "newLotteryRate",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 228,
+                      "referencedDeclaration": 219,
                       "src": "1685:14:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -1376,27 +1376,27 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 236,
+                  "id": 227,
                   "nodeType": "ExpressionStatement",
                   "src": "1671:28:1"
                 }
               ]
             },
             "documentation": "@notice Set the lottery rate in percentage, how easy is to hit the jackpot\n@dev Mostly for testing porpuse. It should be removed in final deployment or no modifiable by anyone\n@param newLotteryRate new lottery rate",
-            "id": 238,
+            "id": 229,
             "implemented": true,
             "kind": "function",
             "modifiers": [
               {
                 "arguments": null,
-                "id": 231,
+                "id": 222,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 230,
+                  "id": 221,
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1726,
+                  "referencedDeclaration": 7973,
                   "src": "1651:9:1",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -1410,15 +1410,15 @@
             "name": "setLotteryRate",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 229,
+              "id": 220,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 228,
+                  "id": 219,
                   "name": "newLotteryRate",
                   "nodeType": "VariableDeclaration",
-                  "scope": 238,
+                  "scope": 229,
                   "src": "1623:19:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1427,7 +1427,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 227,
+                    "id": 218,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "1623:4:1",
@@ -1443,12 +1443,12 @@
               "src": "1622:21:1"
             },
             "returnParameters": {
-              "id": 232,
+              "id": 223,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1661:0:1"
             },
-            "scope": 291,
+            "scope": 282,
             "src": "1599:107:1",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1456,7 +1456,7 @@
           },
           {
             "body": {
-              "id": 268,
+              "id": 259,
               "nodeType": "Block",
               "src": "1882:300:1",
               "statements": [
@@ -1470,18 +1470,18 @@
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         },
-                        "id": 249,
+                        "id": 240,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
                           "argumentTypes": null,
-                          "id": 244,
+                          "id": 235,
                           "name": "jackpot",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 150,
+                          "referencedDeclaration": 141,
                           "src": "1900:7:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
@@ -1497,14 +1497,14 @@
                             "arguments": [
                               {
                                 "argumentTypes": null,
-                                "id": 246,
+                                "id": 237,
                                 "name": "this",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 1827,
+                                "referencedDeclaration": 8074,
                                 "src": "1919:4:1",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_contract$_LotteryGame_$291",
+                                  "typeIdentifier": "t_contract$_LotteryGame_$282",
                                   "typeString": "contract LotteryGame"
                                 }
                               }
@@ -1512,11 +1512,11 @@
                             "expression": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_contract$_LotteryGame_$291",
+                                  "typeIdentifier": "t_contract$_LotteryGame_$282",
                                   "typeString": "contract LotteryGame"
                                 }
                               ],
-                              "id": 245,
+                              "id": 236,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
@@ -1529,7 +1529,7 @@
                               },
                               "typeName": "address"
                             },
-                            "id": 247,
+                            "id": 238,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -1543,7 +1543,7 @@
                               "typeString": "address payable"
                             }
                           },
-                          "id": 248,
+                          "id": 239,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -1566,7 +1566,7 @@
                       {
                         "argumentTypes": null,
                         "hexValue": "4a61636b706f7420697320686967686572207468616e20636f6e74726163742062616c616e6365",
-                        "id": 250,
+                        "id": 241,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -1593,21 +1593,21 @@
                           "typeString": "literal_string \"Jackpot is higher than contract balance\""
                         }
                       ],
-                      "id": 243,
+                      "id": 234,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1810,
-                        1811
+                        8057,
+                        8058
                       ],
-                      "referencedDeclaration": 1811,
+                      "referencedDeclaration": 8058,
                       "src": "1892:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 251,
+                    "id": 242,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1621,7 +1621,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 252,
+                  "id": 243,
                   "nodeType": "ExpressionStatement",
                   "src": "1892:84:1"
                 },
@@ -1631,11 +1631,11 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 256,
+                        "id": 247,
                         "name": "jackpot",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 150,
+                        "referencedDeclaration": 141,
                         "src": "2096:7:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -1652,18 +1652,18 @@
                       ],
                       "expression": {
                         "argumentTypes": null,
-                        "id": 253,
+                        "id": 244,
                         "name": "_winnerAddress",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 240,
+                        "referencedDeclaration": 231,
                         "src": "2072:14:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address_payable",
                           "typeString": "address payable"
                         }
                       },
-                      "id": 255,
+                      "id": 246,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -1677,7 +1677,7 @@
                         "typeString": "function (uint256)"
                       }
                     },
-                    "id": 257,
+                    "id": 248,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1691,7 +1691,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 258,
+                  "id": 249,
                   "nodeType": "ExpressionStatement",
                   "src": "2072:32:1"
                 },
@@ -1701,11 +1701,11 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 260,
+                        "id": 251,
                         "name": "_winnerAddress",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 240,
+                        "referencedDeclaration": 231,
                         "src": "2130:14:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address_payable",
@@ -1714,11 +1714,11 @@
                       },
                       {
                         "argumentTypes": null,
-                        "id": 261,
+                        "id": 252,
                         "name": "jackpot",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 150,
+                        "referencedDeclaration": 141,
                         "src": "2146:7:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -1737,18 +1737,18 @@
                           "typeString": "uint256"
                         }
                       ],
-                      "id": 259,
+                      "id": 250,
                       "name": "LotteryWin",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 164,
+                      "referencedDeclaration": 155,
                       "src": "2119:10:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_uint256_$returns$__$",
                         "typeString": "function (address,uint256)"
                       }
                     },
-                    "id": 262,
+                    "id": 253,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1762,25 +1762,25 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 263,
+                  "id": 254,
                   "nodeType": "EmitStatement",
                   "src": "2114:40:1"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 266,
+                    "id": 257,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 264,
+                      "id": 255,
                       "name": "jackpot",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 150,
+                      "referencedDeclaration": 141,
                       "src": "2164:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -1792,7 +1792,7 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "30",
-                      "id": 265,
+                      "id": 256,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -1813,29 +1813,29 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 267,
+                  "id": 258,
                   "nodeType": "ExpressionStatement",
                   "src": "2164:11:1"
                 }
               ]
             },
             "documentation": "@notice Pay winner of the lottery\n@param _winnerAddress address of the winner",
-            "id": 269,
+            "id": 260,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "_payLotteryWinner",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 241,
+              "id": 232,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 240,
+                  "id": 231,
                   "name": "_winnerAddress",
                   "nodeType": "VariableDeclaration",
-                  "scope": 269,
+                  "scope": 260,
                   "src": "1841:30:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1844,7 +1844,7 @@
                     "typeString": "address payable"
                   },
                   "typeName": {
-                    "id": 239,
+                    "id": 230,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1841:15:1",
@@ -1861,12 +1861,12 @@
               "src": "1840:32:1"
             },
             "returnParameters": {
-              "id": 242,
+              "id": 233,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1882:0:1"
             },
-            "scope": 291,
+            "scope": 282,
             "src": "1814:368:1",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1874,25 +1874,25 @@
           },
           {
             "body": {
-              "id": 280,
+              "id": 271,
               "nodeType": "Block",
               "src": "2370:49:1",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 278,
+                    "id": 269,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 272,
+                      "id": 263,
                       "name": "jackpot",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 150,
+                      "referencedDeclaration": 141,
                       "src": "2380:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -1908,18 +1908,18 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 275,
+                            "id": 266,
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1807,
+                            "referencedDeclaration": 8054,
                             "src": "2402:3:1",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
                               "typeString": "msg"
                             }
                           },
-                          "id": 276,
+                          "id": 267,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -1943,32 +1943,32 @@
                         ],
                         "expression": {
                           "argumentTypes": null,
-                          "id": 273,
+                          "id": 264,
                           "name": "jackpot",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 150,
+                          "referencedDeclaration": 141,
                           "src": "2390:7:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           }
                         },
-                        "id": 274,
+                        "id": 265,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "add",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 1662,
+                        "referencedDeclaration": 7909,
                         "src": "2390:11:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
                           "typeString": "function (uint256,uint256) pure returns (uint256)"
                         }
                       },
-                      "id": 277,
+                      "id": 268,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -1988,32 +1988,32 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 279,
+                  "id": 270,
                   "nodeType": "ExpressionStatement",
                   "src": "2380:32:1"
                 }
               ]
             },
             "documentation": "@notice Payable, to fund game by adding ethers to contract and to the jackpot\n@dev It's just the same as fallback function.",
-            "id": 281,
+            "id": 272,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "fundGame",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 270,
+              "id": 261,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2352:2:1"
             },
             "returnParameters": {
-              "id": 271,
+              "id": 262,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2370:0:1"
             },
-            "scope": 291,
+            "scope": 282,
             "src": "2335:84:1",
             "stateMutability": "payable",
             "superFunction": null,
@@ -2022,22 +2022,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 290,
+            "id": 281,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "_playLottery",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 286,
+              "id": 277,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 283,
+                  "id": 274,
                   "name": "playerAddress",
                   "nodeType": "VariableDeclaration",
-                  "scope": 290,
+                  "scope": 281,
                   "src": "2447:29:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2046,7 +2046,7 @@
                     "typeString": "address payable"
                   },
                   "typeName": {
-                    "id": 282,
+                    "id": 273,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "2447:15:1",
@@ -2061,10 +2061,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 285,
+                  "id": 276,
                   "name": "_roundId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 290,
+                  "scope": 281,
                   "src": "2478:13:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2073,7 +2073,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 284,
+                    "id": 275,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "2478:4:1",
@@ -2089,15 +2089,15 @@
               "src": "2446:46:1"
             },
             "returnParameters": {
-              "id": 289,
+              "id": 280,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 288,
+                  "id": 279,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 290,
+                  "scope": 281,
                   "src": "2510:4:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2106,7 +2106,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 287,
+                    "id": 278,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "2510:4:1",
@@ -2121,14 +2121,14 @@
               ],
               "src": "2509:6:1"
             },
-            "scope": 291,
+            "scope": 282,
             "src": "2425:91:1",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "private"
           }
         ],
-        "scope": 292,
+        "scope": 283,
         "src": "149:2369:1"
       }
     ],
@@ -2138,14 +2138,14 @@
     "absolutePath": "/home/rggentil/Documents/master_ethereum/BLOCKCHAINTFM/RPS_commit_and_reveal/contracts/LotteryGame.sol",
     "exportedSymbols": {
       "LotteryGame": [
-        291
+        282
       ]
     },
-    "id": 292,
+    "id": 283,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 141,
+        "id": 132,
         "literals": [
           "solidity",
           ">=",
@@ -2157,10 +2157,10 @@
       {
         "absolutePath": "openzeppelin-solidity/contracts/ownership/Ownable.sol",
         "file": "openzeppelin-solidity/contracts/ownership/Ownable.sol",
-        "id": 142,
+        "id": 133,
         "nodeType": "ImportDirective",
-        "scope": 292,
-        "sourceUnit": 1793,
+        "scope": 283,
+        "sourceUnit": 8040,
         "src": "24:63:1",
         "symbolAliases": [],
         "unitAlias": ""
@@ -2168,10 +2168,10 @@
       {
         "absolutePath": "openzeppelin-solidity/contracts/math/SafeMath.sol",
         "file": "openzeppelin-solidity/contracts/math/SafeMath.sol",
-        "id": 143,
+        "id": 134,
         "nodeType": "ImportDirective",
-        "scope": 292,
-        "sourceUnit": 1684,
+        "scope": 283,
+        "sourceUnit": 7931,
         "src": "88:59:1",
         "symbolAliases": [],
         "unitAlias": ""
@@ -2182,53 +2182,53 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 144,
+              "id": 135,
               "name": "Ownable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1792,
+              "referencedDeclaration": 8039,
               "src": "173:7:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Ownable_$1792",
+                "typeIdentifier": "t_contract$_Ownable_$8039",
                 "typeString": "contract Ownable"
               }
             },
-            "id": 145,
+            "id": 136,
             "nodeType": "InheritanceSpecifier",
             "src": "173:7:1"
           }
         ],
         "contractDependencies": [
-          1792
+          8039
         ],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 291,
+        "id": 282,
         "linearizedBaseContracts": [
-          291,
-          1792
+          282,
+          8039
         ],
         "name": "LotteryGame",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
-            "id": 148,
+            "id": 139,
             "libraryName": {
               "contractScope": null,
-              "id": 146,
+              "id": 137,
               "name": "SafeMath",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1683,
+              "referencedDeclaration": 7930,
               "src": "193:8:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_SafeMath_$1683",
+                "typeIdentifier": "t_contract$_SafeMath_$7930",
                 "typeString": "library SafeMath"
               }
             },
             "nodeType": "UsingForDirective",
             "src": "187:24:1",
             "typeName": {
-              "id": 147,
+              "id": 138,
               "name": "uint",
               "nodeType": "ElementaryTypeName",
               "src": "206:4:1",
@@ -2240,10 +2240,10 @@
           },
           {
             "constant": false,
-            "id": 150,
+            "id": 141,
             "name": "jackpot",
             "nodeType": "VariableDeclaration",
-            "scope": 291,
+            "scope": 282,
             "src": "217:19:1",
             "stateVariable": true,
             "storageLocation": "default",
@@ -2252,7 +2252,7 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 149,
+              "id": 140,
               "name": "uint",
               "nodeType": "ElementaryTypeName",
               "src": "217:4:1",
@@ -2266,10 +2266,10 @@
           },
           {
             "constant": false,
-            "id": 152,
+            "id": 143,
             "name": "lotteryOn",
             "nodeType": "VariableDeclaration",
-            "scope": 291,
+            "scope": 282,
             "src": "242:21:1",
             "stateVariable": true,
             "storageLocation": "default",
@@ -2278,7 +2278,7 @@
               "typeString": "bool"
             },
             "typeName": {
-              "id": 151,
+              "id": 142,
               "name": "bool",
               "nodeType": "ElementaryTypeName",
               "src": "242:4:1",
@@ -2292,10 +2292,10 @@
           },
           {
             "constant": false,
-            "id": 155,
+            "id": 146,
             "name": "lotteryRate",
             "nodeType": "VariableDeclaration",
-            "scope": 291,
+            "scope": 282,
             "src": "269:30:1",
             "stateVariable": true,
             "storageLocation": "default",
@@ -2304,7 +2304,7 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 153,
+              "id": 144,
               "name": "uint",
               "nodeType": "ElementaryTypeName",
               "src": "269:4:1",
@@ -2316,7 +2316,7 @@
             "value": {
               "argumentTypes": null,
               "hexValue": "31303030",
-              "id": 154,
+              "id": 145,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -2335,10 +2335,10 @@
           },
           {
             "constant": false,
-            "id": 158,
+            "id": 149,
             "name": "minJackpot",
             "nodeType": "VariableDeclaration",
-            "scope": 291,
+            "scope": 282,
             "src": "320:32:1",
             "stateVariable": true,
             "storageLocation": "default",
@@ -2347,7 +2347,7 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 156,
+              "id": 147,
               "name": "uint",
               "nodeType": "ElementaryTypeName",
               "src": "320:4:1",
@@ -2359,7 +2359,7 @@
             "value": {
               "argumentTypes": null,
               "hexValue": "31",
-              "id": 157,
+              "id": 148,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -2379,20 +2379,20 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 164,
+            "id": 155,
             "name": "LotteryWin",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 163,
+              "id": 154,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 160,
+                  "id": 151,
                   "indexed": false,
                   "name": "winner",
                   "nodeType": "VariableDeclaration",
-                  "scope": 164,
+                  "scope": 155,
                   "src": "428:14:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2401,7 +2401,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 159,
+                    "id": 150,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "428:7:1",
@@ -2416,11 +2416,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 162,
+                  "id": 153,
                   "indexed": false,
                   "name": "jackpot",
                   "nodeType": "VariableDeclaration",
-                  "scope": 164,
+                  "scope": 155,
                   "src": "444:12:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2429,7 +2429,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 161,
+                    "id": 152,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "444:4:1",
@@ -2448,31 +2448,31 @@
           },
           {
             "body": {
-              "id": 167,
+              "id": 158,
               "nodeType": "Block",
               "src": "493:135:1",
               "statements": []
             },
             "documentation": null,
-            "id": 168,
+            "id": 159,
             "implemented": true,
             "kind": "constructor",
             "modifiers": [],
             "name": "",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 165,
+              "id": 156,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "475:2:1"
             },
             "returnParameters": {
-              "id": 166,
+              "id": 157,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "493:0:1"
             },
-            "scope": 291,
+            "scope": 282,
             "src": "464:164:1",
             "stateMutability": "payable",
             "superFunction": null,
@@ -2480,25 +2480,25 @@
           },
           {
             "body": {
-              "id": 179,
+              "id": 170,
               "nodeType": "Block",
               "src": "744:49:1",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 177,
+                    "id": 168,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 171,
+                      "id": 162,
                       "name": "jackpot",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 150,
+                      "referencedDeclaration": 141,
                       "src": "754:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -2514,18 +2514,18 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 174,
+                            "id": 165,
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1807,
+                            "referencedDeclaration": 8054,
                             "src": "776:3:1",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
                               "typeString": "msg"
                             }
                           },
-                          "id": 175,
+                          "id": 166,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -2549,32 +2549,32 @@
                         ],
                         "expression": {
                           "argumentTypes": null,
-                          "id": 172,
+                          "id": 163,
                           "name": "jackpot",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 150,
+                          "referencedDeclaration": 141,
                           "src": "764:7:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           }
                         },
-                        "id": 173,
+                        "id": 164,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "add",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 1662,
+                        "referencedDeclaration": 7909,
                         "src": "764:11:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
                           "typeString": "function (uint256,uint256) pure returns (uint256)"
                         }
                       },
-                      "id": 176,
+                      "id": 167,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -2594,32 +2594,32 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 178,
+                  "id": 169,
                   "nodeType": "ExpressionStatement",
                   "src": "754:32:1"
                 }
               ]
             },
             "documentation": "@notice Fallback, just in case of receiving funds, to the jackpot",
-            "id": 180,
+            "id": 171,
             "implemented": true,
             "kind": "fallback",
             "modifiers": [],
             "name": "",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 169,
+              "id": 160,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "724:2:1"
             },
             "returnParameters": {
-              "id": 170,
+              "id": 161,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "744:0:1"
             },
-            "scope": 291,
+            "scope": 282,
             "src": "715:78:1",
             "stateMutability": "payable",
             "superFunction": null,
@@ -2627,25 +2627,25 @@
           },
           {
             "body": {
-              "id": 189,
+              "id": 180,
               "nodeType": "Block",
               "src": "913:34:1",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 187,
+                    "id": 178,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 185,
+                      "id": 176,
                       "name": "lotteryOn",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 152,
+                      "referencedDeclaration": 143,
                       "src": "923:9:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
@@ -2657,7 +2657,7 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "66616c7365",
-                      "id": 186,
+                      "id": 177,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -2678,27 +2678,27 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 188,
+                  "id": 179,
                   "nodeType": "ExpressionStatement",
                   "src": "923:17:1"
                 }
               ]
             },
             "documentation": "@notice Stop lottery (this means stop playing for jackpot)",
-            "id": 190,
+            "id": 181,
             "implemented": true,
             "kind": "function",
             "modifiers": [
               {
                 "arguments": null,
-                "id": 183,
+                "id": 174,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 182,
+                  "id": 173,
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1726,
+                  "referencedDeclaration": 7973,
                   "src": "903:9:1",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -2712,18 +2712,18 @@
             "name": "stopLottery",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 181,
+              "id": 172,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "893:2:1"
             },
             "returnParameters": {
-              "id": 184,
+              "id": 175,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "913:0:1"
             },
-            "scope": 291,
+            "scope": 282,
             "src": "873:74:1",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -2731,7 +2731,7 @@
           },
           {
             "body": {
-              "id": 225,
+              "id": 216,
               "nodeType": "Block",
               "src": "1064:247:1",
               "statements": [
@@ -2745,18 +2745,18 @@
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         },
-                        "id": 201,
+                        "id": 192,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
                           "argumentTypes": null,
-                          "id": 196,
+                          "id": 187,
                           "name": "jackpot",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 150,
+                          "referencedDeclaration": 141,
                           "src": "1082:7:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
@@ -2772,14 +2772,14 @@
                             "arguments": [
                               {
                                 "argumentTypes": null,
-                                "id": 198,
+                                "id": 189,
                                 "name": "this",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 1827,
+                                "referencedDeclaration": 8074,
                                 "src": "1101:4:1",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_contract$_LotteryGame_$291",
+                                  "typeIdentifier": "t_contract$_LotteryGame_$282",
                                   "typeString": "contract LotteryGame"
                                 }
                               }
@@ -2787,11 +2787,11 @@
                             "expression": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_contract$_LotteryGame_$291",
+                                  "typeIdentifier": "t_contract$_LotteryGame_$282",
                                   "typeString": "contract LotteryGame"
                                 }
                               ],
-                              "id": 197,
+                              "id": 188,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
@@ -2804,7 +2804,7 @@
                               },
                               "typeName": "address"
                             },
-                            "id": 199,
+                            "id": 190,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -2818,7 +2818,7 @@
                               "typeString": "address payable"
                             }
                           },
-                          "id": 200,
+                          "id": 191,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -2841,7 +2841,7 @@
                       {
                         "argumentTypes": null,
                         "hexValue": "4a61636b706f74206c6f776572207468616e2053432062616c616e6365",
-                        "id": 202,
+                        "id": 193,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -2868,21 +2868,21 @@
                           "typeString": "literal_string \"Jackpot lower than SC balance\""
                         }
                       ],
-                      "id": 195,
+                      "id": 186,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1810,
-                        1811
+                        8057,
+                        8058
                       ],
-                      "referencedDeclaration": 1811,
+                      "referencedDeclaration": 8058,
                       "src": "1074:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 203,
+                    "id": 194,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2896,7 +2896,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 204,
+                  "id": 195,
                   "nodeType": "ExpressionStatement",
                   "src": "1074:74:1"
                 },
@@ -2910,7 +2910,7 @@
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
                         },
-                        "id": 217,
+                        "id": 208,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -2924,7 +2924,7 @@
                                 "typeIdentifier": "t_uint256",
                                 "typeString": "uint256"
                               },
-                              "id": 211,
+                              "id": 202,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -2936,14 +2936,14 @@
                                   "arguments": [
                                     {
                                       "argumentTypes": null,
-                                      "id": 207,
+                                      "id": 198,
                                       "name": "this",
                                       "nodeType": "Identifier",
                                       "overloadedDeclarations": [],
-                                      "referencedDeclaration": 1827,
+                                      "referencedDeclaration": 8074,
                                       "src": "1175:4:1",
                                       "typeDescriptions": {
-                                        "typeIdentifier": "t_contract$_LotteryGame_$291",
+                                        "typeIdentifier": "t_contract$_LotteryGame_$282",
                                         "typeString": "contract LotteryGame"
                                       }
                                     }
@@ -2951,11 +2951,11 @@
                                   "expression": {
                                     "argumentTypes": [
                                       {
-                                        "typeIdentifier": "t_contract$_LotteryGame_$291",
+                                        "typeIdentifier": "t_contract$_LotteryGame_$282",
                                         "typeString": "contract LotteryGame"
                                       }
                                     ],
-                                    "id": 206,
+                                    "id": 197,
                                     "isConstant": false,
                                     "isLValue": false,
                                     "isPure": true,
@@ -2968,7 +2968,7 @@
                                     },
                                     "typeName": "address"
                                   },
-                                  "id": 208,
+                                  "id": 199,
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": false,
@@ -2982,7 +2982,7 @@
                                     "typeString": "address payable"
                                   }
                                 },
-                                "id": 209,
+                                "id": 200,
                                 "isConstant": false,
                                 "isLValue": false,
                                 "isPure": false,
@@ -3000,11 +3000,11 @@
                               "operator": ">=",
                               "rightExpression": {
                                 "argumentTypes": null,
-                                "id": 210,
+                                "id": 201,
                                 "name": "minJackpot",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 158,
+                                "referencedDeclaration": 149,
                                 "src": "1192:10:1",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -3018,7 +3018,7 @@
                               }
                             }
                           ],
-                          "id": 212,
+                          "id": 203,
                           "isConstant": false,
                           "isInlineArray": false,
                           "isLValue": false,
@@ -3042,18 +3042,18 @@
                                 "typeIdentifier": "t_uint256",
                                 "typeString": "uint256"
                               },
-                              "id": 215,
+                              "id": 206,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
                               "lValueRequested": false,
                               "leftExpression": {
                                 "argumentTypes": null,
-                                "id": 213,
+                                "id": 204,
                                 "name": "jackpot",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 150,
+                                "referencedDeclaration": 141,
                                 "src": "1208:7:1",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -3064,11 +3064,11 @@
                               "operator": ">=",
                               "rightExpression": {
                                 "argumentTypes": null,
-                                "id": 214,
+                                "id": 205,
                                 "name": "minJackpot",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 158,
+                                "referencedDeclaration": 149,
                                 "src": "1219:10:1",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -3082,7 +3082,7 @@
                               }
                             }
                           ],
-                          "id": 216,
+                          "id": 207,
                           "isConstant": false,
                           "isInlineArray": false,
                           "isLValue": false,
@@ -3104,7 +3104,7 @@
                       {
                         "argumentTypes": null,
                         "hexValue": "4d696e696d756d204a61636b706f74206973206e656564656420666f72207374617274696e672067616d65",
-                        "id": 218,
+                        "id": 209,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -3131,21 +3131,21 @@
                           "typeString": "literal_string \"Minimum Jackpot is needed for starting game\""
                         }
                       ],
-                      "id": 205,
+                      "id": 196,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1810,
-                        1811
+                        8057,
+                        8058
                       ],
-                      "referencedDeclaration": 1811,
+                      "referencedDeclaration": 8058,
                       "src": "1158:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 219,
+                    "id": 210,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3159,25 +3159,25 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 220,
+                  "id": 211,
                   "nodeType": "ExpressionStatement",
                   "src": "1158:120:1"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 223,
+                    "id": 214,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 221,
+                      "id": 212,
                       "name": "lotteryOn",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 152,
+                      "referencedDeclaration": 143,
                       "src": "1288:9:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
@@ -3189,7 +3189,7 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "74727565",
-                      "id": 222,
+                      "id": 213,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -3210,27 +3210,27 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 224,
+                  "id": 215,
                   "nodeType": "ExpressionStatement",
                   "src": "1288:16:1"
                 }
               ]
             },
             "documentation": "@notice Start lottery (this means playing for jackpot)",
-            "id": 226,
+            "id": 217,
             "implemented": true,
             "kind": "function",
             "modifiers": [
               {
                 "arguments": null,
-                "id": 193,
+                "id": 184,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 192,
+                  "id": 183,
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1726,
+                  "referencedDeclaration": 7973,
                   "src": "1054:9:1",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -3244,18 +3244,18 @@
             "name": "startLottery",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 191,
+              "id": 182,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1044:2:1"
             },
             "returnParameters": {
-              "id": 194,
+              "id": 185,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1064:0:1"
             },
-            "scope": 291,
+            "scope": 282,
             "src": "1023:288:1",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -3263,25 +3263,25 @@
           },
           {
             "body": {
-              "id": 237,
+              "id": 228,
               "nodeType": "Block",
               "src": "1661:45:1",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 235,
+                    "id": 226,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 233,
+                      "id": 224,
                       "name": "lotteryRate",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 155,
+                      "referencedDeclaration": 146,
                       "src": "1671:11:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -3292,11 +3292,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 234,
+                      "id": 225,
                       "name": "newLotteryRate",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 228,
+                      "referencedDeclaration": 219,
                       "src": "1685:14:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -3309,27 +3309,27 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 236,
+                  "id": 227,
                   "nodeType": "ExpressionStatement",
                   "src": "1671:28:1"
                 }
               ]
             },
             "documentation": "@notice Set the lottery rate in percentage, how easy is to hit the jackpot\n@dev Mostly for testing porpuse. It should be removed in final deployment or no modifiable by anyone\n@param newLotteryRate new lottery rate",
-            "id": 238,
+            "id": 229,
             "implemented": true,
             "kind": "function",
             "modifiers": [
               {
                 "arguments": null,
-                "id": 231,
+                "id": 222,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 230,
+                  "id": 221,
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1726,
+                  "referencedDeclaration": 7973,
                   "src": "1651:9:1",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -3343,15 +3343,15 @@
             "name": "setLotteryRate",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 229,
+              "id": 220,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 228,
+                  "id": 219,
                   "name": "newLotteryRate",
                   "nodeType": "VariableDeclaration",
-                  "scope": 238,
+                  "scope": 229,
                   "src": "1623:19:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3360,7 +3360,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 227,
+                    "id": 218,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "1623:4:1",
@@ -3376,12 +3376,12 @@
               "src": "1622:21:1"
             },
             "returnParameters": {
-              "id": 232,
+              "id": 223,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1661:0:1"
             },
-            "scope": 291,
+            "scope": 282,
             "src": "1599:107:1",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -3389,7 +3389,7 @@
           },
           {
             "body": {
-              "id": 268,
+              "id": 259,
               "nodeType": "Block",
               "src": "1882:300:1",
               "statements": [
@@ -3403,18 +3403,18 @@
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         },
-                        "id": 249,
+                        "id": 240,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
                           "argumentTypes": null,
-                          "id": 244,
+                          "id": 235,
                           "name": "jackpot",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 150,
+                          "referencedDeclaration": 141,
                           "src": "1900:7:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
@@ -3430,14 +3430,14 @@
                             "arguments": [
                               {
                                 "argumentTypes": null,
-                                "id": 246,
+                                "id": 237,
                                 "name": "this",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 1827,
+                                "referencedDeclaration": 8074,
                                 "src": "1919:4:1",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_contract$_LotteryGame_$291",
+                                  "typeIdentifier": "t_contract$_LotteryGame_$282",
                                   "typeString": "contract LotteryGame"
                                 }
                               }
@@ -3445,11 +3445,11 @@
                             "expression": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_contract$_LotteryGame_$291",
+                                  "typeIdentifier": "t_contract$_LotteryGame_$282",
                                   "typeString": "contract LotteryGame"
                                 }
                               ],
-                              "id": 245,
+                              "id": 236,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
@@ -3462,7 +3462,7 @@
                               },
                               "typeName": "address"
                             },
-                            "id": 247,
+                            "id": 238,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -3476,7 +3476,7 @@
                               "typeString": "address payable"
                             }
                           },
-                          "id": 248,
+                          "id": 239,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -3499,7 +3499,7 @@
                       {
                         "argumentTypes": null,
                         "hexValue": "4a61636b706f7420697320686967686572207468616e20636f6e74726163742062616c616e6365",
-                        "id": 250,
+                        "id": 241,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -3526,21 +3526,21 @@
                           "typeString": "literal_string \"Jackpot is higher than contract balance\""
                         }
                       ],
-                      "id": 243,
+                      "id": 234,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1810,
-                        1811
+                        8057,
+                        8058
                       ],
-                      "referencedDeclaration": 1811,
+                      "referencedDeclaration": 8058,
                       "src": "1892:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 251,
+                    "id": 242,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3554,7 +3554,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 252,
+                  "id": 243,
                   "nodeType": "ExpressionStatement",
                   "src": "1892:84:1"
                 },
@@ -3564,11 +3564,11 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 256,
+                        "id": 247,
                         "name": "jackpot",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 150,
+                        "referencedDeclaration": 141,
                         "src": "2096:7:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -3585,18 +3585,18 @@
                       ],
                       "expression": {
                         "argumentTypes": null,
-                        "id": 253,
+                        "id": 244,
                         "name": "_winnerAddress",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 240,
+                        "referencedDeclaration": 231,
                         "src": "2072:14:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address_payable",
                           "typeString": "address payable"
                         }
                       },
-                      "id": 255,
+                      "id": 246,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -3610,7 +3610,7 @@
                         "typeString": "function (uint256)"
                       }
                     },
-                    "id": 257,
+                    "id": 248,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3624,7 +3624,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 258,
+                  "id": 249,
                   "nodeType": "ExpressionStatement",
                   "src": "2072:32:1"
                 },
@@ -3634,11 +3634,11 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 260,
+                        "id": 251,
                         "name": "_winnerAddress",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 240,
+                        "referencedDeclaration": 231,
                         "src": "2130:14:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address_payable",
@@ -3647,11 +3647,11 @@
                       },
                       {
                         "argumentTypes": null,
-                        "id": 261,
+                        "id": 252,
                         "name": "jackpot",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 150,
+                        "referencedDeclaration": 141,
                         "src": "2146:7:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -3670,18 +3670,18 @@
                           "typeString": "uint256"
                         }
                       ],
-                      "id": 259,
+                      "id": 250,
                       "name": "LotteryWin",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 164,
+                      "referencedDeclaration": 155,
                       "src": "2119:10:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_uint256_$returns$__$",
                         "typeString": "function (address,uint256)"
                       }
                     },
-                    "id": 262,
+                    "id": 253,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3695,25 +3695,25 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 263,
+                  "id": 254,
                   "nodeType": "EmitStatement",
                   "src": "2114:40:1"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 266,
+                    "id": 257,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 264,
+                      "id": 255,
                       "name": "jackpot",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 150,
+                      "referencedDeclaration": 141,
                       "src": "2164:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -3725,7 +3725,7 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "30",
-                      "id": 265,
+                      "id": 256,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -3746,29 +3746,29 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 267,
+                  "id": 258,
                   "nodeType": "ExpressionStatement",
                   "src": "2164:11:1"
                 }
               ]
             },
             "documentation": "@notice Pay winner of the lottery\n@param _winnerAddress address of the winner",
-            "id": 269,
+            "id": 260,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "_payLotteryWinner",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 241,
+              "id": 232,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 240,
+                  "id": 231,
                   "name": "_winnerAddress",
                   "nodeType": "VariableDeclaration",
-                  "scope": 269,
+                  "scope": 260,
                   "src": "1841:30:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3777,7 +3777,7 @@
                     "typeString": "address payable"
                   },
                   "typeName": {
-                    "id": 239,
+                    "id": 230,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1841:15:1",
@@ -3794,12 +3794,12 @@
               "src": "1840:32:1"
             },
             "returnParameters": {
-              "id": 242,
+              "id": 233,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1882:0:1"
             },
-            "scope": 291,
+            "scope": 282,
             "src": "1814:368:1",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -3807,25 +3807,25 @@
           },
           {
             "body": {
-              "id": 280,
+              "id": 271,
               "nodeType": "Block",
               "src": "2370:49:1",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 278,
+                    "id": 269,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 272,
+                      "id": 263,
                       "name": "jackpot",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 150,
+                      "referencedDeclaration": 141,
                       "src": "2380:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -3841,18 +3841,18 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 275,
+                            "id": 266,
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1807,
+                            "referencedDeclaration": 8054,
                             "src": "2402:3:1",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
                               "typeString": "msg"
                             }
                           },
-                          "id": 276,
+                          "id": 267,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -3876,32 +3876,32 @@
                         ],
                         "expression": {
                           "argumentTypes": null,
-                          "id": 273,
+                          "id": 264,
                           "name": "jackpot",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 150,
+                          "referencedDeclaration": 141,
                           "src": "2390:7:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           }
                         },
-                        "id": 274,
+                        "id": 265,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "add",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 1662,
+                        "referencedDeclaration": 7909,
                         "src": "2390:11:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
                           "typeString": "function (uint256,uint256) pure returns (uint256)"
                         }
                       },
-                      "id": 277,
+                      "id": 268,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -3921,32 +3921,32 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 279,
+                  "id": 270,
                   "nodeType": "ExpressionStatement",
                   "src": "2380:32:1"
                 }
               ]
             },
             "documentation": "@notice Payable, to fund game by adding ethers to contract and to the jackpot\n@dev It's just the same as fallback function.",
-            "id": 281,
+            "id": 272,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "fundGame",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 270,
+              "id": 261,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2352:2:1"
             },
             "returnParameters": {
-              "id": 271,
+              "id": 262,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2370:0:1"
             },
-            "scope": 291,
+            "scope": 282,
             "src": "2335:84:1",
             "stateMutability": "payable",
             "superFunction": null,
@@ -3955,22 +3955,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 290,
+            "id": 281,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "_playLottery",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 286,
+              "id": 277,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 283,
+                  "id": 274,
                   "name": "playerAddress",
                   "nodeType": "VariableDeclaration",
-                  "scope": 290,
+                  "scope": 281,
                   "src": "2447:29:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3979,7 +3979,7 @@
                     "typeString": "address payable"
                   },
                   "typeName": {
-                    "id": 282,
+                    "id": 273,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "2447:15:1",
@@ -3994,10 +3994,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 285,
+                  "id": 276,
                   "name": "_roundId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 290,
+                  "scope": 281,
                   "src": "2478:13:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -4006,7 +4006,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 284,
+                    "id": 275,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "2478:4:1",
@@ -4022,15 +4022,15 @@
               "src": "2446:46:1"
             },
             "returnParameters": {
-              "id": 289,
+              "id": 280,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 288,
+                  "id": 279,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 290,
+                  "scope": 281,
                   "src": "2510:4:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -4039,7 +4039,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 287,
+                    "id": 278,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "2510:4:1",
@@ -4054,14 +4054,14 @@
               ],
               "src": "2509:6:1"
             },
-            "scope": 291,
+            "scope": 282,
             "src": "2425:91:1",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "private"
           }
         ],
-        "scope": 292,
+        "scope": 283,
         "src": "149:2369:1"
       }
     ],
@@ -4073,7 +4073,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.2",
-  "updatedAt": "2019-03-20T05:50:44.330Z",
+  "updatedAt": "2019-03-24T07:29:45.439Z",
   "devdoc": {
     "methods": {
       "fundGame()": {
