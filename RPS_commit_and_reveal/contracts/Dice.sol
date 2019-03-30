@@ -22,32 +22,43 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
 
     uint public jackpot = 0;
 
+    uint public roundCount;
+
     struct Player {
         uint choice;
         bytes32 secretChoice;
         address payable playerAddress;
     }
 
-    struct Round {
-        Player player1;
-        Player player2;
-        uint betAmount;
-        address payable winner;
-        bool isClosed;
-        address lotteryWinner;
-    }
+
+
+    // mapping(uint=>Round) rounds;
 
     // All oraclize calls will result in a common callback to __callback(...).
-    struct oraclizeCallback {
-        address payable player;
+    struct Round {
+        Player player;
         bytes32 queryId;
         uint    risk;
         uint    betAmount;
         uint    rolledDiceNumber;
         uint    profit;
+        address payable winner;
     }
 
-     mapping (bytes32 => oraclizeCallback) public oraclizeCallbacks;
+
+
+    mapping (uint => Round) rounds;
+    mapping (bytes32 => uint) public idToRounds;
+
+    // struct Round {
+    //     Player player1;
+    //     Player player2;
+    //     uint betAmount;
+    //     address payable winner;
+    //     bool isClosed;
+    //     address lotteryWinner;
+    //     OraclizeCallback oraclizeCallbacks;
+    // }
 
     // Events
     event logPlayerBetAccepted(address _contract, address _player, uint _risk, uint _bet);
@@ -78,59 +89,24 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
     * @param myid The id of the query
     * @param result The result of the query
     */
-    function __callback(bytes32 myid, string memory result, bytes memory proof) 
+    function __callback(bytes32 myid, string memory result, bytes memory proof)
     public
     {
-        
-
-        bool playerWins = false;     
-          
 
         require (msg.sender == oraclize_cbAddress());
-        
-        address payable player = oraclizeCallbacks[myid].player;       
-        uint rolledDiceNumber = parseInt(result); 
-        oraclizeCallbacks[myid].rolledDiceNumber = rolledDiceNumber;   
-        uint risk = oraclizeCallbacks[myid].risk;
-        uint betAmount = oraclizeCallbacks[myid].betAmount;     
+
+        Round storage round = rounds[idToRounds[myid]];
+        //address payable player = round.player;
+        uint rolledDiceNumber = parseInt(result);
+
+
+        round.rolledDiceNumber = rolledDiceNumber;
+        uint risk = round.risk;
+        uint betAmount = round.betAmount;
         emit logRolledDiceNumber(address(this), myid, risk, rolledDiceNumber);
 
-
-         // If the number of the rolled dice is higher than the assumed risk then the player wins
-         if(rolledDiceNumber > risk) {
-             playerWins = true;
-        }
-           
-        if(playerWins) {
-            
-            // Calculate player profit    
-            uint netProfit = calculateProfit(betAmount, risk);
- 
-            oraclizeCallbacks[myid].profit = netProfit;  
-            emit logPlayerWins("Player wins: ", address(this), player, rolledDiceNumber, netProfit);
-
-            // Increase jackpot
-            // balances[owner()] = balances[owner()].add(feeJackpot);
-            // emit logJackpotBalance("Balance owner: ", owner(), balances[owner()]);            
-
-             if(netProfit > 0) {             
-                 payWinner(player, betAmount, netProfit);          
-             }
-            
-         }
-
-         if(playerWins==false) {
-             emit logPlayerLose("Player lose: ",address(this), player, rolledDiceNumber, betAmount);
-        }
-
+        _resolveRound(idToRounds[myid]);
     }
-
-    // /**
-    //  * @notice sendMoney function is equivalent to fallback function
-    //  * The sender's money is transferred to contract
-    //  */
-    // function sendMoney() public payable{ 
-    // }
 
     function calculateProfit(uint betAmount, uint risk)
     private
@@ -178,9 +154,19 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
     }
 
     function playSoloRound(uint _choice) public payable gameIsOn(true) returns(uint) {
+
+        roundCount++;
+        uint roundId = roundCount;
+        // Round storage round = rounds[roundId];
+        // round.player1.playerAddress = msg.sender;
+        // round.player1.choice = _choice;
+        // round.betAmount = msg.value;
+        // round.isSolo = true;
+        
+
         uint risk = _choice;
-        bytes32 oraclizeQueryId;
-        address payable player = msg.sender;
+        // bytes32 oraclizeQueryId;
+        address payable playerAddress = msg.sender;
 
         uint betAmount = msg.value;
         uint netPossibleProfit = calculateProfit(betAmount, risk);
@@ -191,28 +177,68 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
         require(betAmount < address(this).balance);
         require(isValidBet(betAmount, minimumBet, maximumBet));
         require(isValidRisk(risk, minimumRisk, maximumRisk));
-        emit logPlayerBetAccepted(address(this), player, risk, betAmount);
+        emit logPlayerBetAccepted(address(this), playerAddress, risk, betAmount);
 
         // Making oraclized query to random.org.
-        emit logRollDice(address(this), player, "Oraclize query to random.org was sent, standing by for the answer.");
+        emit logRollDice(address(this), playerAddress, "Oraclize query to random.org was sent, standing by for the answer.");
         // oraclizeQueryId = oraclize_query("URL", "https://www.random.org/integers/?num=1&min=1&max=100&col=1&base=10&format=plain&rnd=new");
-        oraclizeQueryId = oraclize_query("URL", "BA7vPyUltcy7z2vcvEA/BRCsjT1HicOkfyGReC7pcm+a+l0eTzv+gs7igzBF5LNGZG8LuOCfKKQY3hfRRWZ4VesMwWu7IrFrvHSeVI/ToLIxg62H9uujPvwcHqprCBM2vmtATUWmOExfnbe8Lbywedvh/R8mHfE83KMitNz5WC7/bIZRctSufbtGF+uLaoEiLJejjqT5CUl8XKQ2+KG2YCjJine1Sod0");
-
+        bytes32 oraclizeQueryId = oraclize_query("URL", "BA7vPyUltcy7z2vcvEA/BRCsjT1HicOkfyGReC7pcm+a+l0eTzv+gs7igzBF5LNGZG8LuOCfKKQY3hfRRWZ4VesMwWu7IrFrvHSeVI/ToLIxg62H9uujPvwcHqprCBM2vmtATUWmOExfnbe8Lbywedvh/R8mHfE83KMitNz5WC7/bIZRctSufbtGF+uLaoEiLJejjqT5CUl8XKQ2+KG2YCjJine1Sod0");
+        idToRounds[oraclizeQueryId] = roundCount;
         // Saving the struct
-        oraclizeCallbacks[oraclizeQueryId].queryId = oraclizeQueryId;
-        oraclizeCallbacks[oraclizeQueryId].player = player;
-        oraclizeCallbacks[oraclizeQueryId].risk = risk;
-        oraclizeCallbacks[oraclizeQueryId].betAmount = betAmount;
+        rounds[roundCount].queryId = oraclizeQueryId;
+        //rounds[roundCount].player = player;
+        rounds[roundCount].risk = risk;
+        rounds[roundCount].betAmount = betAmount;
+        rounds[roundCount].player.playerAddress = playerAddress;
 
         return 1;
     }
 
     function _resolveRound(uint _roundId) private {
-        uint i = 9;
+        Round storage round = rounds[_roundId];
+        // If the number of the rolled dice is higher than the assumed risk then the player wins
+         if(round.rolledDiceNumber > round.risk) {
+             round.winner = round.player.playerAddress;
+        }
+
+        _payRound(_roundId);
+    }
+
+    function _checkWinner(Player memory player1, Player memory player2) private pure returns(address payable) {
+        if ((uint(player1.choice) + 1) % 3 == uint(player2.choice)) {
+            return player2.playerAddress;
+        } else if ((uint(player1.choice) + 2) % 3 == uint(player2.choice)) {
+            return player1.playerAddress;
+        } else {
+            return address(0);
+        }
     }
 
     function _payRound(uint _roundId) private {
-        uint i = 9;
+
+        Round storage round = rounds[_roundId];
+        bool playerWins = round.winner == msg.sender;
+        if(playerWins) {
+
+            // Calculate player profit
+            uint netProfit = calculateProfit(round.betAmount, round.risk);
+
+            round.profit = netProfit;
+            emit logPlayerWins("Player wins: ", address(this), round.player.playerAddress, round.rolledDiceNumber, netProfit);
+
+            // Increase jackpot
+            // balances[owner()] = balances[owner()].add(feeJackpot);
+            // emit logJackpotBalance("Balance owner: ", owner(), balances[owner()]);
+
+             if(netProfit > 0) {
+                 payWinner(round.player.playerAddress, round.betAmount, netProfit);
+             }
+
+         }
+
+         if(playerWins==false) {
+             emit logPlayerLose("Player lose: ",address(this), round.player.playerAddress, round.rolledDiceNumber, round.betAmount);
+        }
     }
 
     function _playLottery(address payable playerAddress, uint _roundId) private returns (bool) {
