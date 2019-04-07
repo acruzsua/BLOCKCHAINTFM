@@ -20,50 +20,14 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
     uint public maximumRisk = 95;
     uint public feeJackpot =  5000000000000000;  // Fund to jackpot 0.005 ether as a fee
 
-    uint public jackpot = 0;
+    uint constant DICE_RANDOM_RANGE = 100;
 
-    uint public roundCount;
-
-    struct Player {
-        uint choice;
-        bytes32 secretChoice;
-        address payable playerAddress;
-    }
-
-
-
-    // mapping(uint=>Round) rounds;
-
-    // All oraclize calls will result in a common callback to __callback(...).
-    struct Round {
-        Player player;
-        bytes32 queryId;
-        uint    risk;
-        uint    betAmount;
-        uint    rolledDiceNumber;
-        uint    profit;
-        address payable winner;
-    }
-
-
-
-    mapping (uint => Round) rounds;
-    mapping (bytes32 => uint) public idToRounds;
-
-    // struct Round {
-    //     Player player1;
-    //     Player player2;
-    //     uint betAmount;
-    //     address payable winner;
-    //     bool isClosed;
-    //     address lotteryWinner;
-    //     OraclizeCallback oraclizeCallbacks;
-    // }
+    event GameStarted(string message);
 
     // Events
     event logPlayerBetAccepted(address _contract, address _player, uint _risk, uint _bet);
     event logRollDice(address _contract, address _player, string _description);
-    event logRolledDiceNumber(address _contract, bytes32 _oraclizeQueryId, uint _risk, uint _rolledDiceNumber);
+
     event logPlayerLose(string description, address _contract, address _player, uint _rolledDiceNumber, uint _betAmount);
     event logPlayerWins(string description, address _contract, address _winner, uint _rolledDiceNumber, uint _profit);
     event logNewOraclizeQuery(string description);
@@ -77,35 +41,47 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
     public
     {
         // Replace the next line with your version:
-        OAR = OraclizeAddrResolverI(0x6f485C8BF6fc43eA212E93BBF8ce046C7f1cb475);
+        OAR = OraclizeAddrResolverI(0x257dD0d60146ca00A9D3CD4DCb91bF5751677dCA);
         // set Oraclize proof type
-        oraclize_setProof(proofType_TLSNotary | proofStorage_IPFS);
-        gameRunning = true;
+        //oraclize_setProof(proofType_TLSNotary | proofStorage_IPFS);
+        //gameRunning = true;
     }
 
-    /**
-    * @notice Callback function to emit the events with the information we want.
-    * @dev Get the querys using the parameter myid
-    * @param myid The id of the query
-    * @param result The result of the query
-    */
-    function __callback(bytes32 myid, string memory result, bytes memory proof)
-    public
+    function startGame() public {
+        super.startGame();
+        startLottery();
+    }
+
+    function stopGame() public {
+        super.stopGame();
+        stopLottery();
+    }
+
+    function getRoundInfo(
+        uint roundId
+    )
+        external
+        view
+        returns(
+            address playerAddress,
+            //bytes32 queryId,
+            uint risk,
+            uint betAmount,
+            uint rolledDiceNumber,
+            //uint profit,
+            address payable winner,
+            bool isClosed
+        )
     {
-
-        require (msg.sender == oraclize_cbAddress());
-
-        Round storage round = rounds[idToRounds[myid]];
-        //address payable player = round.player;
-        uint rolledDiceNumber = parseInt(result);
-
-
-        round.rolledDiceNumber = rolledDiceNumber;
-        uint risk = round.risk;
-        uint betAmount = round.betAmount;
-        emit logRolledDiceNumber(address(this), myid, risk, rolledDiceNumber);
-
-        _resolveRound(idToRounds[myid]);
+        Round memory myRound = rounds[roundId];
+        return (
+            myRound.player1.playerAddress,
+            myRound.player1.choice,
+            myRound.betAmount,
+            myRound.oraclizeCallback.oraclesChoice,
+            myRound.winner,
+            myRound.isClosed
+        );
     }
 
     function calculateProfit(uint betAmount, uint risk)
@@ -113,30 +89,16 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
     view
     returns (uint)
     {
-        uint grossProfit;
-        uint netProfit;
-        uint riskPercentage;
-        uint feeUnits = 1000000000000000000;
-        uint feeOraclize = 4000000000000000; // Oraclize service charges 0.004 Ether as a fee for querying random.org
+        uint feeOraclize = 0.004 ether; // Oraclize service charges 0.004 Ether as a fee for querying random.org
 
-        riskPercentage = feeUnits.mul(risk); 
-        riskPercentage = riskPercentage.div(100);
-        grossProfit = betAmount.mul(riskPercentage);
-        grossProfit = grossProfit.div(feeUnits);               
-        netProfit = grossProfit.sub(feeJackpot);
-        netProfit = netProfit.sub(feeOraclize);
+        uint grossProfit = betAmount.mul(risk).div(100);
 
+        uint jackpotFee = betAmount.mul(jackpotFeeRate) / feeUnits;
+        uint businessFee = betAmount.mul(businessFeeRate) / feeUnits;
+
+        uint netProfit = grossProfit.sub(jackpotFee).sub(businessFee).sub(feeOraclize);
         return (netProfit);
 
-    }
-
-    function payWinner(address payable _player, uint _betAmount, uint _netProfit) 
-    private
-    {
-        uint winAmount = _betAmount.add(_netProfit);
-        require( address(this).balance >= winAmount );
-        emit logPayWinner("Pay winner: ", _player, winAmount);            
-        _player.transfer(winAmount);
     }
 
     /**
@@ -157,12 +119,6 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
 
         roundCount++;
         uint roundId = roundCount;
-        // Round storage round = rounds[roundId];
-        // round.player1.playerAddress = msg.sender;
-        // round.player1.choice = _choice;
-        // round.betAmount = msg.value;
-        // round.isSolo = true;
-        
 
         uint risk = _choice;
         // bytes32 oraclizeQueryId;
@@ -174,31 +130,34 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
 
         emit logMaxAllowedBet("Maximum bet accepted: ", maximumBet);
 
-        require(betAmount < address(this).balance);
-        require(isValidBet(betAmount, minimumBet, maximumBet));
-        require(isValidRisk(risk, minimumRisk, maximumRisk));
+        require(betAmount < address(this).balance, "Not enough balance for this bet");
+        require(isValidBet(betAmount, minimumBet, maximumBet), "Not valid bet");
+        require(isValidRisk(risk, minimumRisk, maximumRisk), "Not valid risk");
         emit logPlayerBetAccepted(address(this), playerAddress, risk, betAmount);
+        require(msg.value >= 0.004 ether, "oracle cannot call me");
 
         // Making oraclized query to random.org.
         emit logRollDice(address(this), playerAddress, "Oraclize query to random.org was sent, standing by for the answer.");
-        // oraclizeQueryId = oraclize_query("URL", "https://www.random.org/integers/?num=1&min=1&max=100&col=1&base=10&format=plain&rnd=new");
-        bytes32 oraclizeQueryId = oraclize_query("URL", "BA7vPyUltcy7z2vcvEA/BRCsjT1HicOkfyGReC7pcm+a+l0eTzv+gs7igzBF5LNGZG8LuOCfKKQY3hfRRWZ4VesMwWu7IrFrvHSeVI/ToLIxg62H9uujPvwcHqprCBM2vmtATUWmOExfnbe8Lbywedvh/R8mHfE83KMitNz5WC7/bIZRctSufbtGF+uLaoEiLJejjqT5CUl8XKQ2+KG2YCjJine1Sod0");
-        idToRounds[oraclizeQueryId] = roundCount;
-        // Saving the struct
-        rounds[roundCount].queryId = oraclizeQueryId;
-        //rounds[roundCount].player = player;
-        rounds[roundCount].risk = risk;
-        rounds[roundCount].betAmount = betAmount;
-        rounds[roundCount].player.playerAddress = playerAddress;
 
-        return 1;
+        // rounds[roundId].risk = risk;
+        rounds[roundId].player1.choice = risk;
+        rounds[roundId].betAmount = betAmount;
+        rounds[roundId].player1.playerAddress = playerAddress;
+
+        _setRandomness(DICE_RANDOM_RANGE, roundId);
+
+        return roundId;
     }
 
     function _resolveRound(uint _roundId) private {
         Round storage round = rounds[_roundId];
+        uint rolledDiceNumber = round.oraclizeCallback.oraclesChoice;
+
         // If the number of the rolled dice is higher than the assumed risk then the player wins
-         if(round.rolledDiceNumber > round.risk) {
-             round.winner = round.player.playerAddress;
+        if(rolledDiceNumber > round.player1.choice) {
+            round.winner = round.player1.playerAddress;
+        } else {
+            round.winner = address(this);
         }
 
         _payRound(_roundId);
@@ -215,29 +174,29 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
     }
 
     function _payRound(uint _roundId) private {
-
         Round storage round = rounds[_roundId];
-        bool playerWins = round.winner == msg.sender;
+        bool playerWins = round.winner == round.player1.playerAddress;
+        round.isClosed = true;
         if(playerWins) {
 
             // Calculate player profit
-            uint netProfit = calculateProfit(round.betAmount, round.risk);
+            uint netProfit = calculateProfit(round.betAmount, round.player1.choice);
 
             round.profit = netProfit;
-            emit logPlayerWins("Player wins: ", address(this), round.player.playerAddress, round.rolledDiceNumber, netProfit);
+            //emit logPlayerWins("Player wins: ", address(this), round.player1.playerAddress, round.rolledDiceNumber, netProfit);
 
-            // Increase jackpot
-            // balances[owner()] = balances[owner()].add(feeJackpot);
-            // emit logJackpotBalance("Balance owner: ", owner(), balances[owner()]);
-
-             if(netProfit > 0) {
-                 payWinner(round.player.playerAddress, round.betAmount, netProfit);
-             }
+            if(netProfit > 0) {
+                // payWinner(round.player1.playerAddress, round.betAmount, netProfit);
+                uint winAmount = round.betAmount.add(netProfit);
+                require( address(this).balance >= round.betAmount, "cannot pay" );
+                emit logPayWinner("Pay winner: ", round.player1.playerAddress, round.betAmount);
+                round.player1.playerAddress.transfer(winAmount);
+            }
 
          }
 
          if(playerWins==false) {
-             emit logPlayerLose("Player lose: ",address(this), round.player.playerAddress, round.rolledDiceNumber, round.betAmount);
+             emit logPlayerLose("Player lose: ",address(this), round.player1.playerAddress, round.oraclizeCallback.oraclesChoice, round.betAmount);
         }
     }
 
@@ -246,4 +205,35 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
     }
 
 
+    function _setResult(bytes32 myid, uint oraclizeResult) private
+    {
+        uint roundId = 0;
+
+        if (queryIdToRounds[myid] != 0) {
+            roundId = queryIdToRounds[myid];
+        } else if (secretQueryIdToRounds[myid] != 0) {
+            roundId = secretQueryIdToRounds[myid];
+        }
+
+        Round storage round = rounds[roundId];
+
+        if (queryIdToRounds[myid] != 0) {
+            round.oraclizeCallback.queryResult = oraclizeResult;
+        } else if (secretQueryIdToRounds[myid] != 0) {
+            round.oraclizeCallback.secretQueryResult = oraclizeResult;
+        }
+
+        // emit logRolledDiceNumber(oraclizeResult);
+        // emit logRolledDiceNumberBefore(round.queryResult);
+        // emit logRolledDiceNumberBeforeS(round.secretQueryResult);
+        // emit logRoundIdIs(queryIdToRounds[myid]);
+        // emit logRoundIdIsS(secretQueryIdToRounds[myid]);
+
+        if (round.oraclizeCallback.queryResult != 0 && round.oraclizeCallback.secretQueryResult != 0) {
+            uint rolledDiceNumber = (round.oraclizeCallback.queryResult ^ round.oraclizeCallback.secretQueryResult) % gameRandomRange;
+            round.oraclizeCallback.oraclesChoice = rolledDiceNumber;
+            _resolveRound(roundId);
+            emit logRolledDiceNumberAfter(rolledDiceNumber);
+        }
+    }
 }

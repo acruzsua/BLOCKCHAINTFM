@@ -106,15 +106,24 @@ contract('Dice', async (accounts) => {
            resolve(randomNumber);
          }) 
       }) 
-
+      console.log("caraaaaaaaaaaaaaaaaaajoooooooooooooo");
       var diceNumberResult  = function () {
         checkForNumber
           .then(function (fulfilled) {
+            console.log("hola");
             assert.isAtLeast(checkForNumber, 1, 'Random number was less than 1')
+            assert.isAtLeast(checkForNumber, 10000000000, 'Random number was less than 1')
             assert.isAtMost(checkForNumber, 100, 'Random number was greater than 100')
+            console.log("my number is: " + checkForNumber);
           })
           .catch(function(error){
-          });
+              console.log("coniooooooooo");
+              //console.log(error);
+              //assert.isTrue(false, "ein");
+              //assert.isFalse(true, "wtffffffffffffffffffffffffff");
+              console.log("me no entiende");
+              assert.isTrue(true, "po vaya");  
+       });
       }
 
       diceNumberResult();

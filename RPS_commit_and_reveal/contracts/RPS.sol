@@ -13,37 +13,7 @@ import "./LotteryGame.sol";
  */
 contract RPS is P2PGamblingGame, LotteryGame {
 
-    using SafeMath for uint;
-
-    uint public roundCount;
-
-    /* Not used yet
-    uint maxJackpot;
-    */
-
     enum Choice { Rock, Paper, Scissors }
-
-    struct Player {
-        Choice choice;
-        bytes32 secretChoice;
-        address payable playerAddress;
-    }
-
-    struct Round {
-        Player player1;
-        Player player2;
-        uint betAmount;
-        address payable winner;
-        bool isClosed;
-        bool isSolo;
-        address lotteryWinner;
-        uint currentJackpot;
-    }
-
-    mapping(uint=>Round) rounds;
-
-    // We could add another mapping to check rounds per address:
-    // mapping(address=>uint[])
 
     modifier isChoice(uint choice) {
         require(choice <= uint(Choice.Scissors), "RPS choice not valid");
@@ -62,9 +32,9 @@ contract RPS is P2PGamblingGame, LotteryGame {
         address winner,
         uint betAmount,
         address indexed player1,
-        Choice choice1,
+        uint choice1,
         address player2,
-        Choice choice2
+        uint choice2
     );
 
     event Secret(bytes32 secret);
@@ -88,7 +58,7 @@ contract RPS is P2PGamblingGame, LotteryGame {
       * @return player2Choice choice of player2
       * @return betAmount amount of the bet of this round, in wei.
       * @return winner address of the winner, it's 0x0 if not finished or draw
-      TODO: THIS CAN'T BE ACCESSIBLE BECAUSE ANYAONE COULD KNOW THE CHOICES JUST
+      TODO: THIS CAN'T BE ACCESSIBLE BECAUSE ANYONE COULD KNOW THE CHOICES JUST
             REQUESTING THIS FUNCTION
     */
     function getRoundInfo(
@@ -98,9 +68,9 @@ contract RPS is P2PGamblingGame, LotteryGame {
         view
         returns(
             address player1Address,
-            Choice player1Choice,
+            uint player1Choice,
             address player2Address,
-            Choice player2Choice,
+            uint player2Choice,
             uint betAmount,
             address winner,
             bool isSolo
@@ -130,14 +100,13 @@ contract RPS is P2PGamblingGame, LotteryGame {
         payable
         returns(uint)
     {
-        require(isValidBet(msg.value, minimumBet, 1000000 ether));
-        //require(msg.value >= minimumBet, "Not enough amount bet");
-        Choice choice = Choice(_choice);
+        // require(isValidBet(msg.value, minimumBet, 1000000 ether));
+        require(msg.value >= minimumBet, "Not enough amount bet");
         roundCount++;
         uint roundId = roundCount;
         Round storage round = rounds[roundId];
         round.player1.playerAddress = msg.sender;
-        round.player1.choice = choice;
+        round.player1.choice = _choice;
         round.betAmount = msg.value;
         round.isSolo = true;
 
@@ -149,8 +118,8 @@ contract RPS is P2PGamblingGame, LotteryGame {
         );
 
         if (round.isSolo) {
-            require(isValidBet(msg.value, minimumBet, jackpot));
-            //require(msg.value <= jackpot, "Bet too high");
+            // require(isValidBet(msg.value, minimumBet, jackpot));
+            require(msg.value <= jackpot, "Bet too high");
             round.player2.playerAddress = address(this);
             round.player2.choice = getRandomChoice();
             _resolveRound(roundId);
@@ -214,7 +183,7 @@ contract RPS is P2PGamblingGame, LotteryGame {
         msg.sender.transfer(msg.value - myRound.betAmount);  // No need to use SafeMath since this can't be negative
 
         myRound.player2.playerAddress = msg.sender;
-        myRound.player2.choice = Choice(_choice);
+        myRound.player2.choice = _choice;
     }
 
     /** @notice Player 1 reveals choice when other player has joined to player 1's round
@@ -223,7 +192,7 @@ contract RPS is P2PGamblingGame, LotteryGame {
         Round storage myRound = rounds[_roundId];  // Pointer to round
         require(myRound.player2.playerAddress != address(0), "Nobody joined to the round, it can't be resolved");
         require(keccak256(abi.encodePacked(_choice, _secret)) == myRound.player1.secretChoice, "Error trying to reveal choice");
-        myRound.player1.choice = Choice(_choice);
+        myRound.player1.choice = _choice;
         _resolveRound(_roundId);
         if (lotteryOn) {
             _playLottery(myRound.player1.playerAddress, _roundId);
@@ -276,8 +245,8 @@ contract RPS is P2PGamblingGame, LotteryGame {
             platform. Change randomness in case we want it to be realistic. Probably it needs Oraclize.
       * @return Choice enum value (ROCK, PAPER, SCISSOR) chosen randomly.
     */
-    function getRandomChoice() private view returns(Choice){
-        return Choice(uint(keccak256(abi.encodePacked(roundCount, msg.sender, blockhash(block.number - 1)))) % 3);
+    function getRandomChoice() private view returns(uint){
+        return uint(keccak256(abi.encodePacked(roundCount, msg.sender, blockhash(block.number - 1)))) % 3;
     }
 
     /** @notice Resolve round, both vs House or vs other player.
@@ -398,6 +367,10 @@ contract RPS is P2PGamblingGame, LotteryGame {
             return true;
         }
         return false;
+    }
+
+    function _setResult(bytes32 myid, uint oraclizeResult) private {
+
     }
 
 }
