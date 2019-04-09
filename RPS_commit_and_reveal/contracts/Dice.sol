@@ -41,10 +41,9 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
     public
     {
         // Replace the next line with your version:
-        OAR = OraclizeAddrResolverI(0x257dD0d60146ca00A9D3CD4DCb91bF5751677dCA);
+        OAR = OraclizeAddrResolverI(0x18C0cAb11428daf78bF6Fcc0fcb8Dea742ab715D);
         // set Oraclize proof type
         //oraclize_setProof(proofType_TLSNotary | proofStorage_IPFS);
-        //gameRunning = true;
     }
 
     function startGame() public {
@@ -64,11 +63,9 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
         view
         returns(
             address playerAddress,
-            //bytes32 queryId,
             uint risk,
             uint betAmount,
             uint rolledDiceNumber,
-            //uint profit,
             address payable winner,
             bool isClosed
         )

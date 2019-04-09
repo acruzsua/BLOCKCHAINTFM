@@ -15,6 +15,8 @@ contract RPS is P2PGamblingGame, LotteryGame {
 
     enum Choice { Rock, Paper, Scissors }
 
+    uint constant RPS_RANDOM_RANGE = 3;
+
     modifier isChoice(uint choice) {
         require(choice <= uint(Choice.Scissors), "RPS choice not valid");
         _;
@@ -44,6 +46,7 @@ contract RPS is P2PGamblingGame, LotteryGame {
     constructor() public payable {
         // We could handle games through constructor and setting variables like
         // minimum bet, max jackpot, fees, etc.
+        OAR = OraclizeAddrResolverI(0x18C0cAb11428daf78bF6Fcc0fcb8Dea742ab715D);
     }
 
     /** @notice Get info from rounds.
@@ -73,7 +76,8 @@ contract RPS is P2PGamblingGame, LotteryGame {
             uint player2Choice,
             uint betAmount,
             address winner,
-            bool isSolo
+            bool isSolo,
+            address lotteryWinner
         )
     {
         Round memory myRound = rounds[roundId];
@@ -84,15 +88,13 @@ contract RPS is P2PGamblingGame, LotteryGame {
             myRound.player2.choice,
             myRound.betAmount,
             myRound.winner,
-            myRound.isSolo
+            myRound.isSolo,
+            myRound.lotteryWinner
         );
     }
+ 
 
-    /** @notice Function called each time we want to play individually vs the house/blockchain.
-                Payable function thar receives the bet amount.
-      * @param _choice choose Choice enum value: ROCK, PAPER, SCISSOR
-      * @return roundId id number that identify the round created
-     */
+    event CurrentJackpot(uint jackpot);
     function playSoloRound(uint _choice)
         public
         gameIsOn(true)
@@ -100,7 +102,6 @@ contract RPS is P2PGamblingGame, LotteryGame {
         payable
         returns(uint)
     {
-        // require(isValidBet(msg.value, minimumBet, 1000000 ether));
         require(msg.value >= minimumBet, "Not enough amount bet");
         roundCount++;
         uint roundId = roundCount;
@@ -118,14 +119,11 @@ contract RPS is P2PGamblingGame, LotteryGame {
         );
 
         if (round.isSolo) {
-            // require(isValidBet(msg.value, minimumBet, jackpot));
+            emit CurrentJackpot(jackpot);
+            require(isValidBet(msg.value, minimumBet, jackpot));
             require(msg.value <= jackpot, "Bet too high");
             round.player2.playerAddress = address(this);
-            round.player2.choice = getRandomChoice();
-            _resolveRound(roundId);
-            if (lotteryOn) {
-                _playLottery(round.player1.playerAddress, roundId);
-            }
+            _setRandomness(RPS_RANDOM_RANGE, roundId);
         }
 
         return roundId;
@@ -194,10 +192,6 @@ contract RPS is P2PGamblingGame, LotteryGame {
         require(keccak256(abi.encodePacked(_choice, _secret)) == myRound.player1.secretChoice, "Error trying to reveal choice");
         myRound.player1.choice = _choice;
         _resolveRound(_roundId);
-        if (lotteryOn) {
-            _playLottery(myRound.player1.playerAddress, _roundId);
-            _playLottery(myRound.player2.playerAddress, _roundId);
-        }
     }
 
     /**  @dev For some reason, overloading that used to work fine now it fails, so I've changed the name of the funciton
@@ -268,6 +262,12 @@ contract RPS is P2PGamblingGame, LotteryGame {
             myRound.player2.choice
         );
         myRound.isSolo = true;
+        if (lotteryOn) {
+            _playLottery(myRound.player1.playerAddress, _roundId);
+            if (!myRound.isSolo) {
+                _playLottery(myRound.player2.playerAddress, _roundId);
+            }
+        }
     }
 
     /** @notice Pay winner of the round resolved.
@@ -349,6 +349,7 @@ contract RPS is P2PGamblingGame, LotteryGame {
         }
     }
 
+    event lottoWinAddress(address winner, uint roundId);
     /** @notice Play lottery for the round
       * @dev TODO: Current randomness is not the best way for gambling since it can be attacked by miners.
              TODO: It is needed to implement a mechanism that assures that existing rounds can be paid altoudh
@@ -359,10 +360,11 @@ contract RPS is P2PGamblingGame, LotteryGame {
      */
     function _playLottery(address payable playerAddress, uint _roundId) private returns (bool) {
 
-        if (uint(keccak256(abi.encodePacked(roundCount, playerAddress, blockhash(block.number - 1)))) % lotteryRate == 0) {
+        if ((uint(keccak256(abi.encodePacked(roundCount, playerAddress, blockhash(block.number - 1)))) % lotteryRate) == 0) {
             Round storage myRound = rounds[_roundId];  // Pointer to round
             require(myRound.lotteryWinner == address(0), "Only one loterry winner per round");
             myRound.lotteryWinner = playerAddress;
+            emit lottoWinAddress(myRound.lotteryWinner, _roundId);
             _payLotteryWinner(playerAddress);
             return true;
         }
@@ -370,7 +372,35 @@ contract RPS is P2PGamblingGame, LotteryGame {
     }
 
     function _setResult(bytes32 myid, uint oraclizeResult) private {
+        uint roundId = 0;
 
+        if (queryIdToRounds[myid] != 0) {
+            roundId = queryIdToRounds[myid];
+        } else if (secretQueryIdToRounds[myid] != 0) {
+            roundId = secretQueryIdToRounds[myid];
+        }
+
+        Round storage round = rounds[roundId];
+
+        emit logRolledDiceNumber(oraclizeResult);
+        emit logRolledDiceNumberBefore(round.oraclizeCallback.queryResult);
+        emit logRolledDiceNumberBeforeS(round.oraclizeCallback.secretQueryResult);
+        emit logRoundIdIs(queryIdToRounds[myid]);
+        emit logRoundIdIsS(secretQueryIdToRounds[myid]);
+
+        if (queryIdToRounds[myid] != 0) {
+            round.oraclizeCallback.queryResult = oraclizeResult;
+        } else if (secretQueryIdToRounds[myid] != 0) {
+            round.oraclizeCallback.secretQueryResult = oraclizeResult;
+        }
+
+        if (round.oraclizeCallback.queryResult != 0 && round.oraclizeCallback.secretQueryResult != 0) {
+            uint rpsChoice = (round.oraclizeCallback.queryResult ^ round.oraclizeCallback.secretQueryResult) % gameRandomRange;
+            round.oraclizeCallback.oraclesChoice = rpsChoice;
+            round.player2.choice = rpsChoice;
+            _resolveRound(roundId);
+            emit logRolledDiceNumberAfter(rpsChoice);
+        }
     }
 
 }

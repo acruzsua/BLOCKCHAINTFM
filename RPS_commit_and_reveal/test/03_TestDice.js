@@ -161,7 +161,7 @@ contract("Dice", async (accounts) => {
             await dice.playSoloRound(player1.choice, {from: player1.address, value: betAmount});
             const lastRound = await dice.roundCount();
 
-            await helpers.sleep(50000);
+            await helpers.sleep(100000);
 
             const roundInfo =  await dice.getRoundInfo(lastRound);
             const result = roundInfo.rolledDiceNumber.toNumber();

@@ -140,8 +140,6 @@ contract GamblingGame is Ownable, usingOraclize {
 
     function playSoloRound(uint _choice) public payable returns(uint);
 
-    //function playSoloRound(uint _choice1, uint _choice2) public payable returns(uint);
-
     function _setResult(bytes32 myid, uint oraclizeResult) private;
 
     event logRolledDiceNumber(uint _rolledDiceNumber);
@@ -174,10 +172,5 @@ contract GamblingGame is Ownable, usingOraclize {
         gameRandomRange = _range;
         emit LogGetRandomness("getting randomness", oraclizeQueryId);
     }
-
-
-
-
-
 
 }
