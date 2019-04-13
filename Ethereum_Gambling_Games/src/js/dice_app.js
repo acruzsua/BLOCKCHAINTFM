@@ -30,6 +30,7 @@ App = {
 
         App.showPlayersInfo();
         App.cleanMaximumBet();
+        App.showJackpot();
         App.manageNewEvents();
 
       });
@@ -46,6 +47,12 @@ App = {
       });
 
 
+    },
+
+    showJackpot: async () => {
+      diceInstance = await App.contracts.Dice.deployed();
+      const jackpot = await diceInstance.jackpot();
+      document.getElementById("jackpot-amount").innerHTML = web3.fromWei(jackpot, 'ether') + ' ETH';
     },
 
     showPlayersInfo: async() => {
@@ -106,6 +113,7 @@ App = {
                   latestBlock = latestBlock + 1;   //update the latest blockNumber
                   App.populateHistoryTable([event.args]);
                   App.showResult(event.args.rolledDiceNumber);
+                  App.showJackpot();
                 }
               }
             });
@@ -149,7 +157,7 @@ App = {
     const risk = ($('#risk').val());
     var result;
 
-    if (NumberOutcome > risk)
+    if (parseInt(NumberOutcome) > risk)
     {
     result = NumberOutcome + " - You win!";
     }

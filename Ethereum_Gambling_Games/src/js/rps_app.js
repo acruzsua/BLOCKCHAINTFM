@@ -68,6 +68,7 @@ App = {
               latestBlock = latestBlock + 1;   //update the latest blockNumber
               App.populateHistoryTable([event.args]);
               App.deleteRoundOpenedTable(event.args.roundId);
+              App.showJackpot();
               if (event.args.player1 == account || event.args.player2 == account) {
                 App.showResult(event.args.roundId, event.args.winner);
               }

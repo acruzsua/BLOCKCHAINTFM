@@ -196,5 +196,7 @@ contract("Dice", async (accounts) => {
         dice.startLottery({from: owner});
 
     });
+
+
 }
 )

@@ -140,7 +140,9 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
 
         require(betAmount < address(this).balance, "Not enough balance for this bet");
         require(isValidBet(betAmount, minimumBet, maximumBet), "Not valid bet");
+        require(isValidBet(betAmount, minimumBet, jackpot), "Not valid bet");
         require(isValidRisk(risk, minimumRisk, maximumRisk), "Not valid risk");
+        require(msg.value <= jackpot, "Bet too high");
         emit logPlayerBetAccepted(address(this), playerAddress, risk, betAmount);
         require(msg.value >= 0.008 ether, "oracle cannot call me");
 
@@ -178,6 +180,13 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
             round.oraclizeCallback.oraclesChoice,
             winAmount
         );
+
+        if (lotteryOn) {
+            _playLottery(round.player1.playerAddress, _roundId);
+            if (!round.isSolo) {
+                _playLottery(round.player2.playerAddress, _roundId);
+            }
+        }
     }
 
     function _checkWinner(Player memory player1, Player memory player2) private pure returns(address payable) {
@@ -194,14 +203,19 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
         Round storage round = rounds[_roundId];
         bool playerWins = round.winner == round.player1.playerAddress;
         round.isClosed = true;
+        uint inititalJackpot = jackpot;
+        uint initialBalance = address(this).balance;
+        uint jackpotFee = round.betAmount.mul(jackpotFeeRate) / feeUnits;
         uint winAmount;
+
         if(playerWins) {
 
             // Calculate player profit
-            uint netProfit = calculateProfit(round.betAmount, round.player1.choice);
+            uint netProfit = calculateProfit(round.betAmount - jackpotFee, round.player1.choice);
 
             round.profit = netProfit;
-            //emit logPlayerWins("Player wins: ", address(this), round.player1.playerAddress, round.rolledDiceNumber, netProfit);
+            jackpot = jackpot.sub(round.betAmount);
+            jackpot = jackpot.add(jackpotFee);
 
             if(netProfit > 0) {
                 // payWinner(round.player1.playerAddress, round.betAmount, netProfit);
@@ -211,18 +225,22 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
                 round.player1.playerAddress.transfer(winAmount);
             }
 
-         }
+        }
+        else {
+            jackpot = jackpot.add(round.betAmount);
+        }
 
          if(playerWins==false) {
              emit logPlayerLose("Player lose: ",address(this), round.player1.playerAddress, round.oraclizeCallback.oraclesChoice, round.betAmount);
         }
+
+        // Additional check por security for reentrancy (kind of formal verification)
+        // These additional checks may not be necessary since we are using transfer that limits gas to 2300,
+        // so in the final deployment we could ommit all these additional checks in order to save same uncessary gas
+        assert((jackpot >= inititalJackpot - (2 * round.betAmount)) && (address(this).balance >= initialBalance - (2 * round.betAmount)));
+
         return winAmount;
     }
-
-    function _playLottery(address payable playerAddress, uint _roundId) private returns (bool) {
-        return false;
-    }
-
 
     function _setResult(bytes32 myid, uint oraclizeResult) private
     {
@@ -248,5 +266,29 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
             emit logRolledDiceNumber(rolledDiceNumber);
             _resolveRound(roundId);
         }
+    }
+
+    /** @notice Play lottery for the round
+      * @dev TODO: It is needed to implement a mechanism that assures that existing rounds can be paid altoudh
+             someone has hit the jakpot. Curerntly if someone hits the jackpot he/she gets all value of the contract
+      * @param playerAddress address of the player
+      * @param _roundId id number that identify the round to resolve
+      * @return if player wins the lottery or not
+     */
+    function _playLottery(address payable playerAddress, uint _roundId) private returns (bool) {
+        Round storage myRound = rounds[_roundId];  // Pointer to round
+        if ((uint(keccak256(abi.encodePacked(roundCount, playerAddress, blockhash(block.number - 1), myRound.oraclizeCallback.queryResult)))
+            % lotteryRate) == 0) {
+            require(myRound.lotteryWinner == address(0), "Only one loterry winner per round");
+            myRound.lotteryWinner = playerAddress;
+            _payLotteryWinner(playerAddress);
+            return true;
+        }
+        return false;
+    }
+
+    function withdrawFunds(address payable _myAddress) public {
+        super.withdrawFunds(_myAddress);
+        jackpot = 0;
     }
 }

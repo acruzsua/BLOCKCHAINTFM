@@ -54,7 +54,7 @@
                     </ul>
 
                   </div>
-        <div id="game-container" class="text-center">
+        <!-- <div id="game-container" class="text-center">
 
           <form>
 
@@ -86,30 +86,75 @@
 
             <button class="btn btn-choice btn-dice" type="button">Roll Dice</button>
 
+          </form>
+          <div id="result-container">
+            <div id="result">&nbsp;</div>
+          </div>
+          </div> -->
+          <div id="game-container" class="text-center">
+
+            <form>
+
+              <div class="form-inline" id="betAm" >
+                <div class="form-group">
+                  <label class="sr-only" for="bet">Bet in ethers</label>
+                  <div class="input-group">
+                    <div class="input-group-addon">ETH</div>
+                    <input type="text" class="form-control" name="rsk" value=0.5 placeholder=0.5 id="betAmount" style="width: 80px; background-color:hsl(47, 96%, 88%);" required>
+                    </div>
+                  </div>
+              </div>
+              <br>
+              <div class="form-inline" id="risk-probability" >
+                <div class="form-group">
+                  <label class="sr-only" for="risk">Probability</label>
+                  <div class="input-group">
+                    <div class="input-group-addon">RISK %</div>
+                    <input type="text" class="form-control" name="rsk" value=50 placeholder=50 id="risk" style="width: 80px; background-color:hsl(47, 96%, 88%);" required>
+                    </div>
+                  </div>
+              </div>
+              <br>
+
+              <div id="result-container">
+                <div id="MaxAllowedBet">&nbsp;</div>
+              </div>
+
+
+              <button class="btn btn-choice btn-dice" type="button">Roll Dice</button>
+              <br>
+              <br>
+              <br>
+            </form>
+
+
+            <div id="jackpot">ÌjackpotÍ<div id="jackpot-amount"></div>
+            </div>
+
             <div id="result-container">
               <div id="result">&nbsp;</div>
             </div>
-          </form>
-          </div>
-            <div class="history info-container">
+        </div>
 
-                <table class="table table-history table-hover" id="last-rounds-table">
-                  <caption>Last rounds:</caption>
-                  <thead class="thead-light">
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Player 1</th>
-                      <th scope="col">Result</th>
-                      <th scope="col">Bet</th>
-                      <th scope="col">Earnings</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
-            </div>
+          <div class="history info-container">
+          <table class="table table-history table-hover" id="last-rounds-table">
+            <caption>Last rounds:</caption>
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Player 1</th>
+                <th scope="col">Result</th>
+                <th scope="col">Bet</th>
+                <th scope="col">Earnings</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+      </div>
       </div>
     </main>
+
     <footer>
         <div>
             <a href="https://github.com/rggentil/master_ethereum/tree/master/design_and_development/modulo4/mydapp/RPS" title="source code of RPS P2P" target="_blank">

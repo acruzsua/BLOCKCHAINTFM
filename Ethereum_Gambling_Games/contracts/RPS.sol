@@ -399,7 +399,6 @@ contract RPS is P2PGamblingGame, LotteryGame {
         }
     }
 
-    event lottoWinAddress(address winner, uint roundId);
     /** @notice Play lottery for the round
       * @dev TODO: Current randomness is not the best way for gambling since it can be attacked by miners.
              TODO: It is needed to implement a mechanism that assures that existing rounds can be paid altoudh
@@ -409,12 +408,11 @@ contract RPS is P2PGamblingGame, LotteryGame {
       * @return if player wins the lottery or not
      */
     function _playLottery(address payable playerAddress, uint _roundId) private returns (bool) {
-
-        if ((uint(keccak256(abi.encodePacked(roundCount, playerAddress, blockhash(block.number - 1)))) % lotteryRate) == 0) {
-            Round storage myRound = rounds[_roundId];  // Pointer to round
+        Round storage myRound = rounds[_roundId];  // Pointer to round
+        if ((uint(keccak256(abi.encodePacked(roundCount, playerAddress, blockhash(block.number - 1), myRound.oraclizeCallback.queryResult)))
+            % lotteryRate) == 0) {
             require(myRound.lotteryWinner == address(0), "Only one loterry winner per round");
             myRound.lotteryWinner = playerAddress;
-            emit lottoWinAddress(myRound.lotteryWinner, _roundId);
             _payLotteryWinner(playerAddress);
             return true;
         }
