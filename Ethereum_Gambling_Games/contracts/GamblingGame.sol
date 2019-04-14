@@ -20,6 +20,9 @@ contract GamblingGame is Ownable, usingOraclize {
 
     uint public minimumBet = 0.0001 ether;
 
+    // Oraclize service charges 0.004 Ether as a fee for querying random.org, two queries
+    uint feeOraclize = 0.008 ether;
+
     /* Not used yet
     uint maxJackpot;
     */

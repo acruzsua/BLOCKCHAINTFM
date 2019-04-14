@@ -97,8 +97,6 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
     view
     returns (uint)
     {
-        uint feeOraclize = 0.008 ether; // Oraclize service charges 0.004 Ether as a fee for querying random.org, two queries
-
         uint grossProfit = betAmount.mul(risk).div(100);
 
         uint jackpotFee = betAmount.mul(jackpotFeeRate) / feeUnits;
@@ -144,7 +142,7 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
         require(isValidRisk(risk, minimumRisk, maximumRisk), "Not valid risk");
         require(msg.value <= jackpot, "Bet too high");
         emit logPlayerBetAccepted(address(this), playerAddress, risk, betAmount);
-        require(msg.value >= 0.008 ether, "oracle cannot call me");
+        require(msg.value >= feeOraclize, "oracle cannot call me");
 
         // Making oraclized query to random.org.
         emit logRollDice(address(this), playerAddress, "Oraclize query to random.org was sent, standing by for the answer.");
@@ -214,8 +212,6 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
             uint netProfit = calculateProfit(round.betAmount - jackpotFee, round.player1.choice);
 
             round.profit = netProfit;
-            jackpot = jackpot.sub(round.betAmount);
-            jackpot = jackpot.add(jackpotFee);
 
             if(netProfit > 0) {
                 // payWinner(round.player1.playerAddress, round.betAmount, netProfit);
@@ -226,13 +222,12 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
             }
 
         }
-        else {
-            jackpot = jackpot.add(round.betAmount);
-        }
 
          if(playerWins==false) {
              emit logPlayerLose("Player lose: ",address(this), round.player1.playerAddress, round.oraclizeCallback.oraclesChoice, round.betAmount);
         }
+
+        jackpot = address(this).balance;
 
         // Additional check por security for reentrancy (kind of formal verification)
         // These additional checks may not be necessary since we are using transfer that limits gas to 2300,
@@ -281,7 +276,7 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
             % lotteryRate) == 0) {
             require(myRound.lotteryWinner == address(0), "Only one loterry winner per round");
             myRound.lotteryWinner = playerAddress;
-            _payLotteryWinner(playerAddress);
+            _payLotteryWinner(playerAddress, myRound.betAmount);
             return true;
         }
         return false;

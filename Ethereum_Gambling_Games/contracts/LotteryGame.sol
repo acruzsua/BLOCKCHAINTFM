@@ -51,11 +51,11 @@ contract LotteryGame is Ownable{
     /** @notice Pay winner of the lottery
       * @param _winnerAddress address of the winner
      */
-    function _payLotteryWinner(address payable _winnerAddress) internal {
-        require(jackpot <= address(this).balance, "Jackpot is higher than contract balance");
+    function _payLotteryWinner(address payable _winnerAddress, uint betAmount) internal {
+        // require(jackpot <= address(this).balance.sub(betAmount), "Jackpot is higher than contract balance");
 
         // I think we dont need to avoid reentrancy since no problem using transfer.
-        _winnerAddress.transfer(jackpot);
+        _winnerAddress.transfer(address(this).balance);
         emit LotteryWin(_winnerAddress, jackpot);
         jackpot = 0;
     }

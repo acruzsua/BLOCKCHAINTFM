@@ -193,10 +193,72 @@ contract("Dice", async (accounts) => {
             assert.closeTo(newContractsBalance, expectedContractsBalance, gasFees, 'House balance is wrong after round');
         }
 
-        dice.startLottery({from: owner});
+        // dice.startLottery({from: owner});
 
     });
 
+     // This test is disabled because it takes too long (because of oraclize) to play several rounds until a round
+    // wins the lottery, and the test fails because of an internal timeout.
+    // This was tested without oraclize, getting random numbers internally, and it passed.
+    it("Test play lottery)", async () => {
 
+        // Make sure the game is on
+        try {
+            await dice.startGame({from: owner});
+        }
+        catch(e){}
+        console.log(parseInt(await dice.jackpot()))
+        console.log(await web3.eth.getBalance(dice.address))
+
+        dice.startLottery({from: owner});
+
+        await dice.fundGame({from: accounts[0], value: web3.utils.toWei('4')});
+
+        // I can set a new lottery rate
+        const newLotteryRate = 4;
+        await dice.setLotteryRate(newLotteryRate);
+        assert.equal(newLotteryRate, await dice.lotteryRate());
+
+        const roundsNumber = 50;
+        const betAmount = web3.utils.toWei('0.05');
+
+        let lotteryWinner;
+        let jackpot;
+        let previousPlayersBalance;
+
+        initialContractBalance = parseInt(await web3.eth.getBalance(dice.address));
+        initialJackpot = parseInt(await dice.jackpot());
+        // The idea is to modify the number of rounds and chance of winning to assure that there is a big change of winning
+        // lottery, so we can get an event of winning lottery.
+        for (i of [...Array(roundsNumber).keys()]) {
+            previousPlayersBalance = parseInt(await web3.eth.getBalance(player1.address));
+            jackpot = parseInt(await dice.jackpot());
+
+            let lastRound = parseInt(await dice.roundCount());
+            result = await dice.playSoloRound(player1.choice, {from: player1.address, value: betAmount});
+            do{
+                roundInfo =  await dice.getRoundInfo(lastRound + 1);
+                await helpers.sleep(90000);
+            } while (!roundInfo.isClosed);
+
+            roundInfo =  await dice.getRoundInfo(lastRound + 1);
+
+            if (roundInfo.lotteryWinner != "0x0000000000000000000000000000000000000000"){
+                lotteryWinner = roundInfo.lotteryWinner;
+                break;
+            }
+        }
+
+        const probalityOfWinning = 1 - ((newLotteryRate - 1) / newLotteryRate) ** roundsNumber;
+
+        assert.isOk(lotteryWinner, "Probabilistic, there should exist a winner (" + probalityOfWinning * 100 + "%)");
+
+        const fees =  parseInt(web3.utils.toWei('0.09'));  // Gas fees, adjust when we know better about gas cost
+        const newLotteryWinnerBalance = parseInt(await web3.eth.getBalance(lotteryWinner));
+        const expectedLotteryWinnerBalance = previousPlayersBalance + jackpot;
+        const contractsBalance = parseInt(await web3.eth.getBalance(dice.address));
+        assert.closeTo(expectedLotteryWinnerBalance, newLotteryWinnerBalance, fees, 'Lottery winner balance is wrong');
+        assert.closeTo(initialContractBalance - initialJackpot, contractsBalance, parseInt(betAmount) * 2, 'Contract balance should be minus jackpot');
+    });
 }
 )

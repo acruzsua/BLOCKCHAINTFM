@@ -413,7 +413,7 @@ contract RPS is P2PGamblingGame, LotteryGame {
             % lotteryRate) == 0) {
             require(myRound.lotteryWinner == address(0), "Only one loterry winner per round");
             myRound.lotteryWinner = playerAddress;
-            _payLotteryWinner(playerAddress);
+            _payLotteryWinner(playerAddress, myRound.betAmount);
             return true;
         }
         return false;
