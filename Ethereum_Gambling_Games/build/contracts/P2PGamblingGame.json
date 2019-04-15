@@ -572,14 +572,14 @@
     "absolutePath": "/home/rggentil/Documents/master_ethereum/BLOCKCHAINTFM/Ethereum_Gambling_Games/contracts/P2PGamblingGame.sol",
     "exportedSymbols": {
       "P2PGamblingGame": [
-        1558
+        1580
       ]
     },
-    "id": 1559,
+    "id": 1581,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1498,
+        "id": 1520,
         "literals": [
           "solidity",
           ">=",
@@ -591,10 +591,10 @@
       {
         "absolutePath": "/home/rggentil/Documents/master_ethereum/BLOCKCHAINTFM/Ethereum_Gambling_Games/contracts/GamblingGame.sol",
         "file": "./GamblingGame.sol",
-        "id": 1499,
+        "id": 1521,
         "nodeType": "ImportDirective",
-        "scope": 1559,
-        "sourceUnit": 1283,
+        "scope": 1581,
+        "sourceUnit": 1315,
         "src": "24:28:4",
         "symbolAliases": [],
         "unitAlias": ""
@@ -605,35 +605,35 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 1500,
+              "id": 1522,
               "name": "GamblingGame",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1282,
+              "referencedDeclaration": 1314,
               "src": "83:12:4",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_GamblingGame_$1282",
+                "typeIdentifier": "t_contract$_GamblingGame_$1314",
                 "typeString": "contract GamblingGame"
               }
             },
-            "id": 1501,
+            "id": 1523,
             "nodeType": "InheritanceSpecifier",
             "src": "83:12:4"
           }
         ],
         "contractDependencies": [
-          1282,
-          9225,
-          9462
+          1314,
+          9247,
+          9484
         ],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 1558,
+        "id": 1580,
         "linearizedBaseContracts": [
-          1558,
-          1282,
-          9225,
-          9462
+          1580,
+          1314,
+          9247,
+          9484
         ],
         "name": "P2PGamblingGame",
         "nodeType": "ContractDefinition",
@@ -641,22 +641,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1508,
+            "id": 1530,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "createRound",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1504,
+              "id": 1526,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1503,
+                  "id": 1525,
                   "name": "_choice",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1508,
+                  "scope": 1530,
                   "src": "123:12:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -665,7 +665,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1502,
+                    "id": 1524,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "123:4:4",
@@ -681,15 +681,15 @@
               "src": "122:14:4"
             },
             "returnParameters": {
-              "id": 1507,
+              "id": 1529,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1506,
+                  "id": 1528,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1508,
+                  "scope": 1530,
                   "src": "184:4:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -698,7 +698,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1505,
+                    "id": 1527,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "184:4:4",
@@ -713,7 +713,7 @@
               ],
               "src": "183:6:4"
             },
-            "scope": 1558,
+            "scope": 1580,
             "src": "102:88:4",
             "stateMutability": "payable",
             "superFunction": null,
@@ -722,22 +722,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1515,
+            "id": 1537,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "createSecretRound",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1511,
+              "id": 1533,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1510,
+                  "id": 1532,
                   "name": "_secretChoice",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1515,
+                  "scope": 1537,
                   "src": "223:21:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -746,7 +746,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 1509,
+                    "id": 1531,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "223:7:4",
@@ -762,15 +762,15 @@
               "src": "222:23:4"
             },
             "returnParameters": {
-              "id": 1514,
+              "id": 1536,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1513,
+                  "id": 1535,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1515,
+                  "scope": 1537,
                   "src": "293:4:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -779,7 +779,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1512,
+                    "id": 1534,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "293:4:4",
@@ -794,7 +794,7 @@
               ],
               "src": "292:6:4"
             },
-            "scope": 1558,
+            "scope": 1580,
             "src": "196:103:4",
             "stateMutability": "payable",
             "superFunction": null,
@@ -803,22 +803,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1522,
+            "id": 1544,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "joinRound",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1520,
+              "id": 1542,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1517,
+                  "id": 1539,
                   "name": "_roundId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1522,
+                  "scope": 1544,
                   "src": "324:13:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -827,7 +827,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1516,
+                    "id": 1538,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "324:4:4",
@@ -841,10 +841,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1519,
+                  "id": 1541,
                   "name": "_choice",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1522,
+                  "scope": 1544,
                   "src": "339:12:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -853,7 +853,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1518,
+                    "id": 1540,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "339:4:4",
@@ -869,12 +869,12 @@
               "src": "323:29:4"
             },
             "returnParameters": {
-              "id": 1521,
+              "id": 1543,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "367:0:4"
             },
-            "scope": 1558,
+            "scope": 1580,
             "src": "305:63:4",
             "stateMutability": "payable",
             "superFunction": null,
@@ -883,22 +883,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1529,
+            "id": 1551,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "joinSecretRound",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1527,
+              "id": 1549,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1524,
+                  "id": 1546,
                   "name": "_roundId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1529,
+                  "scope": 1551,
                   "src": "399:13:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -907,7 +907,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1523,
+                    "id": 1545,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "399:4:4",
@@ -921,10 +921,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1526,
+                  "id": 1548,
                   "name": "_choice",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1529,
+                  "scope": 1551,
                   "src": "414:12:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -933,7 +933,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1525,
+                    "id": 1547,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "414:4:4",
@@ -949,12 +949,12 @@
               "src": "398:29:4"
             },
             "returnParameters": {
-              "id": 1528,
+              "id": 1550,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "442:0:4"
             },
-            "scope": 1558,
+            "scope": 1580,
             "src": "374:69:4",
             "stateMutability": "payable",
             "superFunction": null,
@@ -963,22 +963,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1538,
+            "id": 1560,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "revealChoice",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1536,
+              "id": 1558,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1531,
+                  "id": 1553,
                   "name": "_roundId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1538,
+                  "scope": 1560,
                   "src": "471:13:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -987,7 +987,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1530,
+                    "id": 1552,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "471:4:4",
@@ -1001,10 +1001,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1533,
+                  "id": 1555,
                   "name": "_choice",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1538,
+                  "scope": 1560,
                   "src": "486:15:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1013,7 +1013,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1532,
+                    "id": 1554,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "486:7:4",
@@ -1027,10 +1027,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1535,
+                  "id": 1557,
                   "name": "_secret",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1538,
+                  "scope": 1560,
                   "src": "503:21:4",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -1039,7 +1039,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1534,
+                    "id": 1556,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "503:6:4",
@@ -1055,12 +1055,12 @@
               "src": "470:55:4"
             },
             "returnParameters": {
-              "id": 1537,
+              "id": 1559,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "532:0:4"
             },
-            "scope": 1558,
+            "scope": 1580,
             "src": "449:84:4",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1069,22 +1069,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1543,
+            "id": 1565,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "cancelRoundSender",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1541,
+              "id": 1563,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1540,
+                  "id": 1562,
                   "name": "_roundId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1543,
+                  "scope": 1565,
                   "src": "566:13:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1093,7 +1093,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1539,
+                    "id": 1561,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "566:4:4",
@@ -1109,12 +1109,12 @@
               "src": "565:15:4"
             },
             "returnParameters": {
-              "id": 1542,
+              "id": 1564,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "587:0:4"
             },
-            "scope": 1558,
+            "scope": 1580,
             "src": "539:49:4",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1123,22 +1123,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1552,
+            "id": 1574,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "cancelRound",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1550,
+              "id": 1572,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1545,
+                  "id": 1567,
                   "name": "_roundId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1552,
+                  "scope": 1574,
                   "src": "615:13:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1147,7 +1147,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1544,
+                    "id": 1566,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "615:4:4",
@@ -1161,10 +1161,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1547,
+                  "id": 1569,
                   "name": "_choice",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1552,
+                  "scope": 1574,
                   "src": "630:15:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1173,7 +1173,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1546,
+                    "id": 1568,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "630:7:4",
@@ -1187,10 +1187,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1549,
+                  "id": 1571,
                   "name": "_secret",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1552,
+                  "scope": 1574,
                   "src": "647:21:4",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -1199,7 +1199,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1548,
+                    "id": 1570,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "647:6:4",
@@ -1215,12 +1215,12 @@
               "src": "614:55:4"
             },
             "returnParameters": {
-              "id": 1551,
+              "id": 1573,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "676:0:4"
             },
-            "scope": 1558,
+            "scope": 1580,
             "src": "594:83:4",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1229,22 +1229,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1557,
+            "id": 1579,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "_cancelRound",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1555,
+              "id": 1577,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1554,
+                  "id": 1576,
                   "name": "_roundId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1557,
+                  "scope": 1579,
                   "src": "705:13:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1253,7 +1253,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1553,
+                    "id": 1575,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "705:4:4",
@@ -1269,19 +1269,19 @@
               "src": "704:15:4"
             },
             "returnParameters": {
-              "id": 1556,
+              "id": 1578,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "727:0:4"
             },
-            "scope": 1558,
+            "scope": 1580,
             "src": "683:45:4",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "private"
           }
         ],
-        "scope": 1559,
+        "scope": 1581,
         "src": "55:675:4"
       }
     ],
@@ -1291,14 +1291,14 @@
     "absolutePath": "/home/rggentil/Documents/master_ethereum/BLOCKCHAINTFM/Ethereum_Gambling_Games/contracts/P2PGamblingGame.sol",
     "exportedSymbols": {
       "P2PGamblingGame": [
-        1558
+        1580
       ]
     },
-    "id": 1559,
+    "id": 1581,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1498,
+        "id": 1520,
         "literals": [
           "solidity",
           ">=",
@@ -1310,10 +1310,10 @@
       {
         "absolutePath": "/home/rggentil/Documents/master_ethereum/BLOCKCHAINTFM/Ethereum_Gambling_Games/contracts/GamblingGame.sol",
         "file": "./GamblingGame.sol",
-        "id": 1499,
+        "id": 1521,
         "nodeType": "ImportDirective",
-        "scope": 1559,
-        "sourceUnit": 1283,
+        "scope": 1581,
+        "sourceUnit": 1315,
         "src": "24:28:4",
         "symbolAliases": [],
         "unitAlias": ""
@@ -1324,35 +1324,35 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 1500,
+              "id": 1522,
               "name": "GamblingGame",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1282,
+              "referencedDeclaration": 1314,
               "src": "83:12:4",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_GamblingGame_$1282",
+                "typeIdentifier": "t_contract$_GamblingGame_$1314",
                 "typeString": "contract GamblingGame"
               }
             },
-            "id": 1501,
+            "id": 1523,
             "nodeType": "InheritanceSpecifier",
             "src": "83:12:4"
           }
         ],
         "contractDependencies": [
-          1282,
-          9225,
-          9462
+          1314,
+          9247,
+          9484
         ],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 1558,
+        "id": 1580,
         "linearizedBaseContracts": [
-          1558,
-          1282,
-          9225,
-          9462
+          1580,
+          1314,
+          9247,
+          9484
         ],
         "name": "P2PGamblingGame",
         "nodeType": "ContractDefinition",
@@ -1360,22 +1360,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1508,
+            "id": 1530,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "createRound",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1504,
+              "id": 1526,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1503,
+                  "id": 1525,
                   "name": "_choice",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1508,
+                  "scope": 1530,
                   "src": "123:12:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1384,7 +1384,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1502,
+                    "id": 1524,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "123:4:4",
@@ -1400,15 +1400,15 @@
               "src": "122:14:4"
             },
             "returnParameters": {
-              "id": 1507,
+              "id": 1529,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1506,
+                  "id": 1528,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1508,
+                  "scope": 1530,
                   "src": "184:4:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1417,7 +1417,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1505,
+                    "id": 1527,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "184:4:4",
@@ -1432,7 +1432,7 @@
               ],
               "src": "183:6:4"
             },
-            "scope": 1558,
+            "scope": 1580,
             "src": "102:88:4",
             "stateMutability": "payable",
             "superFunction": null,
@@ -1441,22 +1441,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1515,
+            "id": 1537,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "createSecretRound",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1511,
+              "id": 1533,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1510,
+                  "id": 1532,
                   "name": "_secretChoice",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1515,
+                  "scope": 1537,
                   "src": "223:21:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1465,7 +1465,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 1509,
+                    "id": 1531,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "223:7:4",
@@ -1481,15 +1481,15 @@
               "src": "222:23:4"
             },
             "returnParameters": {
-              "id": 1514,
+              "id": 1536,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1513,
+                  "id": 1535,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1515,
+                  "scope": 1537,
                   "src": "293:4:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1498,7 +1498,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1512,
+                    "id": 1534,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "293:4:4",
@@ -1513,7 +1513,7 @@
               ],
               "src": "292:6:4"
             },
-            "scope": 1558,
+            "scope": 1580,
             "src": "196:103:4",
             "stateMutability": "payable",
             "superFunction": null,
@@ -1522,22 +1522,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1522,
+            "id": 1544,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "joinRound",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1520,
+              "id": 1542,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1517,
+                  "id": 1539,
                   "name": "_roundId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1522,
+                  "scope": 1544,
                   "src": "324:13:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1546,7 +1546,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1516,
+                    "id": 1538,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "324:4:4",
@@ -1560,10 +1560,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1519,
+                  "id": 1541,
                   "name": "_choice",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1522,
+                  "scope": 1544,
                   "src": "339:12:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1572,7 +1572,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1518,
+                    "id": 1540,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "339:4:4",
@@ -1588,12 +1588,12 @@
               "src": "323:29:4"
             },
             "returnParameters": {
-              "id": 1521,
+              "id": 1543,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "367:0:4"
             },
-            "scope": 1558,
+            "scope": 1580,
             "src": "305:63:4",
             "stateMutability": "payable",
             "superFunction": null,
@@ -1602,22 +1602,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1529,
+            "id": 1551,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "joinSecretRound",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1527,
+              "id": 1549,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1524,
+                  "id": 1546,
                   "name": "_roundId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1529,
+                  "scope": 1551,
                   "src": "399:13:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1626,7 +1626,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1523,
+                    "id": 1545,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "399:4:4",
@@ -1640,10 +1640,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1526,
+                  "id": 1548,
                   "name": "_choice",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1529,
+                  "scope": 1551,
                   "src": "414:12:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1652,7 +1652,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1525,
+                    "id": 1547,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "414:4:4",
@@ -1668,12 +1668,12 @@
               "src": "398:29:4"
             },
             "returnParameters": {
-              "id": 1528,
+              "id": 1550,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "442:0:4"
             },
-            "scope": 1558,
+            "scope": 1580,
             "src": "374:69:4",
             "stateMutability": "payable",
             "superFunction": null,
@@ -1682,22 +1682,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1538,
+            "id": 1560,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "revealChoice",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1536,
+              "id": 1558,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1531,
+                  "id": 1553,
                   "name": "_roundId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1538,
+                  "scope": 1560,
                   "src": "471:13:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1706,7 +1706,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1530,
+                    "id": 1552,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "471:4:4",
@@ -1720,10 +1720,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1533,
+                  "id": 1555,
                   "name": "_choice",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1538,
+                  "scope": 1560,
                   "src": "486:15:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1732,7 +1732,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1532,
+                    "id": 1554,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "486:7:4",
@@ -1746,10 +1746,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1535,
+                  "id": 1557,
                   "name": "_secret",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1538,
+                  "scope": 1560,
                   "src": "503:21:4",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -1758,7 +1758,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1534,
+                    "id": 1556,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "503:6:4",
@@ -1774,12 +1774,12 @@
               "src": "470:55:4"
             },
             "returnParameters": {
-              "id": 1537,
+              "id": 1559,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "532:0:4"
             },
-            "scope": 1558,
+            "scope": 1580,
             "src": "449:84:4",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1788,22 +1788,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1543,
+            "id": 1565,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "cancelRoundSender",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1541,
+              "id": 1563,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1540,
+                  "id": 1562,
                   "name": "_roundId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1543,
+                  "scope": 1565,
                   "src": "566:13:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1812,7 +1812,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1539,
+                    "id": 1561,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "566:4:4",
@@ -1828,12 +1828,12 @@
               "src": "565:15:4"
             },
             "returnParameters": {
-              "id": 1542,
+              "id": 1564,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "587:0:4"
             },
-            "scope": 1558,
+            "scope": 1580,
             "src": "539:49:4",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1842,22 +1842,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1552,
+            "id": 1574,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "cancelRound",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1550,
+              "id": 1572,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1545,
+                  "id": 1567,
                   "name": "_roundId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1552,
+                  "scope": 1574,
                   "src": "615:13:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1866,7 +1866,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1544,
+                    "id": 1566,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "615:4:4",
@@ -1880,10 +1880,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1547,
+                  "id": 1569,
                   "name": "_choice",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1552,
+                  "scope": 1574,
                   "src": "630:15:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1892,7 +1892,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1546,
+                    "id": 1568,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "630:7:4",
@@ -1906,10 +1906,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1549,
+                  "id": 1571,
                   "name": "_secret",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1552,
+                  "scope": 1574,
                   "src": "647:21:4",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -1918,7 +1918,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1548,
+                    "id": 1570,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "647:6:4",
@@ -1934,12 +1934,12 @@
               "src": "614:55:4"
             },
             "returnParameters": {
-              "id": 1551,
+              "id": 1573,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "676:0:4"
             },
-            "scope": 1558,
+            "scope": 1580,
             "src": "594:83:4",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1948,22 +1948,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1557,
+            "id": 1579,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "_cancelRound",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1555,
+              "id": 1577,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1554,
+                  "id": 1576,
                   "name": "_roundId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1557,
+                  "scope": 1579,
                   "src": "705:13:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1972,7 +1972,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1553,
+                    "id": 1575,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "705:4:4",
@@ -1988,19 +1988,19 @@
               "src": "704:15:4"
             },
             "returnParameters": {
-              "id": 1556,
+              "id": 1578,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "727:0:4"
             },
-            "scope": 1558,
+            "scope": 1580,
             "src": "683:45:4",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "private"
           }
         ],
-        "scope": 1559,
+        "scope": 1581,
         "src": "55:675:4"
       }
     ],
@@ -2012,7 +2012,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.6",
-  "updatedAt": "2019-04-14T09:53:36.405Z",
+  "updatedAt": "2019-04-14T19:38:33.987Z",
   "devdoc": {
     "methods": {
       "__callback(bytes32,string,bytes)": {

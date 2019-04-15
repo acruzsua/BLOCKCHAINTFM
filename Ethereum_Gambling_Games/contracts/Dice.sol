@@ -92,18 +92,28 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
         );
     }
 
+    event LogProfit(uint profit);
     function calculateProfit(uint betAmount, uint risk)
-    private
-    view
+    public
     returns (uint)
     {
-        uint grossProfit = betAmount.mul(risk).div(100);
+        // uint grossProfit = betAmount.mul(risk).div(100);
 
         uint jackpotFee = betAmount.mul(jackpotFeeRate) / feeUnits;
         uint businessFee = betAmount.mul(businessFeeRate) / feeUnits;
 
+        // uint netProfit = grossProfit.sub(jackpotFee).sub(businessFee).sub(feeOraclize);
+        // return (netProfit);
+
+        uint riskEarnings = risk.mul(feeUnits);
+        riskEarnings = riskEarnings.div(100);
+        uint earningRate = (feeUnits - riskEarnings); // 0.5 * fe
+        uint x = (feeUnits * feeUnits).div(earningRate);
+        uint grossProfit = x.mul(betAmount);
+        grossProfit = grossProfit.div(feeUnits);
         uint netProfit = grossProfit.sub(jackpotFee).sub(businessFee).sub(feeOraclize);
-        return (netProfit);
+        emit LogProfit(netProfit);
+        return netProfit;
 
     }
 
@@ -204,21 +214,21 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
         uint inititalJackpot = jackpot;
         uint initialBalance = address(this).balance;
         uint jackpotFee = round.betAmount.mul(jackpotFeeRate) / feeUnits;
-        uint winAmount;
+        uint netProfit;
 
         if(playerWins) {
 
             // Calculate player profit
-            uint netProfit = calculateProfit(round.betAmount - jackpotFee, round.player1.choice);
+            netProfit = calculateProfit(round.betAmount, round.player1.choice);
 
             round.profit = netProfit;
 
             if(netProfit > 0) {
                 // payWinner(round.player1.playerAddress, round.betAmount, netProfit);
-                winAmount = round.betAmount.add(netProfit);
+                // winAmount = round.betAmount.add(netProfit);
                 require( address(this).balance >= round.betAmount, "cannot pay" );
                 emit logPayWinner("Pay winner: ", round.player1.playerAddress, round.betAmount);
-                round.player1.playerAddress.transfer(winAmount);
+                round.player1.playerAddress.transfer(netProfit);
             }
 
         }
@@ -232,9 +242,9 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
         // Additional check por security for reentrancy (kind of formal verification)
         // These additional checks may not be necessary since we are using transfer that limits gas to 2300,
         // so in the final deployment we could ommit all these additional checks in order to save same uncessary gas
-        assert((jackpot >= inititalJackpot - (2 * round.betAmount)) && (address(this).balance >= initialBalance - (2 * round.betAmount)));
+        // assert((jackpot >= inititalJackpot - (2 * round.betAmount)) && (address(this).balance >= initialBalance - (2 * round.betAmount)));
 
-        return winAmount;
+        return netProfit;
     }
 
     function _setResult(bytes32 myid, uint oraclizeResult) private
