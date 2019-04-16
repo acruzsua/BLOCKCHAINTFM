@@ -136,11 +136,6 @@ App = {
         const account = await accounts[0];
         const result = await diceInstance.playSoloRound(risk, {from: account, value: betAmount});
 
-        // var LogRolledDiceNumber = diceInstance.logRolledDiceNumber({});
-        // LogRolledDiceNumber.watch(function (err, result) {
-        //     App.showResult(result.args.rolledDiceNumber.valueOf());
-
-        // })
         })
 
   },

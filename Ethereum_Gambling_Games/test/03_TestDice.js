@@ -159,14 +159,13 @@ contract("Dice", async (accounts) => {
             // Pick a random number to test between 30-80 (valid risk numbers)
             player1.choice = Math.floor((Math.random() * 50) + 31);;
             await dice.playSoloRound(player1.choice, {from: player1.address, value: betAmount});
-            await dice.playSoloRound(50, {from: player1.address, value: betAmount});
 
             const lastRound = await dice.roundCount();
 
-            await helpers.sleep(90000);
+            await helpers.sleep(80000);
 
             const roundInfo =  await dice.getRoundInfo(lastRound);
-            const result = roundInfo.rolledDiceNumber.toNumber();
+            const result = parseInt(roundInfo.rolledDiceNumber);
 
             assert.isAtLeast(result, 1, 'Random number was less than 1');
             assert.isAtMost(result, 100, 'Random number was greater than 100');
@@ -175,13 +174,12 @@ contract("Dice", async (accounts) => {
             const newContractsBalance = parseInt(await web3.eth.getBalance(dice.address));
             const gasFees =  parseInt(web3.utils.toWei('0.05'));  // Gas fees, adjust when we know better about gas cost
             const oraclizeFees = parseInt(web3.utils.toWei('0.04'));
-            const profit = parseInt(betAmount) * player1.choice / 100;
+            const profit = parseInt(betAmount) * (100 / (100 - player1.choice));
 
             if (result > player1.choice) {
                 // Player wins
-
-                expectedPlayersBalance = previousPlayersBalance + profit- jackpotFees - businessFees;
-                expectedContractsBalance = previousContractsBalance - profit + jackpotFees + businessFees;
+                expectedPlayersBalance = previousPlayersBalance + profit - parseInt(betAmount) - jackpotFees - businessFees;
+                expectedContractsBalance = previousContractsBalance - profit + parseInt(betAmount) + jackpotFees + businessFees;
                 expectedWinner = player1.address;
             } else {
                 // Player loses
@@ -199,68 +197,66 @@ contract("Dice", async (accounts) => {
 
     });
 
-    //  // This test is disabled because it takes too long (because of oraclize) to play several rounds until a round
-    // // wins the lottery, and the test fails because of an internal timeout.
-    // // This was tested without oraclize, getting random numbers internally, and it passed.
-    // it("Test play lottery)", async () => {
+     // This test is disabled because it takes too long (because of oraclize) to play several rounds until a round
+    // wins the lottery, and the test fails because of an internal timeout.
+    // This was tested without oraclize, getting random numbers internally, and it passed.
+    xit("Test play lottery)", async () => {
 
-    //     // Make sure the game is on
-    //     try {
-    //         await dice.startGame({from: owner});
-    //     }
-    //     catch(e){}
-    //     console.log(parseInt(await dice.jackpot()))
-    //     console.log(await web3.eth.getBalance(dice.address))
+        // Make sure the game is on
+        try {
+            await dice.startGame({from: owner});
+        }
+        catch(e){}
 
-    //     dice.startLottery({from: owner});
+        dice.startLottery({from: owner});
 
-    //     await dice.fundGame({from: accounts[0], value: web3.utils.toWei('4')});
+        await dice.fundGame({from: accounts[0], value: web3.utils.toWei('4')});
 
-    //     // I can set a new lottery rate
-    //     const newLotteryRate = 4;
-    //     await dice.setLotteryRate(newLotteryRate);
-    //     assert.equal(newLotteryRate, await dice.lotteryRate());
+        // I can set a new lottery rate
+        const newLotteryRate = 4;
+        await dice.setLotteryRate(newLotteryRate);
+        assert.equal(newLotteryRate, await dice.lotteryRate());
 
-    //     const roundsNumber = 50;
-    //     const betAmount = web3.utils.toWei('0.05');
+        const roundsNumber = 50;
+        const betAmount = web3.utils.toWei('0.05');
 
-    //     let lotteryWinner;
-    //     let jackpot;
-    //     let previousPlayersBalance;
+        let lotteryWinner;
+        let jackpot;
+        let previousPlayersBalance;
 
-    //     initialContractBalance = parseInt(await web3.eth.getBalance(dice.address));
-    //     initialJackpot = parseInt(await dice.jackpot());
-    //     // The idea is to modify the number of rounds and chance of winning to assure that there is a big change of winning
-    //     // lottery, so we can get an event of winning lottery.
-    //     for (i of [...Array(roundsNumber).keys()]) {
-    //         previousPlayersBalance = parseInt(await web3.eth.getBalance(player1.address));
-    //         jackpot = parseInt(await dice.jackpot());
+        initialContractBalance = parseInt(await web3.eth.getBalance(dice.address));
+        initialJackpot = parseInt(await dice.jackpot());
+        // The idea is to modify the number of rounds and chance of winning to assure that there is a big change of winning
+        // lottery, so we can get an event of winning lottery.
+        for (i of [...Array(roundsNumber).keys()]) {
+            previousPlayersBalance = parseInt(await web3.eth.getBalance(player1.address));
+            jackpot = parseInt(await dice.jackpot());
 
-    //         let lastRound = parseInt(await dice.roundCount());
-    //         result = await dice.playSoloRound(player1.choice, {from: player1.address, value: betAmount});
-    //         do{
-    //             roundInfo =  await dice.getRoundInfo(lastRound + 1);
-    //             await helpers.sleep(90000);
-    //         } while (!roundInfo.isClosed);
+            let lastRound = parseInt(await dice.roundCount());
+            result = await dice.playSoloRound(player1.choice, {from: player1.address, value: betAmount});
+            do{
+                roundInfo =  await dice.getRoundInfo(lastRound + 1);
+                await helpers.sleep(90000);
+            } while (!roundInfo.isClosed);
 
-    //         roundInfo =  await dice.getRoundInfo(lastRound + 1);
+            roundInfo =  await dice.getRoundInfo(lastRound + 1);
 
-    //         if (roundInfo.lotteryWinner != "0x0000000000000000000000000000000000000000"){
-    //             lotteryWinner = roundInfo.lotteryWinner;
-    //             break;
-    //         }
-    //     }
+            if (roundInfo.lotteryWinner != "0x0000000000000000000000000000000000000000"){
+                lotteryWinner = roundInfo.lotteryWinner;
+                break;
+            }
+        }
 
-    //     const probalityOfWinning = 1 - ((newLotteryRate - 1) / newLotteryRate) ** roundsNumber;
+        const probalityOfWinning = 1 - ((newLotteryRate - 1) / newLotteryRate) ** roundsNumber;
 
-    //     assert.isOk(lotteryWinner, "Probabilistic, there should exist a winner (" + probalityOfWinning * 100 + "%)");
+        assert.isOk(lotteryWinner, "Probabilistic, there should exist a winner (" + probalityOfWinning * 100 + "%)");
 
-    //     const fees =  parseInt(web3.utils.toWei('0.09'));  // Gas fees, adjust when we know better about gas cost
-    //     const newLotteryWinnerBalance = parseInt(await web3.eth.getBalance(lotteryWinner));
-    //     const expectedLotteryWinnerBalance = previousPlayersBalance + jackpot;
-    //     const contractsBalance = parseInt(await web3.eth.getBalance(dice.address));
-    //     assert.closeTo(expectedLotteryWinnerBalance, newLotteryWinnerBalance, fees, 'Lottery winner balance is wrong');
-    //     assert.closeTo(initialContractBalance - initialJackpot, contractsBalance, parseInt(betAmount) * 2, 'Contract balance should be minus jackpot');
-    // });
+        const fees =  parseInt(web3.utils.toWei('0.09'));  // Gas fees, adjust when we know better about gas cost
+        const newLotteryWinnerBalance = parseInt(await web3.eth.getBalance(lotteryWinner));
+        const expectedLotteryWinnerBalance = previousPlayersBalance + jackpot;
+        const contractsBalance = parseInt(await web3.eth.getBalance(dice.address));
+        assert.closeTo(expectedLotteryWinnerBalance, newLotteryWinnerBalance, fees, 'Lottery winner balance is wrong');
+        assert.closeTo(initialContractBalance - initialJackpot, contractsBalance, parseInt(betAmount) * 2, 'Contract balance should be minus jackpot');
+    });
 }
 )

@@ -4,30 +4,28 @@ pragma solidity ^0.5.0;
 import "./GamblingGame.sol";
 import "./oraclizeAPI.sol";
 import "./LotteryGame.sol";
-//import "./StartStopGame.sol";
 
 
-/** @title Dice - Dice game
+/** @title Dice game, playing also for a jackpot.
   * @author Rodrigo Gómez Gentil, Antonio Cruz Suárez
+  * @notice This is just a simple game for the TFM of the Master in Ethereum.
+            Do not use betting real value since it may have some vulnerabilities.
+            Further analysis and assurance is needed to take in production/main net.
  */
-
 contract Dice is usingOraclize, GamblingGame, LotteryGame {
 
     using SafeMath for uint;
 
-    // uint public minimumBet = 0.0001 ether;
     uint public minimumRisk = 1;
     uint public maximumRisk = 99;
     uint public feeJackpot =  5000000000000000;  // Fund to jackpot 0.005 ether as a fee
 
     uint constant DICE_RANDOM_RANGE = 100;
 
-    event GameStarted(string message);
-
     // Events
+    event GameStarted(string message);
     event logPlayerBetAccepted(address _contract, address _player, uint _risk, uint _bet);
     event logRollDice(address _contract, address _player, string _description);
-    event logRolledDiceNumber(uint _rolledDiceNumber);
     event logPlayerLose(string description, address _contract, address _player, uint _rolledDiceNumber, uint _betAmount);
     event logPlayerWins(string description, address _contract, address _winner, uint _rolledDiceNumber, uint _profit);
     event logNewOraclizeQuery(string description);
@@ -47,26 +45,20 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
     );
 
 
-    constructor()
-    public
-    {
-        // Replace the next line with your version:
-        //OAR = OraclizeAddrResolverI(0x18C0cAb11428daf78bF6Fcc0fcb8Dea742ab715D);
-
-        // set Oraclize proof type
-        //oraclize_setProof(proofType_TLSNotary | proofStorage_IPFS);
+    constructor() public payable {
     }
 
-    function startGame() public {
-        super.startGame();
-        startLottery();
-    }
 
-    function stopGame() public {
-        super.stopGame();
-        stopLottery();
-    }
-
+    /** @notice Get info from rounds.
+      * @dev This function is implemented mainly for debugging purpose.
+             Actually getting info from front-end is managed through events.
+      * @param roundId round id number that identify a round
+      * @return player1Address address of player1
+      * @return player1Choice secret choice of player1
+      * @return betAmount amount of the bet of this round, in wei.
+      * @return winner address of the winner, it's 0x0 if not finished or draw
+      * @return if round is closed
+    */
     function getRoundInfo(
         uint roundId
     )
@@ -92,18 +84,33 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
         );
     }
 
-    event LogProfit(uint profit);
+    /** @notice When we have everything ready owner can start game so anyone can play.
+                Also for restarting game after having stopped it
+                Call parent function and start lottery as well
+    */
+    function startGame() public {
+        super.startGame();
+        startLottery();
+    }
+
+    /** @notice Function for emergengies. Call parent function and stop lottery as well
+    */
+    function stopGame() public {
+        super.stopGame();
+        stopLottery();
+    }
+
+    /** @notice Function for calculate the profit if winning in dice game.
+     * @param betAmount amount of the bet
+     * @param risk risk/choice chosen by player. The higher the risk, the more profitable if winning
+    */
     function calculateProfit(uint betAmount, uint risk)
     public
+    view
     returns (uint)
     {
-        // uint grossProfit = betAmount.mul(risk).div(100);
-
         uint jackpotFee = betAmount.mul(jackpotFeeRate) / feeUnits;
         uint businessFee = betAmount.mul(businessFeeRate) / feeUnits;
-
-        // uint netProfit = grossProfit.sub(jackpotFee).sub(businessFee).sub(feeOraclize);
-        // return (netProfit);
 
         uint riskEarnings = risk.mul(feeUnits);
         riskEarnings = riskEarnings.div(100);
@@ -112,14 +119,12 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
         uint grossProfit = x.mul(betAmount);
         grossProfit = grossProfit.div(feeUnits);
         uint netProfit = grossProfit.sub(jackpotFee).sub(businessFee).sub(feeOraclize);
-        emit LogProfit(netProfit);
         return netProfit;
-
     }
 
     /**
      * @notice Test if the risk assumed by the user is the minimum accepted by the game
-     * @param _risk : Risk assumed by the player
+     * @param _risk Risk assumed by the player
      * @param _minimumRisk Indicates the minimum risk accepted to play the game
      * @return True if the risk is over 30, False otherwise.
      */
@@ -131,6 +136,11 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
         return ((_risk > _minimumRisk) && (_risk <= _maximumRisk));
     }
 
+    /**
+     * @notice Function to create a round playing against the blockchain.
+     * @param _choice Choice made by player
+     * @return Round Id of the round
+     */
     function playSoloRound(uint _choice) public payable gameIsOn(true) returns(uint) {
 
         roundCount++;
@@ -157,7 +167,6 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
         // Making oraclized query to random.org.
         emit logRollDice(address(this), playerAddress, "Oraclize query to random.org was sent, standing by for the answer.");
 
-        // rounds[roundId].risk = risk;
         rounds[roundId].player1.choice = risk;
         rounds[roundId].betAmount = betAmount;
         rounds[roundId].player1.playerAddress = playerAddress;
@@ -167,6 +176,18 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
         return roundId;
     }
 
+    /** @notice Withdraw funds in case of an emergengy. Set jackpot to 0.
+      * @param _myAddress addres to withdraw funds to
+    */
+    function withdrawFunds(address payable _myAddress) public {
+        super.withdrawFunds(_myAddress);
+        jackpot = 0;
+    }
+
+    /** @notice Resolve round, vs House 
+                Pay winner if any.
+      * @param _roundId id number that identify the round to resolve
+     */
     function _resolveRound(uint _roundId) private {
         Round storage round = rounds[_roundId];
         uint rolledDiceNumber = round.oraclizeCallback.oraclesChoice;
@@ -197,16 +218,9 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
         }
     }
 
-    function _checkWinner(Player memory player1, Player memory player2) private pure returns(address payable) {
-        if ((uint(player1.choice) + 1) % 3 == uint(player2.choice)) {
-            return player2.playerAddress;
-        } else if ((uint(player1.choice) + 2) % 3 == uint(player2.choice)) {
-            return player1.playerAddress;
-        } else {
-            return address(0);
-        }
-    }
-
+    /** @notice Pay winner of the round resolved.
+      * @param _roundId id number that identify the round to resolve
+     */
     function _payRound(uint _roundId) private returns(uint) {
         Round storage round = rounds[_roundId];
         bool playerWins = round.winner == round.player1.playerAddress;
@@ -224,53 +238,19 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
             round.profit = netProfit;
 
             if(netProfit > 0) {
-                // payWinner(round.player1.playerAddress, round.betAmount, netProfit);
-                // winAmount = round.betAmount.add(netProfit);
                 require( address(this).balance >= round.betAmount, "cannot pay" );
-                emit logPayWinner("Pay winner: ", round.player1.playerAddress, round.betAmount);
+                emit logPayWinner("Pay winner: ", round.player1.playerAddress, netProfit);
                 round.player1.playerAddress.transfer(netProfit);
             }
 
         }
-
-         if(playerWins==false) {
-             emit logPlayerLose("Player lose: ",address(this), round.player1.playerAddress, round.oraclizeCallback.oraclesChoice, round.betAmount);
+        else {
+            emit logPlayerLose("Player lose: ",address(this), round.player1.playerAddress, round.oraclizeCallback.oraclesChoice, round.betAmount);
         }
 
         jackpot = address(this).balance;
 
-        // Additional check por security for reentrancy (kind of formal verification)
-        // These additional checks may not be necessary since we are using transfer that limits gas to 2300,
-        // so in the final deployment we could ommit all these additional checks in order to save same uncessary gas
-        // assert((jackpot >= inititalJackpot - (2 * round.betAmount)) && (address(this).balance >= initialBalance - (2 * round.betAmount)));
-
         return netProfit;
-    }
-
-    function _setResult(bytes32 myid, uint oraclizeResult) private
-    {
-        uint roundId = 0;
-
-        if (queryIdToRounds[myid] != 0) {
-            roundId = queryIdToRounds[myid];
-        } else if (secretQueryIdToRounds[myid] != 0) {
-            roundId = secretQueryIdToRounds[myid];
-        }
-
-        Round storage round = rounds[roundId];
-
-        if (queryIdToRounds[myid] != 0) {
-            round.oraclizeCallback.queryResult = oraclizeResult;
-        } else if (secretQueryIdToRounds[myid] != 0) {
-            round.oraclizeCallback.secretQueryResult = oraclizeResult;
-        }
-
-        if (round.oraclizeCallback.queryResult != 0 && round.oraclizeCallback.secretQueryResult != 0) {
-            uint rolledDiceNumber = (round.oraclizeCallback.queryResult ^ round.oraclizeCallback.secretQueryResult) % gameRandomRange;
-            round.oraclizeCallback.oraclesChoice = rolledDiceNumber;
-            emit logRolledDiceNumber(rolledDiceNumber);
-            _resolveRound(roundId);
-        }
     }
 
     /** @notice Play lottery for the round
@@ -292,8 +272,4 @@ contract Dice is usingOraclize, GamblingGame, LotteryGame {
         return false;
     }
 
-    function withdrawFunds(address payable _myAddress) public {
-        super.withdrawFunds(_myAddress);
-        jackpot = 0;
-    }
 }

@@ -5,7 +5,7 @@ import "./LotteryGame.sol";
 
 
 /** @title RPS - RockPaperScissor P2P game, playing also for a jackpot.
-  * @author rggentil
+  * @author Rodrigo Gómez Gentil, Antonio Cruz Suárez
   * @notice This is just a simple game done mostly for learning solidity
             and web3 development, do not use betting real value since
             it has some known vulnerabilities.
@@ -44,25 +44,18 @@ contract RPS is P2PGamblingGame, LotteryGame {
     event BusinessPayment(address businessAddress, uint payment);
 
     constructor() public payable {
-        // We could handle games through constructor and setting variables like
-        // minimum bet, max jackpot, fees, etc.
-
     }
 
     /** @notice Get info from rounds.
-                TODO: This function should be removed in final deployment because
-                it facilitates getting other player's choice before betting.
       * @dev This function is implemented mainly for debugging purpose.
              Actually getting info from front-end is managed through events.
       * @param roundId round id number that identify a round
       * @return player1Address address of player1
-      * @return player1Choice choice of player1
+      * @return player1Choice secret choice of player1
       * @return player2Address address of player2
       * @return player2Choice choice of player2
       * @return betAmount amount of the bet of this round, in wei.
       * @return winner address of the winner, it's 0x0 if not finished or draw
-      TODO: THIS CAN'T BE ACCESSIBLE BECAUSE ANYONE COULD KNOW THE CHOICES JUST
-            REQUESTING THIS FUNCTION
     */
     function getRoundInfo(
         uint roundId
@@ -92,9 +85,13 @@ contract RPS is P2PGamblingGame, LotteryGame {
             myRound.lotteryWinner
         );
     }
- 
 
-    event CurrentJackpot(uint jackpot);
+
+    /**
+     * @notice Function to create a round playing against the blockchain.
+     * @param _choice Choice made by player
+     * @return Round Id of the round
+     */
     function playSoloRound(uint _choice)
         public
         gameIsOn(true)
@@ -119,7 +116,6 @@ contract RPS is P2PGamblingGame, LotteryGame {
         );
 
         if (round.isSolo) {
-            emit CurrentJackpot(jackpot);
             require(isValidBet(msg.value, minimumBet, jackpot));
             require(msg.value <= jackpot, "Bet too high");
             round.player2.playerAddress = address(this);
@@ -162,38 +158,6 @@ contract RPS is P2PGamblingGame, LotteryGame {
         return roundId;
     }
 
-    /** @notice Function called each time we want to play.
-                Payable function thar receives the bet amount.
-      * @param _choice choose Choice enum value: ROCK, PAPER, SCISSOR
-      * @return roundId id number that identify the round created
-     */
-    function createRound(uint _choice)
-        public
-        gameIsOn(true)
-        isChoice(_choice)
-        payable
-        returns(uint)
-    {
-        require(msg.value >= minimumBet, "Not enough amount bet");
-
-        roundCount++;
-        uint roundId = roundCount;
-        Round storage round = rounds[roundId];
-        round.player1.playerAddress = msg.sender;
-        round.player1.choice = _choice;
-        round.betAmount = msg.value;
-        round.isSolo = false;
-
-        emit RoundCreated(
-            roundCount,
-            round.betAmount,
-            round.player1.playerAddress,
-            round.isSolo
-        );
-
-        return roundId;
-    }
-
     /** @notice Join to an existing round created by other player
                 Payable function thar receives the bet amount.
       * @param _roundId id number that identify the round to join
@@ -216,21 +180,6 @@ contract RPS is P2PGamblingGame, LotteryGame {
         myRound.player2.choice = _choice;
     }
 
-    /** @notice Join to an existing round created by other player
-                Payable function thar receives the bet amount.
-      * @param _roundId id number that identify the round to join
-      * @param _choice choose Choice enum value: ROCK, PAPER, SCISSOR
-     */
-    function joinRound(uint _roundId, uint _choice)
-        public
-        gameIsOn(true)
-        isChoice(_choice)
-        payable
-    {
-        joinRound(_roundId, _choice);
-        _resolveRound(_roundId);
-    }
-
     /** @notice Player 1 reveals choice when other player has joined to player 1's round
      */
     function revealChoice(uint _roundId, uint256 _choice, string memory _secret) public gameIsOn(true) {
@@ -242,53 +191,28 @@ contract RPS is P2PGamblingGame, LotteryGame {
         _resolveRound(_roundId);
     }
 
-    /**  @dev For some reason, overloading that used to work fine now it fails, so I've changed the name of the funciton
-              to differentiate from the other cancelRound
+    /** @notice When we have everything ready owner can start game so anyone can play.
+                Also for restarting game after having stopped it
+                Call parent function and start lottery as well
     */
-    function cancelRoundSender(uint _roundId) public {
-        require(rounds[_roundId].player1.playerAddress == msg.sender, "Error trying to cancel round: the sender is not the creator of the round");
-        _cancelRound(_roundId);
-    }
-
-    function cancelRound(uint _roundId, uint256 _choice, string memory _secret) public {
-        require(keccak256(abi.encodePacked(_choice, _secret)) == rounds[_roundId].player1.secretChoice, "Error trying to cancel round: wrong choice or secret");
-        _cancelRound(_roundId);
-    }
-
     function startGame() public {
         super.startGame();
         startLottery();
     }
 
+    /** @notice Function for emergengies. Call parent function and stop lottery as well
+    */
     function stopGame() public {
         super.stopGame();
         stopLottery();
     }
 
+    /** @notice Withdraw funds in case of an emergengy. Set jackpot to 0.
+      * @param _myAddress addres to withdraw funds to
+    */
     function withdrawFunds(address payable _myAddress) public {
         super.withdrawFunds(_myAddress);
         jackpot = 0;
-    }
-
-    function _cancelRound(uint _roundId) private {
-        Round storage myRound = rounds[_roundId];  // Pointer to round
-        require(myRound.player2.playerAddress == address(0), "Only possible to cancel round when nobody has joined");
-
-        // Player can cancel round and receives the bet amount minus fees
-        uint jackpotFee = myRound.betAmount.mul(jackpotFeeRate) / feeUnits;
-        uint businessFee = myRound.betAmount.mul(businessFeeRate) / feeUnits;
-        myRound.player1.playerAddress.transfer(myRound.betAmount - jackpotFee - businessFee);
-        myRound.isClosed = true;
-    }
-
-    /** @notice Function that generates randomness for the game, used when playing vs House and playing
-                for the jackpot. This implementation is not safe since it can be easyly attacked.
-      * @dev It uses the blockhash of the last block, with two other params but it is not safe for a gambling
-            platform. Change randomness in case we want it to be realistic. Probably it needs Oraclize.
-      * @return Choice enum value (ROCK, PAPER, SCISSOR) chosen randomly.
-    */
-    function getRandomChoice() private view returns(uint){
-        return uint(keccak256(abi.encodePacked(roundCount, msg.sender, blockhash(block.number - 1)))) % 3;
     }
 
     /** @notice Resolve round, both vs House or vs other player.
@@ -400,8 +324,7 @@ contract RPS is P2PGamblingGame, LotteryGame {
     }
 
     /** @notice Play lottery for the round
-      * @dev TODO: Current randomness is not the best way for gambling since it can be attacked by miners.
-             TODO: It is needed to implement a mechanism that assures that existing rounds can be paid altoudh
+      * @dev TODO: It is needed to implement a mechanism that assures that existing rounds can be paid altoudh
              someone has hit the jakpot. Curerntly if someone hits the jackpot he/she gets all value of the contract
       * @param playerAddress address of the player
       * @param _roundId id number that identify the round to resolve
@@ -417,38 +340,6 @@ contract RPS is P2PGamblingGame, LotteryGame {
             return true;
         }
         return false;
-    }
-
-    function _setResult(bytes32 myid, uint oraclizeResult) private {
-        uint roundId = 0;
-
-        if (queryIdToRounds[myid] != 0) {
-            roundId = queryIdToRounds[myid];
-        } else if (secretQueryIdToRounds[myid] != 0) {
-            roundId = secretQueryIdToRounds[myid];
-        }
-
-        Round storage round = rounds[roundId];
-
-        emit logRolledDiceNumber(oraclizeResult);
-        emit logRolledDiceNumberBefore(round.oraclizeCallback.queryResult);
-        emit logRolledDiceNumberBeforeS(round.oraclizeCallback.secretQueryResult);
-        emit logRoundIdIs(queryIdToRounds[myid]);
-        emit logRoundIdIsS(secretQueryIdToRounds[myid]);
-
-        if (queryIdToRounds[myid] != 0) {
-            round.oraclizeCallback.queryResult = oraclizeResult;
-        } else if (secretQueryIdToRounds[myid] != 0) {
-            round.oraclizeCallback.secretQueryResult = oraclizeResult;
-        }
-
-        if (round.oraclizeCallback.queryResult != 0 && round.oraclizeCallback.secretQueryResult != 0) {
-            uint rpsChoice = (round.oraclizeCallback.queryResult ^ round.oraclizeCallback.secretQueryResult) % gameRandomRange;
-            round.oraclizeCallback.oraclesChoice = rpsChoice;
-            round.player2.choice = rpsChoice;
-            _resolveRound(roundId);
-            emit logRolledDiceNumberAfter(rpsChoice);
-        }
     }
 
 }
