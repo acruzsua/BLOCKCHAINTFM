@@ -2,7 +2,6 @@ pragma solidity ^0.5.0;
 
 
 import "./GamblingGame.sol";
-import "./oraclizeAPI.sol";
 import "./LotteryGame.sol";
 
 
@@ -12,9 +11,7 @@ import "./LotteryGame.sol";
             Do not use betting real value since it may have some vulnerabilities.
             Further analysis and assurance is needed to take in production/main net.
  */
-contract Dice is usingOraclize, GamblingGame, LotteryGame {
-
-    using SafeMath for uint;
+contract Dice is GamblingGame, LotteryGame {
 
     uint public minimumRisk = 1;
     uint public maximumRisk = 99;

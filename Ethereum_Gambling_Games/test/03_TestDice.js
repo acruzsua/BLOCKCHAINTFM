@@ -162,7 +162,7 @@ contract("Dice", async (accounts) => {
 
             const lastRound = await dice.roundCount();
 
-            await helpers.sleep(80000);
+            await helpers.sleep(90000);
 
             const roundInfo =  await dice.getRoundInfo(lastRound);
             const result = parseInt(roundInfo.rolledDiceNumber);
